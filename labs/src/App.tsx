@@ -1,5 +1,5 @@
 import React from 'react';
-import GlobalStyles from './components/theme/Global';
+import GlobalStyles from './theme/Global';
 import { HomePage } from './components/pages/HomePage';
 
 const App: React.FC = () => {
