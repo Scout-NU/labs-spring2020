@@ -17,7 +17,7 @@ export const lunchboxColors = {
 // Lunchbox Theme
 export const lunchbox: BaseTheme = {
     typography: {
-        fontFamily: "'Montserrat', 'Open Sans', 'Helvetica Neue', 'Arial', sans-serif",
+        fontFamily: 'Montserrat',
         h1: {
             fontSize: '64px',
             fontWeight: 'bolder',
