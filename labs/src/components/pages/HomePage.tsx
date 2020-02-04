@@ -1,9 +1,10 @@
 import React from 'react';
-import header from '../../images/home-header.svg';
-import vic from '../../images/meet-vic.svg';
+import header from '../../images/home/home-header.svg';
+import vic from '../../images/home/vic-0.svg';
 import styled from '../../theme/Theme';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { lunchboxColors } from '../../theme/lunchbox';
+import JourneyStep from '../molecules/JourneyBlurb';
 import { P, H1, H2, H3, H4 } from '../atoms/Typography';
 
 interface IHomePageProps {
@@ -19,14 +20,14 @@ const HeaderImage = styled.img`
     width: 80%;
 `
 
-const MeetVic = styled.img`
-    height: 70%;
+const JourneyImage = styled.img`
+    height: 40vw;
 `
 
 const HeaderCaption = styled.div`
     position: absolute;
     left: 25%;
-    top: 20%;
+    top: 25vh;
     width: 55%;
     text-align: left;
 `
@@ -38,7 +39,47 @@ const JourneyBlurb = styled.div`
 `
 
 const HomePage: React.FC<IHomePageProps> = props => {
+    const blurbs = [
+        {
+            title: "At first, Vic felt stuck",
+            text: "For this project, I wanted to find a topic I actually cared about. The streets in my neighborhood are old, but I didn’t see how that connected to civics. Then, my teacher told us about this website...",
+            imageName: "vic-1",
+            textFirst: true
+        },
+        {
+            title: "The filters really helped",
+            text: "I searched for “street” and started to find some people in City Hall to connect with. A few options came up, including Jane Doe at the Public Works Department.",
+            imageName: "vic-2",
+            textFirst: false
+        },
+        {
+            title: "Emailing Kate at City Hall",
+            text: "I saw on Kate Jay’s profile that she works on making walking safer. I also felt like we both cared about the same things, so I really wanted to email her. I was still nervous about emailing Kate, but the email form helped a lot.",
+            imageName: "vic-3",
+            textFirst: true
+        },
+        {
+            title: "Kate’s profile gave Vic a great idea",
+            text: "I looked at the “Here’s what we do” section on her profile and noticed how Kate and her team are trying to make walking around Boston easier and safer. It made me think about the crosswalk near my school. It’s old, which makes crossing dangerous. I’d seen lots of other new crosswalks around the city, and wondered why mine wasn’t fixed yet.",
+            imageName: "vic-4",
+            textFirst: false
+        },
+        {
+            title: "Emailing Kate",
+            text: "In my email, I introduced myself and my group’s project. I also told her about the crosswalk near my school and asked,  “Why do some crosswalks get fixed before others?” Within a week, Kate emailed me back! She shared a lot of interesting information, like how the Public Works Department uses a specific system to decide which sidewalks need to be fixed before others.",
+            imageName: "vic-5",
+            textFirst: true
+        },
+        {
+            title: "Vic found a focus",
+            text: "Talking with Kate from City Hall helped me connect my project idea to what’s happening in City Hall. Now, my group and I have a clear path to what our project will focus on: improving the sidewalks near my school!",
+            imageName: "vic-6",
+            textFirst: false
+        }
+    ]
+
     return (
+        <>
         <HeaderSection>
             <Col xs>
                 <Row end='xs' >
@@ -51,7 +92,7 @@ const HomePage: React.FC<IHomePageProps> = props => {
 
                     <Col xs={10}>
                         <Row start='xs' middle="xs">
-                            <MeetVic src={vic}/>
+                            <JourneyImage src={vic}/>
                             <JourneyBlurb>
                                 <H2>Meet Vic!</H2>
                                 <H4>Hi, I’m Vic! I’m a high school student in Boston. Scroll to see my journey through my action civics project.</H4>
@@ -61,6 +102,17 @@ const HomePage: React.FC<IHomePageProps> = props => {
                 </Row>
             </Col>
         </HeaderSection>
+
+        <section>
+            <Col xs>
+                <Row center='xs'>
+                    <Col xs={10}>
+                        { blurbs.map((item, i) => <JourneyStep key={i} title={item.title} text={item.text} textFirst={item.textFirst} imageName={item.imageName} />)}
+                    </Col>
+                </Row>
+            </Col>
+        </section>
+        </>
     )
 }
 
