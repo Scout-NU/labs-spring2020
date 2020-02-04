@@ -38,6 +38,17 @@ const JourneyBlurb = styled.div`
     margin-left: 2em;
 `
 
+const LetsGoButton = styled.button`
+    background-color: ${lunchboxColors.gusher};
+    font-size: 36px;
+    border-radius: 22px;
+    color: white;
+    padding: 1em 2em;
+    font-family: ${ props => props.theme.typography.fontFamily };
+    font-weight: bolder;
+    margin: 3em;
+`
+
 const HomePage: React.FC<IHomePageProps> = props => {
     const blurbs = [
         {
@@ -112,6 +123,9 @@ const HomePage: React.FC<IHomePageProps> = props => {
                 </Row>
             </Col>
         </section>
+        <Row middle='xs' center='xs'>
+            <LetsGoButton>Let's go!</LetsGoButton>
+        </Row>
         </>
     )
 }

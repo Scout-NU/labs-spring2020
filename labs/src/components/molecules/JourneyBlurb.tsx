@@ -3,7 +3,7 @@ import vic from '../../images/home/vic-0.svg';
 
 import { Row } from 'react-flexbox-grid';
 import styled from '../../theme/Theme';
-import { H2, H4 } from '../atoms/Typography';
+import { H2, H4, P } from '../atoms/Typography';
 
 interface JourneyStepProps {
     title: string;
@@ -34,7 +34,7 @@ const JourneyStep: React.FC<JourneyStepProps> = (props) => {
                 <JourneyImage src={require('../../images/home/' + props.imageName + '.svg')}/>
                 <JourneyBlurb>
                     <H2>{props.title}</H2>
-                    <H4>{props.text}</H4>
+                    <P>{props.text}</P>
                 </JourneyBlurb>
             </Row>
         </StepContainer>
