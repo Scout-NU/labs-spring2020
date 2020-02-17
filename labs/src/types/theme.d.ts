@@ -34,7 +34,8 @@ declare module 'styled-components' {
                 fontMax: string,
                 fontMin: string,
                 fontWeight: string,
-                lineHeight: string,
+                lineHeightMax: string,
+                lineHeightMin: string,
             },
         },
 

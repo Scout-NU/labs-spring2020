@@ -47,7 +47,8 @@ export const lunchbox: BaseTheme = {
             fontMax: '18px',
             fontMin: '14px',
             fontWeight: 'normal',
-            lineHeight: '30px',
+            lineHeightMax: '30px',
+            lineHeightMin: '24px'
         },
     },
 

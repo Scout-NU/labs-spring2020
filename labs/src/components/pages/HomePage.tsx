@@ -51,6 +51,10 @@ const JourneyBlurb = styled.div`
     width: 50%;
     text-align: left;
     margin-left: 2em;
+
+    @media ${devices.tablet} {
+        width: 60%;
+    }
 `
 
 const LetsGoButton = styled.button`
