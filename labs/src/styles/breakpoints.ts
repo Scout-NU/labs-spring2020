@@ -12,14 +12,14 @@ export const breakPoints = {
 }
 
 export const device = {
-    mobileS: `(min-width: ${breakPoints.mobileS})`,
-    mobileM: `(min-width: ${breakPoints.mobileM})`,
-    mobileL: `(min-width: ${breakPoints.mobileL})`,
-    tablet: `(min-width: ${breakPoints.tablet})`,
-    laptop: `(min-width: ${breakPoints.laptop})`,
-    laptopL: `(min-width: ${breakPoints.laptopL})`,
-    desktop: `(min-width: ${breakPoints.desktop})`,
-    desktopL: `(min-width: ${breakPoints.desktop})`
+    mobileS: `(max-width: ${breakPoints.mobileS})`,
+    mobileM: `(max-width: ${breakPoints.mobileM})`,
+    mobileL: `(max-width: ${breakPoints.mobileL})`,
+    tablet: `(max-width: ${breakPoints.tablet})`,
+    laptop: `(max-width: ${breakPoints.laptop})`,
+    laptopL: `(max-width: ${breakPoints.laptopL})`,
+    desktop: `(max-width: ${breakPoints.desktop})`,
+    desktopL: `(max-width: ${breakPoints.desktop})`
   };
 
 export default device;

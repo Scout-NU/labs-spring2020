@@ -6,6 +6,8 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import { lunchboxColors } from '../../theme/lunchbox';
 import JourneyStep from '../molecules/JourneyBlurb';
 import { P, H1, H2, H3, H4 } from '../atoms/Typography';
+import devices from '../../styles/breakpoints';
+
 
 interface IHomePageProps {
 
@@ -18,6 +20,12 @@ const HeaderSection = styled.section`
 const HeaderImage = styled.img`
     position: relative;
     width: 80%;
+
+    @media ${devices.laptop} {
+        top: -5px;
+        width: 100%;
+        min-height: 70vh;
+    }
 `
 
 const JourneyImage = styled.img`
@@ -27,9 +35,16 @@ const JourneyImage = styled.img`
 const HeaderCaption = styled.div`
     position: absolute;
     left: 25%;
-    top: 25vh;
+    top: 25%;
     width: 55%;
     text-align: left;
+
+
+    @media ${devices.tablet} {
+        left: auto;
+        top: 5vh;
+        width: 70%;
+    }
 `
 
 const JourneyBlurb = styled.div`
@@ -93,16 +108,16 @@ const HomePage: React.FC<IHomePageProps> = props => {
         <>
         <HeaderSection>
             <Col xs>
-                <Row end='xs' >
+                <Row center='xs' end='md'>         
                     <HeaderImage src={header}/>
                     <HeaderCaption>
                         <H3>Let's talk about</H3>
                         <H1>Action Civics in Boston!</H1>
                         <H4>Connect with someone in City Hall and plan your action civics project.</H4>
                     </HeaderCaption>
-
+           
                     <Col xs={10}>
-                        <Row start='xs' middle="xs">
+                        <Row start='xs'>
                             <JourneyImage src={vic}/>
                             <JourneyBlurb>
                                 <H2>Meet Vic!</H2>
