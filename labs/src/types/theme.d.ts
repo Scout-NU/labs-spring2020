@@ -6,27 +6,33 @@ declare module 'styled-components' {
             fontFamily: string,
             
             h1: {
-                fontSize: string,
+                fontMax: string,
+                fontMin: string,
                 fontWeight: string,
             },
             h2: {
-                fontSize: string,
+                fontMax: string,
+                fontMin: string,
                 fontWeight: string,
             },
             h3: {
-                fontSize: string,
+                fontMax: string,
+                fontMin: string,
                 fontWeight: string,
             },
             h4: {
-                fontSize: string,
+                fontMax: string,
+                fontMin: string,
                 fontWeight: string,
             },
             h5: {
-                fontSize: string,
+                fontMax: string,
+                fontMin: string,
                 fontWeight: string,
             },
             p: {
-                fontSize: string,
+                fontMax: string,
+                fontMin: string,
                 fontWeight: string,
                 lineHeight: string,
             },

@@ -19,27 +19,33 @@ export const lunchbox: BaseTheme = {
     typography: {
         fontFamily: 'Montserrat',
         h1: {
-            fontSize: '64px',
+            fontMax: '64px',
+            fontMin: '42px',
             fontWeight: 'bolder',
         },
         h2: {
-            fontSize: '54px',
+            fontMax: '54px',
+            fontMin: '32px',
             fontWeight: 'bolder'
         },
         h3: {
-            fontSize: '40px',
+            fontMax: '40px',
+            fontMin: '32px',
             fontWeight: 'bolder'
         },
         h4: {
-            fontSize: '36px',
+            fontMax: '36px',
+            fontMin: '16px',
             fontWeight: 'normal'
         },
         h5: {
-            fontSize: '10px',
+            fontMax: '10px',
+            fontMin: '10px',
             fontWeight: 'lighter'
         },
         p: {
-            fontSize: '18px',
+            fontMax: '18px',
+            fontMin: '14px',
             fontWeight: 'normal',
             lineHeight: '30px',
         },
