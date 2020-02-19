@@ -50,6 +50,11 @@ export const lunchbox: BaseTheme = {
             lineHeightMax: '30px',
             lineHeightMin: '24px'
         },
+        navLink: {
+            fontMax: '26px',
+            fontMin: '14px',
+            fontWeight: 'bolder'
+        }
     },
 
     components: {

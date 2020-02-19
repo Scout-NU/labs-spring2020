@@ -4,8 +4,8 @@ import vic from '../../images/home/vic-0.svg';
 import styled from '../../theme/Theme';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import { lunchboxColors } from '../../theme/lunchbox';
-import JourneyStep from '../molecules/JourneyBlurb';
-import { P, H1, H2, H3, H4 } from '../atoms/Typography';
+import JourneyStep, {StepContainer} from '../molecules/JourneyBlurb';
+import { P, H1, H2, H3, H4, NavigationLink, scaleFont } from '../atoms/Typography';
 import devices from '../../styles/breakpoints';
 
 
@@ -59,13 +59,28 @@ const JourneyBlurb = styled.div`
 
 const LetsGoButton = styled.button`
     background-color: ${lunchboxColors.gusher};
-    font-size: 36px;
-    border-radius: 22px;
+    font-size: ${ props => scaleFont(props.theme.typography.h4) };
+    border-radius: 500px;
     color: white;
     padding: 1em 2em;
     font-family: ${ props => props.theme.typography.fontFamily };
     font-weight: bolder;
-    margin: 3em;
+    margin: 2em 0;
+`
+
+// TODO: Break this out into its own compoonent
+const JourneySteps = styled.div`
+
+    & ${StepContainer}:nth-child(even) {
+        flex-direction: row-reverse;
+    };
+
+    @media ${devices.tablet} {
+        ${StepContainer} {
+            flex-direction: row;
+        };
+    }
+
 `
 
 const HomePage: React.FC<IHomePageProps> = props => {
@@ -121,7 +136,7 @@ const HomePage: React.FC<IHomePageProps> = props => {
                     </HeaderCaption>
            
                     <Col xs={10}>
-                        <Row start='xs'>
+                        <Row start='xs' middle='xs'>
                             <JourneyImage src={vic}/>
                             <JourneyBlurb>
                                 <H2>Meet Vic!</H2>
@@ -137,7 +152,9 @@ const HomePage: React.FC<IHomePageProps> = props => {
             <Col xs>
                 <Row center='xs'>
                     <Col xs={10}>
-                        { blurbs.map((item, i) => <JourneyStep key={i} title={item.title} text={item.text} textFirst={item.textFirst} imageName={item.imageName} />)}
+                        <JourneySteps>
+                            { blurbs.map((item, i) => <JourneyStep key={i} title={item.title} text={item.text} textFirst={item.textFirst} imageName={item.imageName} />)}
+                        </JourneySteps>
                     </Col>
                 </Row>
             </Col>

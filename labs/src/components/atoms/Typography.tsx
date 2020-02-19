@@ -43,13 +43,19 @@ export const H5 = styled.h5`
     margin: 0;
 `
 
+export const NavigationLink = styled.a`
+    font-family: ${ props => props.theme.typography.fontFamily };
+    font-weight: ${ props => props.theme.typography.navLink.fontWeight };
+    font-size: ${ props => scaleFont(props.theme.typography.navLink) };
+`
+
 interface TypeSpec {
     fontMax: string;
     fontMin: string;
 }
 
 // Src: https://css-tricks.com/books/fundamental-css-tactics/scale-typography-screen-size/
-const scaleFont = (type: TypeSpec): string => {
+export const scaleFont = (type: TypeSpec): string => {
     return `calc(${type.fontMin} + (${stripLetters(type.fontMax)} - ${stripLetters(type.fontMin)}) * ((100vw - ${breakPoints.mobileS}) / (${stripLetters(breakPoints.desktop)} - ${stripLetters(breakPoints.mobileS)})));`
 } 
 

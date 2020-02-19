@@ -37,6 +37,11 @@ declare module 'styled-components' {
                 lineHeightMax: string,
                 lineHeightMin: string,
             },
+            navLink: {
+                fontMax: string,
+                fontMin: string,
+                fontWeight: string,
+            }
         },
 
         components: {

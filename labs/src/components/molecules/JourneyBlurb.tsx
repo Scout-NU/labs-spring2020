@@ -17,28 +17,30 @@ const JourneyBlurb = styled.div`
     text-align: left;
     margin-left: 2em;
 `
-
 const JourneyImage = styled.img`
     height: 30vw;
 `
 
-const StepContainer = styled.div`
+export const StepContainer = styled.div`
     margin: 3em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    flex: 0 1 auto;
 `
-
 
 const JourneyStep: React.FC<JourneyStepProps> = (props) => {
     return (
-        <StepContainer>   
-            <Row between='xs' middle='xs' reverse={props.textFirst}>
-                <JourneyImage src={require('../../images/home/' + props.imageName + '.svg')}/>
-                <JourneyBlurb>
-                    <H2>{props.title}</H2>
-                    <P>{props.text}</P>
-                </JourneyBlurb>
-            </Row>
+        <StepContainer>
+            <JourneyImage src={require('../../images/home/' + props.imageName + '.svg')}/>
+            <JourneyBlurb>
+                <H2>{props.title}</H2>
+                <P>{props.text}</P>
+            </JourneyBlurb>
         </StepContainer>
     )
 }
+
 
 export default JourneyStep;

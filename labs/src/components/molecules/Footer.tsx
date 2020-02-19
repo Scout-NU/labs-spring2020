@@ -3,9 +3,10 @@ import footer from '../../images/global/footer.svg';
 import monumlogo from '../../images/global/monumlogo.svg';
 import styled from '../../theme/Theme';
 import { Col, Row } from 'react-flexbox-grid';
-import { H1 } from '../atoms/Typography';
+import { H4, NavigationLink } from '../atoms/Typography';
 import { lunchboxColors } from '../../theme/lunchbox';
 import Button, { ButtonStyle } from '../atoms/Button';
+import device from '../../styles/breakpoints';
 
 interface IFooterProps {
 
@@ -21,23 +22,29 @@ const FooterContent = styled.div`
     width: 100%;
 `
 
-const FooterContentHeader = styled.p`
-    font-family: ${props => props.theme.typography.fontFamily};
+const FooterContentHeader = styled(H4)`
     font-weight: bolder;
-    font-size: 26px;
     color: white;
+    margin-bottom: 1em;
 `
 
-const FooterLink = styled.p`
-    font-family: ${props => props.theme.typography.fontFamily};
-    font-weight: lighter;
+const FooterLink = styled(NavigationLink)`
     color: white;
-    font-size: 20px;
+    font-weight: lighter;
+    margin-bottom: 1em;
 `
 
 const FooterColumn = styled.div`
     text-align: left;
     padding-bottom: 6em;
+`
+
+const FooterRow = styled(Row)`
+    padding: 0 3em;
+
+    @media ${device.tablet} {
+        padding-top: 3em;
+    }
 `
 
 const MonumLogo = styled.img`
@@ -51,8 +58,8 @@ const Footer: React.FC<IFooterProps> = props => {
                 <Row end='xs'>
                     <FooterImage src={footer}/>
                     <FooterContent>
-                        <Row end='xs'>
-                            <Col xs={4}>
+                        <FooterRow around='xs' center='xs' end='sm'>
+                            <Col xs={6} sm={4}>
                                 <FooterColumn>
                                     <FooterContentHeader>How do I connect with City Hall?</FooterContentHeader>
                                     <FooterLink>
@@ -60,7 +67,7 @@ const Footer: React.FC<IFooterProps> = props => {
                                     </FooterLink>
                                 </FooterColumn>
                             </Col>
-                            <Col xs={4}>
+                            <Col xs={6} sm={4}>
                                 <FooterColumn>
                                     <FooterContentHeader>How do I write my email?</FooterContentHeader>
                                     <FooterLink>
@@ -69,7 +76,7 @@ const Footer: React.FC<IFooterProps> = props => {
                                     <Button style={ButtonStyle.SECONDARY} onClick={() => console.log("help!") }>Help</Button>
                                 </FooterColumn>
                             </Col>
-                        </Row>
+                        </FooterRow>
                         <Col xs={10} xsOffset={1}>
                             <Row start='xs' middle='xs'>
                                 <MonumLogo src={monumlogo}/>
