@@ -36,7 +36,7 @@ const FooterLink = styled(NavigationLink)`
 
 const FooterColumn = styled.div`
     text-align: left;
-    padding-bottom: 6em;
+    padding-bottom: 4em;
 `
 
 const FooterRow = styled(Row)`

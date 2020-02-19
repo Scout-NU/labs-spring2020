@@ -42,7 +42,7 @@ const HeaderCaption = styled.div`
 
     @media ${devices.tablet} {
         left: auto;
-        top: 5vh;
+        top: 10vh;
         width: 70%;
     }
 `
