@@ -7,6 +7,7 @@ import { lunchboxColors } from '../../theme/lunchbox';
 import JourneyStep, {StepContainer} from '../molecules/JourneyBlurb';
 import { P, H1, H2, H3, H4, NavigationLink, scaleFont } from '../atoms/Typography';
 import devices from '../../styles/breakpoints';
+import Button, { StyledButton, ButtonStyle } from '../atoms/Button';
 
 
 interface IHomePageProps {
@@ -57,7 +58,7 @@ const JourneyBlurb = styled.div`
     }
 `
 
-const LetsGoButton = styled.button`
+const LetsGoButton = styled(StyledButton)`
     background-color: ${lunchboxColors.gusher};
     font-size: ${ props => scaleFont(props.theme.typography.h4) };
     border-radius: 500px;
@@ -160,7 +161,7 @@ const HomePage: React.FC<IHomePageProps> = props => {
             </Col>
         </section>
         <Row middle='xs' center='xs'>
-            <LetsGoButton>Let's go!</LetsGoButton>
+            <LetsGoButton buttonStyle={ButtonStyle.PRIMARY} onClick={() => console.log("let's go :)")}>Let's go!</LetsGoButton>
         </Row>
         </>
     )

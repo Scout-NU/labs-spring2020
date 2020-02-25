@@ -47,6 +47,11 @@ export const NavigationLink = styled.a`
     font-family: ${ props => props.theme.typography.fontFamily };
     font-weight: ${ props => props.theme.typography.navLink.fontWeight };
     font-size: ${ props => scaleFont(props.theme.typography.navLink) };
+    transition: all .3s ease-in-out;
+
+    &:hover {
+        text-decoration: underline;
+    }
 `
 
 interface TypeSpec {

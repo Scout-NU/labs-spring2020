@@ -73,7 +73,7 @@ const Footer: React.FC<IFooterProps> = props => {
                                     <FooterLink>
                                         Email resources
                                     </FooterLink>
-                                    <Button style={ButtonStyle.SECONDARY} onClick={() => console.log("help!") }>Help</Button>
+                                    <Button buttonStyle={ButtonStyle.SECONDARY} onClick={() => console.log("help!") }>Help</Button>
                                 </FooterColumn>
                             </Col>
                         </FooterRow>

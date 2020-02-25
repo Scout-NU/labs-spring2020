@@ -5,6 +5,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import devices, { device } from '../../styles/breakpoints';
 import burger from '../../images/global/burger.svg'
 import { lunchboxColors } from '../../theme/lunchbox';
+import closebutton from '../../images/global/closebutton.svg';
 
 interface IHeaderProps {
 
@@ -27,12 +28,18 @@ const HeaderLink = styled(NavigationLink)`
     }
 `
 
+// TODO: ImageButton
 const Burger = styled.img`
     display: none;
     position: absolute;
     right: 2em;
     top: 2em;
     height: 2em;
+    transition: all .1s ease-in-out;
+
+    &:hover {
+        transform: scale(1.2);
+    }
 
     @media ${device.tablet} {
         display: flex;
@@ -50,7 +57,7 @@ const HeaderMenu = styled.div`
 
     @media ${device.tablet} {
         position: absolute;
-        text-align: right;
+        text-align: left;
         width: auto;
         top: 2em;
         right: 2em;
@@ -62,6 +69,25 @@ const HeaderMenu = styled.div`
         z-index: 999;
         box-shadow: 0 0 10px ${lunchboxColors.gusher};
     }
+
+
+`
+
+const CloseButton = styled.img`
+    display: none;
+    position: absolute;
+    right: 1.5em;
+    top: 1.5em;
+    height: 8%;
+    transition: all .2s ease-in-out;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    @media ${device.tablet} {
+        display: flex;
+    }
 `
 
 export class Header extends React.Component<IHeaderProps> {
@@ -72,6 +98,7 @@ export class Header extends React.Component<IHeaderProps> {
         this.toggleMenu.bind(this);   
     }
 
+    // TODO: This is hacky I think but idk how to do it otherwise
     toggleMenu() {
         const node = this.menu.current;
         if (node) {
@@ -88,7 +115,8 @@ export class Header extends React.Component<IHeaderProps> {
     render() {
         return (
             <HeaderContainer>
-                <HeaderMenu ref={this.menu}> 
+                    <HeaderMenu ref={this.menu}>
+                    <CloseButton onClick={() => this.toggleMenu()} src={closebutton}/>
                     <HeaderLink>Home</HeaderLink>
                     <HeaderLink>Connect With City Hall</HeaderLink>
                     <HeaderLink>Help</HeaderLink>
