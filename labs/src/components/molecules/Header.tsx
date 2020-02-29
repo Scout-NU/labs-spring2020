@@ -2,7 +2,7 @@ import React from 'react';
 import styled from '../../theme/Theme';
 import { P, NavigationLink } from '../atoms/Typography';
 import { Row, Col } from 'react-flexbox-grid';
-import devices, { device } from '../../styles/breakpoints';
+import devices from '../../styles/breakpoints';
 import burger from '../../images/global/burger.svg'
 import { lunchboxColors } from '../../theme/lunchbox';
 import closebutton from '../../images/global/closebutton.svg';
@@ -23,7 +23,7 @@ const HeaderLink = styled(NavigationLink)`
     margin: 2em 3em 2em 1em;
 
 
-    @media ${device.tablet} {
+    @media ${devices.tablet} {
         margin: 2em 0;
     }
 `
@@ -41,21 +41,21 @@ const Burger = styled.img`
         transform: scale(1.2);
     }
 
-    @media ${device.tablet} {
+    @media ${devices.tablet} {
         display: flex;
     }
 `
 
 const HeaderMenu = styled.div`
 
-    @media ${device.desktop} {
+    @media ${devices.desktop} {
         width: 100%;
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
     }
 
-    @media ${device.tablet} {
+    @media ${devices.tablet} {
         position: absolute;
         text-align: left;
         width: auto;
@@ -85,7 +85,7 @@ const CloseButton = styled.img`
         transform: scale(1.1);
     }
 
-    @media ${device.tablet} {
+    @media ${devices.tablet} {
         display: flex;
     }
 `

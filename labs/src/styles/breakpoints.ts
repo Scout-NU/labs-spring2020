@@ -11,7 +11,7 @@ export const breakPoints = {
     desktop: '2560px'
 }
 
-export const device = {
+export const devices = {
     mobileS: `(max-width: ${breakPoints.mobileS})`,
     mobileM: `(max-width: ${breakPoints.mobileM})`,
     mobileL: `(max-width: ${breakPoints.mobileL})`,
@@ -22,4 +22,4 @@ export const device = {
     desktopL: `(max-width: ${breakPoints.desktop})`
   };
 
-export default device;
+export default devices;

@@ -3,8 +3,15 @@ import HomePage from './components/pages/HomePage';
 import lunchbox from './theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
 import { Header } from './components/molecules/Header';
+import SearchPage from './components/pages/SearchPage';
 import Footer from './components/molecules/Footer';
 import styled from './theme/Theme';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
 const Site = styled.div`
   display: flex;
@@ -27,16 +34,24 @@ const Content = styled.div`
 
 const App: React.FC = () => {
   return (
-    <ThemeProvider theme={lunchbox}>
-      <Site>
-        <Content>
-
-        <Header/>
-        <HomePage/>
-        </Content>
-        <Footer/>
-      </Site>
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={lunchbox}>
+        <Site>
+          <Content>
+            <Header/>
+            <Switch>
+              <Route path="/search">
+                <SearchPage/>
+              </Route>
+              <Route path="/">
+                <HomePage/>
+              </Route>
+            </Switch>
+          </Content>
+          <Footer/>
+        </Site>
+      </ThemeProvider>
+    </Router>
   );
 }
 
