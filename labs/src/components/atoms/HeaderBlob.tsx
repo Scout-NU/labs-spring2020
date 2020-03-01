@@ -1,14 +1,15 @@
 import styled from "../../theme/Theme";
 import devices from '../../styles/breakpoints';
+import { lunchboxColors } from "../../theme/lunchbox";
+import headerblob from '../../images/global/headerblob.svg';
+import React from 'react';
 
 interface HeaderBlobProps {
-    color: string;
+    // color: string;
 }
 
-const HeaderBlob = styled.div<HeaderBlobProps>`
-    z-index: -1;
-    background-color: ${props => props.color};
-    transform: skew(10deg, 5deg);
+const StyledHeaderBlob = styled.img<HeaderBlobProps>`
+    position: relative;
     width: 80%;
 
     @media ${devices.laptop} {
@@ -17,4 +18,14 @@ const HeaderBlob = styled.div<HeaderBlobProps>`
         min-height: 70vh;
     }
 `
+
+interface InameProps {
+
+}
+
+export const HeaderBlob: React.FC<InameProps> = props => {
+    return (
+        <StyledHeaderBlob src={headerblob}/>
+    )
+}
 export default HeaderBlob;
