@@ -6,6 +6,7 @@ import closebutton from '../../images/global/closebutton.svg';
 import { Form } from '@unform/web';
 import { SubmitHandler, FormHandles } from '@unform/core';
 import Input from '../atoms/Input';
+import { NavigationLink } from '../atoms/Typography';
 
 
 const SearchBarGroup = styled.div`
@@ -49,11 +50,38 @@ const SearchInput = styled(Input)`
     }
 `
 
+const SearchSuggestionsContainer = styled.div`
+    position: relative;
+`
+
+const SearchSuggestionsPopover = styled.div`
+    position: absolute;
+    width: 100%;
+    border: 2px solid ${lunchboxColors.gusher};
+    padding: 1.5em;
+    background-color: white;
+    text-align: left;
+    z-index: 1;
+`
+
+const SearchSuggestions = styled.ul`
+    list-style-type: none;
+    color: ${lunchboxColors.gusher};
+    font-weight: lighter;
+    padding: 0;
+    margin: 0;
+    
+
+    & li:not(:last-child) {
+        margin-bottom: 1em;
+    }
+`
+
 const SearchBar: React.FC = () => {
     return (
         <DisconnectedSearchBar 
             suggestionTitle={'Common Topic Areas'}
-            searchSuggestions={[]} 
+            searchSuggestions={['hi', 'bye']} 
             hintText='Search by topic or name'
             onSearch={() => console.log('search')}
         />
@@ -73,7 +101,6 @@ interface SearchBarData {
 
 const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
     const [showSuggestions, toggleSuggestions] = React.useState(false);
-    const [displayedSuggestions, setSuggestions] = React.useState(props.searchSuggestions); 
     const formRef = React.useRef<FormHandles>(null);
 
     const onSubmit: SubmitHandler<SearchBarData> = (data) => {
@@ -89,12 +116,31 @@ const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
             <SearchBarGroup>
                 <SearchIcon src={searchicon}/>
                 <SearchInput 
+                    onFocus={() => toggleSuggestions(true)}
+                    onBlur={() => toggleSuggestions(false)}
                     name='query'
                     type='text'
                     placeholder={props.hintText}
                 />
                 <CloseButton src={closebutton} onClick={() => onClear()}/>
             </SearchBarGroup>
+
+            {showSuggestions && <SearchSuggestionsContainer>
+                <SearchSuggestionsPopover>
+                    <SearchSuggestions>
+                        {props.searchSuggestions.map((value, i) => {
+                            return (
+                                <li>
+                                    <NavigationLink>
+                                        {value}
+                                    </NavigationLink>
+                                </li>
+                            )
+                        })}
+                    </SearchSuggestions>
+                </SearchSuggestionsPopover>
+            </SearchSuggestionsContainer>}
+
         </Form>
     )
 }
