@@ -3,11 +3,10 @@ import styled from '../../theme/Theme';
 import { lunchboxColors } from '../../theme/lunchbox';
 import searchicon from '../../images/global/search.svg';
 import closebutton from '../../images/global/closebutton.svg';
+import { Form } from '@unform/web';
+import { SubmitHandler, FormHandles } from '@unform/core';
+import Input from '../atoms/Input';
 
-
-interface ISearchBarProps {
-
-}
 
 const SearchBarGroup = styled.div`
     display: flex;
@@ -20,7 +19,7 @@ const SearchBarGroup = styled.div`
 
 const CloseButton = styled.img`
     display: flex;
-    width: 2%;
+    width: max(2%, 22px);
     transition: all .2s ease-in-out;
 
     &:hover {
@@ -29,11 +28,11 @@ const CloseButton = styled.img`
 `
 
 const SearchIcon = styled.img`
-    width: 3%;
+    width: max(3%, 40px);
     padding-right: 1em;
 `
 
-const SearchInput = styled.input`
+const SearchInput = styled(Input)`
     background-color: ${lunchboxColors.gusher};
     font-family: ${props => props.theme.typography.fontFamily};
     border: none;
@@ -44,17 +43,59 @@ const SearchInput = styled.input`
     &::placeholder {
         color: white;
     }
+
+    &:focus {
+        outline: none;
+    }
 `
 
-const SearchBar: React.FC<ISearchBarProps> = props => {
+const SearchBar: React.FC = () => {
     return (
-        <form>
+        <DisconnectedSearchBar 
+            suggestionTitle={'Common Topic Areas'}
+            searchSuggestions={[]} 
+            hintText='Search by topic or name'
+            onSearch={() => console.log('search')}
+        />
+    )
+}
+
+interface ISearchBarProps {
+    hintText: string;
+    suggestionTitle?: string;
+    searchSuggestions: string[];
+    onSearch: (query: string) => void;
+}
+
+interface SearchBarData {
+    query: string;
+}
+
+const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
+    const [showSuggestions, toggleSuggestions] = React.useState(false);
+    const [displayedSuggestions, setSuggestions] = React.useState(props.searchSuggestions); 
+    const formRef = React.useRef<FormHandles>(null);
+
+    const onSubmit: SubmitHandler<SearchBarData> = (data) => {
+        props.onSearch(data.query);
+    };
+
+    const onClear = () => {
+        formRef.current?.clearField('query');
+    }
+
+    return (
+        <Form ref={formRef} onSubmit={onSubmit}>
             <SearchBarGroup>
                 <SearchIcon src={searchicon}/>
-                <SearchInput type='text' placeholder='Search by topic or name'/>
-                <CloseButton src={closebutton}/>
+                <SearchInput 
+                    name='query'
+                    type='text'
+                    placeholder={props.hintText}
+                />
+                <CloseButton src={closebutton} onClick={() => onClear()}/>
             </SearchBarGroup>
-        </form>
+        </Form>
     )
 }
 
