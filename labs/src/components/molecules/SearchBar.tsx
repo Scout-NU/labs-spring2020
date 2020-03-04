@@ -104,22 +104,22 @@ interface SearchBarData {
 const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
     const [showSuggestions, toggleSuggestions] = React.useState(false);
     const formRef = React.useRef<FormHandles>(null);
+    let queryFieldName = 'query';
 
     const onSubmit: SubmitHandler<SearchBarData> = (data) => {
         props.onSearch(data.query);
     };
 
     const onClear = () => {
-        formRef.current?.clearField('query');
+        formRef.current?.clearField(queryFieldName);
     }
 
     const addSuggestion = (suggestion: string) => {
         let current = formRef.current;
 
         if (current) {
-            let value = current.getFieldValue('query');
-            current.setFieldValue('query', `${value} ${suggestion}`);
-            console.log(value)
+            let value = current.getFieldValue(queryFieldName);
+            current.setFieldValue(queryFieldName, `${value} ${suggestion}`);
         }
     }
 
@@ -131,7 +131,7 @@ const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
                     autoComplete='off'
                     onFocus={() => toggleSuggestions(true)}
                     onBlur={() => toggleSuggestions(false)}
-                    name='query'
+                    name={queryFieldName}
                     type='text'
                     placeholder={props.hintText}
                 />
