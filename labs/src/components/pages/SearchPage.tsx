@@ -6,10 +6,12 @@ import { Col, Row } from 'react-flexbox-grid';
 import styled from '../../theme/Theme';
 import devices from '../../styles/breakpoints';
 import SearchBar from '../molecules/SearchBar';
+import { IPerson } from '../../types/client';
+import PersonPreview from '../molecules/PersonPreview';
 
 
 interface ISearchPageProps {
-
+    results: IPerson[];
 }
 
 const HeaderSection = styled.section`
@@ -30,7 +32,7 @@ const HeaderCaption = styled.div`
     }
 `
 
-const SearchPage: React.FC<ISearchPageProps> = props => {
+const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
     return (
         <HeaderSection>
             <HeaderBlob/>
@@ -44,9 +46,37 @@ const SearchPage: React.FC<ISearchPageProps> = props => {
                         </HeaderCaption>
                     </Row>
                 </Col>
+                <Col xs={9}>
+                    <Row center='xs'>
+                        {props.results.map((value, i) => <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.name}`)} profile={value} key={i}/>)}
+                    </Row>
+                </Col>
             </Row>
         </HeaderSection>
     )
 }
+
+const SearchPage: React.FC = () => {
+    const people: IPerson[] = [
+        {   
+            id: 'E700DD37-3BA0-4744-ABD9-39D797C2CF6D',
+            name: 'Kate Jay',
+            profileImageUrl: 'https://i.imgur.com/QyWwtjl.png',
+            tags: ['Streets', 'Sidewalks', 'Recycling'],
+            description: 'I like hot dogs!',
+            department: {
+                id: '4794AF0A-E41F-469B-ABDA-15D1C61451CF',
+                title: 'Public Works',
+                imageUrl: 'https://i.imgur.com/Tzvnqql.png',
+                description: 'We ensure that Boston’s streets, sidewalks, and bridges are safe, clean, and attractive. We handle roadway construction and maintenance, recycling, waste removal, & more.'
+            }
+        }
+    ]
+
+    return(
+        <DisconnectedSearchPage results={people}/>
+    )
+}
+
 
 export default SearchPage;

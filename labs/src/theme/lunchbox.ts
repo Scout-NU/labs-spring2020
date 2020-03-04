@@ -39,9 +39,9 @@ export const lunchbox: BaseTheme = {
             fontWeight: 'normal'
         },
         h5: {
-            fontMax: '10px',
-            fontMin: '10px',
-            fontWeight: 'lighter'
+            fontMax: '24px',
+            fontMin: '18px',
+            fontWeight: 'bolder'
         },
         p: {
             fontMax: '18px',

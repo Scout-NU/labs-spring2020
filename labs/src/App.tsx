@@ -41,7 +41,7 @@ const App: React.FC = () => {
             <Header/>
             <Switch>
               <Route path="/search">
-                <SearchPage/>
+                <SearchPage />
               </Route>
               <Route path="/">
                 <HomePage/>
