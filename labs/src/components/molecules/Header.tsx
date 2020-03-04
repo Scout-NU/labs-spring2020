@@ -6,6 +6,7 @@ import devices from '../../styles/breakpoints';
 import burger from '../../images/global/burger.svg'
 import { lunchboxColors } from '../../theme/lunchbox';
 import closebutton from '../../images/global/closebutton.svg';
+import { searchPageRoute, homePageRoute, helpPageRoute } from '../../var/routes';
 
 interface IHeaderProps {
 
@@ -21,7 +22,7 @@ const HeaderContainer = styled.nav`
 const HeaderLink = styled(NavigationLink)`
     text-transform: uppercase;
     margin: 2em 3em 2em 1em;
-
+    
 
     @media ${devices.tablet} {
         margin: 2em 0;
@@ -115,9 +116,9 @@ export class Header extends React.Component<IHeaderProps> {
             <HeaderContainer>
                     <HeaderMenu ref={this.menu}>
                     <CloseButton onClick={() => this.toggleMenu()} src={closebutton}/>
-                    <HeaderLink>Home</HeaderLink>
-                    <HeaderLink>Connect With City Hall</HeaderLink>
-                    <HeaderLink>Help</HeaderLink>
+                    <HeaderLink to={homePageRoute}>Home</HeaderLink>
+                    <HeaderLink to={searchPageRoute}>Connect With City Hall</HeaderLink>
+                    <HeaderLink to={helpPageRoute}>Help</HeaderLink>
                 </HeaderMenu>
                 <Burger onClick={() => this.toggleMenu()} src={burger}/>
             </HeaderContainer>

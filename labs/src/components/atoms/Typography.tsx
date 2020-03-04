@@ -1,5 +1,7 @@
 import styled from '../../theme/Theme';
 import { breakPoints } from '../../styles/breakpoints';
+import { Link } from 'react-router-dom';
+import { css } from 'styled-components';
 
 export const P = styled.p`
     font-family: ${ props => props.theme.typography.fontFamily };
@@ -43,15 +45,30 @@ export const H5 = styled.h5`
     margin: 0;
 `
 
-export const NavigationLink = styled.a`
+const LinkStyle = css`
     font-family: ${ props => props.theme.typography.fontFamily };
     font-weight: ${ props => props.theme.typography.navLink.fontWeight };
     font-size: ${ props => scaleFont(props.theme.typography.navLink) };
     transition: all .3s ease-in-out;
+    text-decoration: none;
 
     &:hover {
         text-decoration: underline;
     }
+
+    &:visited {
+        color: initial;
+    }
+`
+
+// For non-router purposes
+export const A = styled.a`
+    ${LinkStyle};
+`
+
+// For routing
+export const NavigationLink = styled(Link)`
+    ${LinkStyle};
 `
 
 interface TypeSpec {

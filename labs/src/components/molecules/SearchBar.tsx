@@ -6,7 +6,7 @@ import closebutton from '../../images/global/closebutton.svg';
 import { Form } from '@unform/web';
 import { SubmitHandler, FormHandles } from '@unform/core';
 import Input from '../atoms/Input';
-import { NavigationLink } from '../atoms/Typography';
+import { A } from '../atoms/Typography';
 
 
 const SearchBarGroup = styled.div`
@@ -66,15 +66,17 @@ const SearchSuggestionsPopover = styled.div`
 
 const SearchSuggestions = styled.ul`
     list-style-type: none;
-    color: ${lunchboxColors.gusher};
-    font-weight: lighter;
     padding: 0;
     margin: 0;
     
-
     & li:not(:last-child) {
         margin-bottom: 1em;
     }
+`
+
+const SearchSuggestion = styled(A)`
+    font-weight: normal;
+    color: ${lunchboxColors.gusher};
 `
 
 const SearchBar: React.FC = () => {
@@ -111,11 +113,22 @@ const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
         formRef.current?.clearField('query');
     }
 
+    const addSuggestion = (suggestion: string) => {
+        let current = formRef.current;
+
+        if (current) {
+            let value = current.getFieldValue('query');
+            current.setFieldValue('query', `${value} ${suggestion}`);
+            console.log(value)
+        }
+    }
+
     return (
         <Form ref={formRef} onSubmit={onSubmit}>
             <SearchBarGroup>
                 <SearchIcon src={searchicon}/>
                 <SearchInput 
+                    autoComplete='off'
                     onFocus={() => toggleSuggestions(true)}
                     onBlur={() => toggleSuggestions(false)}
                     name='query'
@@ -125,21 +138,15 @@ const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
                 <CloseButton src={closebutton} onClick={() => onClear()}/>
             </SearchBarGroup>
 
-            {showSuggestions && <SearchSuggestionsContainer>
-                <SearchSuggestionsPopover>
-                    <SearchSuggestions>
-                        {props.searchSuggestions.map((value, i) => {
-                            return (
-                                <li>
-                                    <NavigationLink>
-                                        {value}
-                                    </NavigationLink>
-                                </li>
-                            )
-                        })}
-                    </SearchSuggestions>
-                </SearchSuggestionsPopover>
-            </SearchSuggestionsContainer>}
+            { showSuggestions && 
+                <SearchSuggestionsContainer>
+                    <SearchSuggestionsPopover>
+                        <SearchSuggestions>
+                            { props.searchSuggestions.map((value, i) => <li onMouseDown={() => addSuggestion(value)} key={i}> <SearchSuggestion> {value} </SearchSuggestion> </li> )}
+                        </SearchSuggestions>
+                    </SearchSuggestionsPopover>
+                </SearchSuggestionsContainer>
+            }
 
         </Form>
     )

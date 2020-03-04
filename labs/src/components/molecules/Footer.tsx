@@ -7,6 +7,7 @@ import { H4, NavigationLink } from '../atoms/Typography';
 import { lunchboxColors } from '../../theme/lunchbox';
 import Button, { ButtonStyle } from '../atoms/Button';
 import device from '../../styles/breakpoints';
+import { searchPageRoute, monumRoute, homePageRoute } from '../../var/routes';
 
 interface IFooterProps {
 
@@ -32,6 +33,10 @@ const FooterLink = styled(NavigationLink)`
     color: white;
     font-weight: lighter;
     margin-bottom: 1em;
+
+    &:visited {
+        color: white;
+    }
 `
 
 const FooterColumn = styled.div`
@@ -62,7 +67,7 @@ const Footer: React.FC<IFooterProps> = props => {
                             <Col xs={6} sm={4}>
                                 <FooterColumn>
                                     <FooterContentHeader>How do I connect with City Hall?</FooterContentHeader>
-                                    <FooterLink>
+                                    <FooterLink to={searchPageRoute}>
                                         Connect with City Hall
                                     </FooterLink>
                                 </FooterColumn>
@@ -70,7 +75,7 @@ const Footer: React.FC<IFooterProps> = props => {
                             <Col xs={6} sm={4}>
                                 <FooterColumn>
                                     <FooterContentHeader>How do I write my email?</FooterContentHeader>
-                                    <FooterLink>
+                                    <FooterLink to={homePageRoute}>
                                         Email resources
                                     </FooterLink>
                                     <Button buttonStyle={ButtonStyle.SECONDARY} onClick={() => console.log("help!") }>Help</Button>
@@ -80,7 +85,7 @@ const Footer: React.FC<IFooterProps> = props => {
                         <Col xs={10} xsOffset={1}>
                             <Row start='xs' middle='xs'>
                                 <MonumLogo src={monumlogo}/>
-                                <FooterLink>
+                                <FooterLink to={monumRoute}>
                                     Mayor’s Office of New Urban Mechanics
                                 </FooterLink>
                             </Row>
