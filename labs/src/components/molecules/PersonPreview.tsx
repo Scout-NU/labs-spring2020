@@ -34,7 +34,6 @@ const ProfileImageContainer = styled.div`
 
 const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     let info = props.profile;
-    console.log(info.profileImageUrl);
     
     return (
         <Row start='xs'>
