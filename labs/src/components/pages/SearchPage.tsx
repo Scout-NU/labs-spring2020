@@ -14,15 +14,14 @@ interface ISearchPageProps {
 
 const HeaderSection = styled.section`
     text-align: left;
+    margin-top: 8%;
 `
 
 const HeaderCaption = styled.div`
-    position: absolute;
-    left: 40%;
-    top: 25%;
-    
+    position: relative;
     text-align: left;
-    width: 40%;
+    width: 60%;
+    margin-top: 4em;
 
     @media ${devices.tablet} {
         left: auto;
@@ -34,18 +33,18 @@ const HeaderCaption = styled.div`
 const SearchPage: React.FC<ISearchPageProps> = props => {
     return (
         <HeaderSection>
-            <Col xs>
-                <Row end='md'>
-                    <HeaderBlob/>
-                    <Col xs={10}>
-                        <SearchBar/>
-                    </Col>
-                    <HeaderCaption>
-                        <H2>Conect with City Hall</H2>
-                        <H4>Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!</H4>
-                    </HeaderCaption>
-                </Row>
-            </Col>
+            <HeaderBlob/>
+            <Row center='xs'>
+                <Col xs={9}>
+                    <SearchBar/>
+                    <Row end='xs'>
+                        <HeaderCaption>
+                            <H2>Connect with City Hall</H2>
+                            <H4>Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!</H4>
+                        </HeaderCaption>
+                    </Row>
+                </Col>
+            </Row>
         </HeaderSection>
     )
 }

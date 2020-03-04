@@ -9,13 +9,15 @@ interface HeaderBlobProps {
 }
 
 const StyledHeaderBlob = styled.img<HeaderBlobProps>`
-    position: relative;
+    position: absolute;
+    right: 0;
+    top: 0;
     width: 80%;
+    z-index: -1;
 
     @media ${devices.laptop} {
-        top: -5px;
         width: 100%;
-        min-height: 70vh;
+        
     }
 `
 

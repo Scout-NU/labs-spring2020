@@ -2,9 +2,9 @@ import React from 'react';
 import HomePage from './components/pages/HomePage';
 import lunchbox from './theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
-import { Header } from './components/molecules/Header';
+import { Header } from './components/organisms/Header';
 import SearchPage from './components/pages/SearchPage';
-import Footer from './components/molecules/Footer';
+import Footer from './components/organisms/Footer';
 import styled from './theme/Theme';
 import {
   BrowserRouter as Router,
