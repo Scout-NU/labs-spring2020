@@ -27,10 +27,22 @@ const CloseButton = styled.img`
         transform: scale(1.1);
     }
 `
-
+// TODO: Create a global style for "clickables"
 const SearchIcon = styled.img`
     width: max(3%, 40px);
     padding-right: 1em;
+
+    transition: all .1s ease-in-out;
+    
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    &:active {
+        transition: all 0s ease-in-out;
+        transform: scale(1);
+    }
 `
 
 const SearchInput = styled(Input)`
@@ -38,7 +50,7 @@ const SearchInput = styled(Input)`
     font-family: ${props => props.theme.typography.fontFamily};
     border: none;
     color: white;
-    font-size: ${props => props.theme.typography.p.fontMax};
+    font-size: ${props => props.theme.typography.h5.fontMax};
     width: 100%;
 
     &::placeholder {
@@ -79,16 +91,16 @@ const SearchSuggestion = styled(A)`
     color: ${lunchboxColors.gusher};
 `
 
-const SearchBar: React.FC = () => {
-    return (
-        <DisconnectedSearchBar 
-            suggestionTitle={'Common Topic Areas'}
-            searchSuggestions={['hi', 'bye']} 
-            hintText='Search by topic or name'
-            onSearch={() => console.log('search')}
-        />
-    )
-}
+const SubmitButton = styled.button`
+    border: none;
+    background-color: transparent;
+    padding: 0;
+   
+
+    &:focus {
+        outline: none;
+    }
+`
 
 interface ISearchBarProps {
     hintText: string;
@@ -101,7 +113,7 @@ interface SearchBarData {
     query: string;
 }
 
-const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
+const SearchBar: React.FC<ISearchBarProps> = props => {
     const [showSuggestions, toggleSuggestions] = React.useState(false);
     const formRef = React.useRef<FormHandles>(null);
     let queryFieldName = 'query';
@@ -126,7 +138,9 @@ const DisconnectedSearchBar: React.FC<ISearchBarProps> = props => {
     return (
         <Form ref={formRef} onSubmit={onSubmit}>
             <SearchBarGroup>
-                <SearchIcon src={searchicon}/>
+                <SubmitButton type='submit'>
+                    <SearchIcon src={searchicon}/>
+                </SubmitButton>
                 <SearchInput 
                     autoComplete='off'
                     onFocus={() => toggleSuggestions(true)}

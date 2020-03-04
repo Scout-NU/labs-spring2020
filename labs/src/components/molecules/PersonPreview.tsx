@@ -16,20 +16,31 @@ const JobTitle = styled(P)`
     font-style: italic;
 `
 
-const Tags = styled(Row)`
-    margin: 2em 0;
+const Tags = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1.5em;
+
+    & ${StyledTag} {
+        margin-bottom: .7em;
+    }
+
     & ${StyledTag}:not(:last-child) {
         margin-right: .5em;
     }
 `
 
 const DepartmentImage = styled(CircleImage)`
-    position: relative;
-    right: 70px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
 `
 
+// TODO: Can probably improve the way these are sized.
 const ProfileImageContainer = styled.div`
     margin-bottom: 1em;
+    position: relative;
+    width: 250px; 
 `
 
 const PersonPreview: React.FC<IPersonPreviewProps> = props => {
@@ -37,7 +48,7 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     
     return (
         <Row start='xs'>
-            <Col>
+            <Col xs>
                 <ProfileImageContainer>
                     <CircleImage imageUrl={info.profileImageUrl} size='225px' />
                     <DepartmentImage imageUrl={info.department.imageUrl} size='90px'/>
