@@ -18,6 +18,8 @@ interface ISearchPageProps {
 const SearchContainer = styled.section`
     text-align: left;
     margin-top: 15vh;
+
+    
 `
 
 const HeaderCaption = styled.div`

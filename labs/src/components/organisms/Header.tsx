@@ -28,7 +28,7 @@ const HeaderLink = styled(NavigationLink)`
         margin: 2em 0;
     }
 `
-
+// TODO: there's a bug where if you go to a link from mobile and then re-expand to desktop is doens't reappear
 // TODO: ImageButton
 const Burger = styled.img`
     display: none;
