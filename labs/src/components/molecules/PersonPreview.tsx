@@ -4,8 +4,9 @@ import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../theme/Theme';
-import Tag, {StyledTag} from '../atoms/Tag';
 import Button, { ButtonStyle } from '../atoms/Button';
+import TagGroup from '../molecules/TagGroup';
+import { tempPeople } from '../../tempPeople';
 
 interface IPersonPreviewProps {
     profile: IPerson;
@@ -14,20 +15,6 @@ interface IPersonPreviewProps {
 
 const JobTitle = styled(P)`
     font-style: italic;
-`
-
-const Tags = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 1.5em;
-
-    & ${StyledTag} {
-        margin-bottom: .7em;
-    }
-
-    & ${StyledTag}:not(:last-child) {
-        margin-right: .5em;
-    }
 `
 
 const DepartmentImage = styled(CircleImage)`
@@ -56,13 +43,13 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
                 <H5>{info.name}</H5>
                 <JobTitle>{info.department.title}</JobTitle>
                 <P>{info.department.description}</P>
-                <Tags>
-                    {info.tags.map((value, i) => <Tag text={value} key={i}/>)}
-                </Tags>
+                <TagGroup tags={info.tags}/>
                 <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => props.onSelected()}> Learn more </Button>
             </Col>
         </Row>
     )
 }
+
+
 
 export default PersonPreview;
