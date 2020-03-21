@@ -6,6 +6,7 @@ import { H5, P } from '../atoms/Typography';
 import styled from '../../theme/Theme';
 import Tag, {StyledTag} from '../atoms/Tag';
 import Button, { ButtonStyle } from '../atoms/Button';
+import Card from '../atoms/Card';
 
 interface IPersonPreviewProps {
     profile: IPerson;
@@ -47,21 +48,23 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     let info = props.profile;
     
     return (
-        <Row start='xs'>
-            <Col xs>
-                <ProfileImageContainer>
-                    <CircleImage imageUrl={info.profileImageUrl} size='225px' />
-                    <DepartmentImage imageUrl={info.department.imageUrl} size='90px'/>
-                </ProfileImageContainer>
-                <H5>{info.name}</H5>
-                <JobTitle>{info.department.title}</JobTitle>
-                <P>{info.department.description}</P>
-                <Tags>
-                    {info.tags.map((value, i) => <Tag text={value} key={i}/>)}
-                </Tags>
-                <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => props.onSelected()}> Learn more </Button>
-            </Col>
-        </Row>
+        <Card>
+            <Row start='xs'>
+                <Col xs>
+                    <ProfileImageContainer>
+                        <CircleImage imageUrl={info.profileImageUrl} size='225px' />
+                        <DepartmentImage imageUrl={info.department.imageUrl} size='90px'/>
+                    </ProfileImageContainer>
+                    <H5>{info.name}</H5>
+                    <JobTitle>{info.department.title}</JobTitle>
+                    <P>{info.department.description}</P>
+                    <Tags>
+                        {info.tags.map((value, i) => <Tag text={value} key={i}/>)}
+                    </Tags>
+                    <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => props.onSelected()}> Learn more </Button>
+                </Col>
+            </Row>
+        </Card>
     )
 }
 
