@@ -18,8 +18,6 @@ interface ISearchPageProps {
 const SearchContainer = styled.section`
     text-align: left;
     margin-top: 15vh;
-
-    
 `
 
 const HeaderCaption = styled.div`
@@ -59,7 +57,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
                         </HeaderCaption>
                     </Row>
                 </HeaderContainer>
-                <Col xs={10}>
+                <Col xs={11}>
                     <Row middle='xs' start='xs'>
                         { props.results.map((value, i) => {
                             return (

@@ -4,6 +4,7 @@ import lunchbox from './theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
 import { Header } from './components/organisms/Header';
 import SearchPage from './components/pages/SearchPage';
+import ProfilePage from './components/pages/ProfilePage';
 import Footer from './components/organisms/Footer';
 import styled from './theme/Theme';
 import {
@@ -40,6 +41,9 @@ const App: React.FC = () => {
           <Content>
             <Header/>
             <Switch>
+              <Route path="/profile">
+                <ProfilePage />
+              </Route>
               <Route path="/search">
                 <SearchPage />
               </Route>
