@@ -6,7 +6,6 @@ import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import Button, { ButtonStyle } from '../atoms/Button';
 import { H1, H4, P, H3, H5 } from '../atoms/Typography';
-import {tempPeople} from '../../tempPeople';
 import TagGroup from '../molecules/TagGroup';
 import PersonPreview from '../molecules/PersonPreview';
 
@@ -139,15 +138,16 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
 }
 
 const ProfilePage: React.FC = () => {
-    const person: IPerson = tempPeople[0];
+    // const person: IPerson = tempPeople[0];
     const profile = {
-            ...person,
+            
             priorityStatement: 'I care about making walking safer and more enjoyable, and fixing the problems that frustrate our residents the most.',
             knowledgeableTopics: ['Paving sidewalks and streets', 'Keeping sidewalks clean', 'Adding and improving pedestrian crosswalks']
         }
 
     return (
-        <DisconnectedProfilePage info={profile}/>
+        <div></div>
+        // <DisconnectedProfilePage info={profile}/>
     )
 }
 

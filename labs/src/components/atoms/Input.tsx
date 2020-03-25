@@ -10,7 +10,7 @@ interface IInputProps  {
 
 const Input: React.FC<IInputProps & InputHTMLAttributes<HTMLInputElement>> = (props) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
-    const {fieldName, defaultValue = '', registerField, error} = useField(props.name);
+    const {fieldName, defaultValue = '', registerField } = useField(props.name);
 
     React.useEffect(() => {
         registerField({

@@ -14,7 +14,7 @@ export enum ButtonStyle {
 
 export const StyledButton = styled.button<ButtonProps>`
     font-family: ${props => props.theme.typography.fontFamily };
-    background-color: ${props => props.buttonStyle == ButtonStyle.PRIMARY ? lunchboxColors.gusher : lunchboxColors.tangerine };
+    background-color: ${props => props.buttonStyle === ButtonStyle.PRIMARY ? lunchboxColors.gusher : lunchboxColors.tangerine };
     color: white;
     padding: 1em 3.5em;
     text-transform: upcase;

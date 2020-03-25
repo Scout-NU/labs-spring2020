@@ -8,7 +8,8 @@ import devices from '../../styles/breakpoints';
 import SearchBar from '../molecules/SearchBar';
 import { IPerson } from '../../types/client';
 import PersonPreview from '../molecules/PersonPreview';
-import {tempPeople} from '../../tempPeople';
+import { useQuery } from 'urql';
+import gql from 'graphql-tag'
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -77,11 +78,25 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
 const SearchPage: React.FC = () => {
     const [searched, hasSearched] = React.useState(false);
     const [searchSuggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
-    
-    const people: IPerson[] = tempPeople;
+    const [result, reexecuteQuery] = useQuery({
+            query: gql`query {
+                _allDocuments {
+                    edges{
+                        node{
+                            _meta{
+                                id
+                                type
+                            }
+                        }
+                    }
+                }
+            }`
+        });
 
+    console.log(result);
+    
     return(
-        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={people}/>
+        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={[]}/>
     )
 }
 
