@@ -14,6 +14,7 @@
     "@types/styled-components": "^4.4.2",
     "@unform/core": "^2.0.0",
     "@unform/web": "^2.0.0",
+    "contentful-management": "^5.17.0",
     "dotenv": "^8.2.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
@@ -26,7 +27,7 @@
     "storybook": "^5.3.9",
     "styled-components": "^5.0.0",
     "typescript": "~3.7.2",
-    "urql": "^1.8.2"
+    "urql": "^1.9.5"
   },
   "scripts": {
     "start": "react-scripts start",

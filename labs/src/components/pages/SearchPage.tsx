@@ -10,6 +10,8 @@ import { IPerson } from '../../types/client';
 import PersonPreview from '../molecules/PersonPreview';
 import { useQuery } from 'urql';
 import gql from 'graphql-tag'
+import useProfileSearchState from '../../state/ambassador/repository';
+import useProfileRepository from '../../state/ambassador/repository';
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -78,23 +80,17 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
 const SearchPage: React.FC = () => {
     const [searched, hasSearched] = React.useState(false);
     const [searchSuggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
-    const [result, reexecuteQuery] = useQuery({
-            query: gql`query {
-                _allDocuments {
-                    edges{
-                        node{
-                            _meta{
-                                id
-                                type
-                            }
-                        }
-                    }
-                }
-            }`
-        });
+    const profileRepository = useProfileRepository();
 
-    console.log(result);
-    
+    React.useEffect(() => {
+        profileRepository.getAllProfiles()
+        .then(res => res.json())
+        .then(response => {
+            console.log(response);
+        })
+        .catch(error => console.log(error));
+    }, []);
+
     return(
         <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={[]}/>
     )

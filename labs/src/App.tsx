@@ -12,8 +12,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { Provider } from 'urql';
-import client from './hooks/graphQLClient';
+
 
 const Site = styled.div`
   display: flex;
@@ -37,27 +36,25 @@ const Content = styled.div`
 const App: React.FC = () => {
   return (
     <Router>
-      <Provider value={client}>
-        <ThemeProvider theme={lunchbox}>
-          <Site>
-            <Content>
-              <Header/>
-              <Switch>
-                <Route path="/profile">
-                  <ProfilePage />
-                </Route>
-                <Route path="/search">
-                  <SearchPage />
-                </Route>
-                <Route path="/">
-                  <HomePage/>
-                </Route>
-              </Switch>
-            </Content>
-            <Footer/>
-          </Site>
-        </ThemeProvider>
-      </Provider>
+      <ThemeProvider theme={lunchbox}>
+        <Site>
+          <Content>
+            <Header/>
+            <Switch>
+              <Route path="/profile">
+                <ProfilePage />
+              </Route>
+              <Route path="/search">
+                <SearchPage />
+              </Route>
+              <Route path="/">
+                <HomePage/>
+              </Route>
+            </Switch>
+          </Content>
+          <Footer/>
+        </Site>
+      </ThemeProvider>
     </Router>
   );
 }
