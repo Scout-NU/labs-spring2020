@@ -1,8 +1,11 @@
 import * as React from 'react';
 import { IManagaedAmbassador } from './model';
+import * as contentful from 'contentful-management';
+import Space from 'contentful-management';
+import { log } from 'util';
 import client from '../root/client';
-import getAuthenticatedSpace from '../root/auth';
-import type Space from 'contentful-management';
+
+declare type Space = typeof Space
 
 export interface IProfileRepository {
     // TODO: Error stuff
@@ -33,37 +36,24 @@ async function getAllProfiles(): Promise<Response> {
 }
 
 
-// async function getAllProfiless(): Promise<IManagaedAmbassador> {
-async function getAllProfiless(authenticatedSpace: Space) {
+async function getAllProfiless(): Promise<IManagaedAmbassador> {
     const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
     // TODO: tidy up auth
-    // const space = client.getSpace(`${process.env.REACT_APP_CONTENTFUL_SPACE}`)
-    // .then( response => )
-    // .catch(error => {
-    //     console.log("Failed to authenticate space.");
-    //     throw(error);
-    // })
-    const space = getAuthenticatedSpace().then(space => {
-
-    });
-
-    
-    fetch(
-        allProfilesQuery,
-        {
-            method: "GET",
-            headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
+    client.getSpace(`${process.env.REACT_APP_CONTENTFUL_SPACE}`)
+    .then(space => 
+        space.getEntries({ content_type: 'ambassador' }
+        ).then(response =>
+            response.items.map((value) => {
+                {
+                    id: value.sys.id,
+                    ...value
+                }
             })
+        ).catch(error => {
+            console.log(error);
+            throw(error);
         })
-    .then(res => res.json())
-    .then(response => {
-        
-        console.log(response);
-    })
-    .catch(error => {
-        console.log(error);
-        throw(error);
-    });
+    ).catch(error => console.log("failed to auth"))
+
 }
 
