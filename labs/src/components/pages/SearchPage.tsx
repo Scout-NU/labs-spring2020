@@ -63,7 +63,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
                     <Row middle='xs' start='xs'>
                         { props.results.map((value, i) => {
                             return (
-                                <PersonWrapper xs={12} md={6} lg={4}>
+                                <PersonWrapper key={i} xs={12} md={6} lg={4}>
                                     <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.firstName}`)} profile={value} key={i}/>
                                 </PersonWrapper>
                             )
