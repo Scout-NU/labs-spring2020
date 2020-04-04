@@ -1,15 +1,30 @@
 import * as React from 'react';
 import { IManagaedAmbassador } from './model';
 import * as contentful from 'contentful-management';
-import Space from 'contentful-management';
-import { log } from 'util';
 import client from '../root/client';
+import { Collection } from 'contentful-management/typings/collection';
+import { IAmbassador, IAmbassadorFields } from '../../types/cms/generated';
+import { Resolved, IAsset, IEntry } from '../../types/cms/base';
 
-declare type Space = typeof Space
+interface ContentfulIncludedLinks {
+    Entry: any[];
+    Asset: IAsset[];
+}
+
+interface ContentfulBaseResponse<EntryType> {
+    sys: any;
+    total: number;
+    skip: number;
+    limit: number;
+    items: Resolved<EntryType>[];
+    includes?: ContentfulIncludedLinks;
+}
+
+
 
 export interface IProfileRepository {
     // TODO: Error stuff
-    getAllProfiles(): Promise<Response>;
+    getAllProfiles(): Promise<IAmbassador[]>;
     // searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<void>; 
 }
 
@@ -21,39 +36,63 @@ export default function useProfileRepository(): IProfileRepository {
 
 const BASE_URL=`https://cdn.contentful.com/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE}/environments/master`
 
-async function getAllProfiles(): Promise<Response> {
-    const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
+// async function getAllProfiles(): Promise<Response> {
+//     const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
     
-    return fetch(
-        allProfilesQuery,
-        {
-            method: "GET",
-            headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-            })
-        }
-    )
-}
+//     return fetch(
+//         allProfilesQuery,
+//         {
+//             method: "GET",
+//             headers: new Headers({
+//                 Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
+//             })
+//         }
+//     )
+// }
 
 
-async function getAllProfiless(): Promise<IManagaedAmbassador> {
+async function getAllProfiles(): Promise<IAmbassador[]> {
     const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
-    // TODO: tidy up auth
-    client.getSpace(`${process.env.REACT_APP_CONTENTFUL_SPACE}`)
-    .then(space => 
-        space.getEntries({ content_type: 'ambassador' }
-        ).then(response =>
-            response.items.map((value) => {
-                {
-                    id: value.sys.id,
-                    ...value
-                }
+    const profileResponse = await fetch(
+            allProfilesQuery,
+            {
+                method: "GET",
+                headers: new Headers({
+                    Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
+                })
             })
-        ).catch(error => {
-            console.log(error);
-            throw(error);
-        })
-    ).catch(error => console.log("failed to auth"))
 
+    if (!profileResponse.ok) {
+        throw Error(profileResponse.statusText);
+    }
+    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
+
+    let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();
+    let withPictures: ContentfulBaseResponse<IAmbassador> = {
+        ...reducedProfiles,
+        items: reducedProfiles.items.map((person) => {
+            return {
+                ...person,
+                fields: {
+                    ...person.fields,
+                    profilePicture: resolveAsset(person, reducedProfiles.includes!!)
+                }
+            }
+        })
+    }
+
+    console.log(withPictures)
+    
+    // console.log(reducedProfiles.items)
+
+    // console.log(`assets `)
+    // console.log(withPictures)
+
+    return withPictures.items;
 }
 
+function resolveAsset(person: IAmbassador, assets: ContentfulIncludedLinks): IAsset {
+    let assetId = person.fields.profilePicture.sys.id;
+    return assets.Asset.find((asset) => asset.sys.id === assetId)!!;
+    
+}

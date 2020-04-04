@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPerson } from '../../types/client';
+import { IPerson } from '../../types/client/client';
 import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
@@ -40,11 +40,11 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
                 <Col xs>
                     <ProfileImageContainer>
                         <CircleImage imageUrl={info.profileImageUrl} size='225px' />
-                        <DepartmentImage imageUrl={info.department.imageUrl} size='90px'/>
+                        {/* <DepartmentImage imageUrl={info.department.imageUrl} size='90px'/> */}
                     </ProfileImageContainer>
-                    <H5>{info.name}</H5>
-                    <JobTitle>{info.department}</JobTitle>
-                    <P>{info.department.description}</P>
+                    <H5>{`${info.firstName} ${info.lastName}`}</H5>
+                    <JobTitle>{info.positionTitle}</JobTitle>
+                    <P>{info.description}</P>
                     <TagGroup tags={info.tags}/>
                     <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => props.onSelected()}> Learn more </Button>
                 </Col>

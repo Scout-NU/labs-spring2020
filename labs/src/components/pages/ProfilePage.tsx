@@ -1,5 +1,5 @@
 import React from 'react';
-import { IProfile, IPerson } from '../../types/client';
+import { IProfile, IPerson } from '../../types/client/client';
 import HeaderBlob from '../atoms/HeaderBlob';
 import styled from '../../theme/Theme';
 import { Row, Col } from 'react-flexbox-grid';
@@ -75,13 +75,13 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                             <Col xs={12} sm={6}>
                                 <ProfileInformationWrapper>
                                     <GreetingText>Hello, my name is</GreetingText>
-                                    <H1>{info.name}</H1>
-                                    <H4>{info.department.title}</H4>
+                                    <H1>{`${info.firstName} ${info.lastName}`}</H1>
+                                    {/* <H4>{info.department.title}</H4> */}
                                     <PriorityStatement>{info.priorityStatement}</PriorityStatement>
                                     <P>{info.description}</P>
                                     <AskMeText>Ask me about:</AskMeText>
                                     <ul>
-                                        {info.knowledgeableTopics.map((value, i) => <li key={i}><P>{value}</P></li>)}
+                                        {/* {info.knowledgeableTopics.map((value, i) => <li key={i}><P>{value}</P></li>)} */}
                                     </ul>
                                 </ProfileInformationWrapper>
                                 <TagGroup tags={info.tags}/>
@@ -99,14 +99,14 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                                 <Col xs={12}>
                                     <H3>Here's what we do</H3>
                                 </Col>
-                                {info.department.responsibilities.map((value, i) => {
+                                {/* {info.department.responsibilities.map((value, i) => {
                                     return(
                                         <Col key={i} xs={4}>
                                             <H5>{value.title}</H5>
                                             <P>{value.description}</P>
                                         </Col>
                                     )
-                                })}
+                                })} */}
                             </Row>
                         </DepartmentResponsibilitiesWrapper>
                     </Col>

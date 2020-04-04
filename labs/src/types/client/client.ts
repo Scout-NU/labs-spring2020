@@ -1,16 +1,17 @@
 export interface IPerson {
     id: string;
     profileImageUrl: string;
-    name: string;
-    department: IDepartment;
-    jobTitle: string;
+    firstName: string;
+    lastName: string;
+    // department: IDepartment;
+    positionTitle: string;
     description: string;
     genderPronouns: string;
     tags: string[];
-    relatedPeople: IPerson[];
 }
 
 export interface IProfile extends IPerson {
+    relatedPeople: IPerson[];
     priorityStatement: string; // A quote that defines their main goal
     knowledgeableTopics: string[]; // A list of things someone could ask this person about
 }

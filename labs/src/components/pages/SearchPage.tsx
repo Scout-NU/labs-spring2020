@@ -6,12 +6,11 @@ import { Col, Row } from 'react-flexbox-grid';
 import styled from '../../theme/Theme';
 import devices from '../../styles/breakpoints';
 import SearchBar from '../molecules/SearchBar';
-import { IPerson } from '../../types/client';
+import { IPerson } from '../../types/client/client';
 import PersonPreview from '../molecules/PersonPreview';
-import { useQuery } from 'urql';
-import gql from 'graphql-tag'
-import useProfileSearchState from '../../state/ambassador/repository';
 import useProfileRepository from '../../state/ambassador/repository';
+import { IAsset, isAsset } from '../../types/cms';
+import { IAmbassador } from '../../types/cms/generated';
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -65,7 +64,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
                         { props.results.map((value, i) => {
                             return (
                                 <PersonWrapper xs={12} md={6} lg={4}>
-                                    <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.name}`)} profile={value} key={i}/>
+                                    <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.firstName}`)} profile={value} key={i}/>
                                 </PersonWrapper>
                             )
                         })}
@@ -80,18 +79,39 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
 const SearchPage: React.FC = () => {
     const [searched, hasSearched] = React.useState(false);
     const [searchSuggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
+    const [ambassadors, setAmbassadors] = React.useState<IPerson[]>([]);
     const profileRepository = useProfileRepository();
 
     React.useEffect(() => {
         profileRepository.getAllProfiles()
-        .then(res => res.json())
-        .then(response => {
-            console.log(response);
-        }).catch(error => console.log(error));
+        .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log("yp"))
     }, []);
 
+    const mapAmbassadors = (ambassadors: IAmbassador[]): IPerson[] => {
+        // console.log(ambassadors)
+        return ambassadors.map((item) => {
+            let data = item.fields;
+            let asset = item.fields.profilePicture!!;
+            if (isAsset(asset)) {
+                console.log(item)
+                return {
+                    id: item.sys.id,
+                    profileImageUrl: asset.fields.file.url!!,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    positionTitle: data.positionTitle,
+                    description: data.ambassadorDescription,
+                    genderPronouns: data.preferredPronouns.join("/"),
+                    tags: data.problemTags
+                }
+            }
+            console.log(item)
+            throw Error("FUCK")
+        })
+    }
+
     return(
-        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={[]}/>
+        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={ambassadors}/>
     )
 }
 

@@ -15,6 +15,7 @@
     "@unform/core": "^2.0.0",
     "@unform/web": "^2.0.0",
     "contentful-management": "^5.17.0",
+    "contentful-ts-generator": "^0.2.5",
     "dotenv": "^8.2.0",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
