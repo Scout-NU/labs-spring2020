@@ -49,7 +49,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
         <>
         <SearchContainer>
             <HeaderBlob/>
-            <Row center='xs'>
+            <Row center='xs' middle='xs'>
                 <HeaderContainer xs={8}>
                     <SearchBar hintText='Search by topic or name' searchSuggestions={props.suggestedSearches} onSearch={(query) => window.alert(`This search ain\'t real, but when it is it can tell you about ${query}!`)}/>
                     <Row end='xs'>
@@ -60,10 +60,10 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
                     </Row>
                 </HeaderContainer>
                 <Col xs={11}>
-                    <Row middle='xs' start='xs'>
+                    <Row top='xs' center='xs' start='md'>
                         { props.results.map((value, i) => {
                             return (
-                                <PersonWrapper key={i} xs={12} md={6} lg={4}>
+                                <PersonWrapper key={i} xs={11} md={6} lg={4}>
                                     <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.firstName}`)} profile={value} key={i}/>
                                 </PersonWrapper>
                             )
