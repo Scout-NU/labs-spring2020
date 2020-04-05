@@ -2,6 +2,7 @@ import { wrap } from ".";
 import { Asset, Entry, IAsset, IEntry, ILink, isAsset, isEntry, ISys } from "../base";
 import { Department, IDepartment } from "./department";
 import { DepartmentProject, IDepartmentProject } from "./department_project";
+import { IProblemTag, ProblemTag } from "./problem_tag";
 
 export interface IAmbassadorFields {
   firstName: string;
@@ -13,7 +14,7 @@ export interface IAmbassadorFields {
   preferredPronouns: string[];
   email: string;
   priorityStatement: string;
-  problemTags: string[];
+  problemTags: Array<ILink<'Entry'> | IProblemTag>;
   relatedAmbassadors: Array<ILink<'Entry'> | IAmbassador>;
   knowledgeableTopics: string[];
   projects: Array<ILink<'Entry'> | IDepartmentProject>;
@@ -104,12 +105,18 @@ export class Ambassador extends Entry<IAmbassadorFields> implements IAmbassador 
     return this.fields.priorityStatement
   }
 
-  get problemTags(): string[] | undefined {
-    return this.fields.problemTags
+  get problemTags(): Array<ProblemTag | null> | undefined {
+    return !this.fields.problemTags ? undefined :
+    this.fields.problemTags.map((item) =>
+      isEntry(item) ? wrap<'problemTag'>(item) : null
+    )
   }
 
-  get problem_tags(): string[] | undefined {
-    return this.fields.problemTags
+  get problem_tags(): Array<ProblemTag | null> | undefined {
+    return !this.fields.problemTags ? undefined :
+    this.fields.problemTags.map((item) =>
+      isEntry(item) ? wrap<'problemTag'>(item) : null
+    )
   }
 
   get relatedAmbassadors(): Array<Ambassador | null> | undefined {
