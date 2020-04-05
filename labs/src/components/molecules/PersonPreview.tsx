@@ -20,13 +20,8 @@ const JobTitle = styled(P)`
     font-style: italic;
 `
 
-interface IPreviewCardProps {
-    maxHeight: number;
-}
-
-const PreviewCard = styled(Card)<IPreviewCardProps>`
-    /* height: ${props => props.maxHeight ? `${props.maxHeight}px` : '635px'}; */
-    height: 80vh;
+const PreviewCard = styled(Card)`
+    height: 70vh;
     overflow: hidden;
     padding: 2.5em 2em 1em 2em;
     transition: all .2s ease-in-out;
@@ -59,6 +54,14 @@ const TagWrapper = styled.div`
     margin: 1.5em 0;
 `
 
+const Fade = styled.div`
+    position: relative;
+    bottom: 0;
+    height: 10%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+`
+
 const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     let info = props.profile;
     const cardHeight = 635;
@@ -70,7 +73,7 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     }
     
     return (
-        <PreviewCard maxHeight={635}>
+        <PreviewCard>
             <Row center='xs'>
                 <Col xs>
                     <ProfileImageContainer>
@@ -84,8 +87,11 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
                     <TagWrapper>
                         <TagGroup tags={info.tags.sort((a, b) => a.length - b.length)}/>
                     </TagWrapper>
+
                 </Col>
             </Row>
+            <Fade/>
+
         </PreviewCard>
     )
 }
