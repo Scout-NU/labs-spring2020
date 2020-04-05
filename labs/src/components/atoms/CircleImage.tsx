@@ -6,11 +6,10 @@ interface ICircleImageProps {
 }
 
 const CircleImage = styled.img<ICircleImageProps>`
-    width: ${props=> props.size};
-    height: ${props=> props.size};
+    width: ${props => `${props.size}px`};
+    height: ${props => `${props.size}px`};
     background-image: url(${props => props.imageUrl});
     background-size: cover;
-    background-position: center;
     border-radius: 50%;
 `
 

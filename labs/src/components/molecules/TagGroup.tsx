@@ -9,8 +9,8 @@ interface TagGroupProps {
 
 const StyledTagGroup = styled.div`
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
-    margin-bottom: 1.5em;
 
     & ${StyledTag} {
         margin-bottom: .7em;
