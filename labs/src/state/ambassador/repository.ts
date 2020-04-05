@@ -36,21 +36,6 @@ export default function useProfileRepository(): IProfileRepository {
 
 const BASE_URL=`https://cdn.contentful.com/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE}/environments/master`
 
-// async function getAllProfiles(): Promise<Response> {
-//     const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
-    
-//     return fetch(
-//         allProfilesQuery,
-//         {
-//             method: "GET",
-//             headers: new Headers({
-//                 Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-//             })
-//         }
-//     )
-// }
-
-
 async function getAllProfiles(): Promise<IAmbassador[]> {
     const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
     const profileResponse = await fetch(
@@ -76,6 +61,7 @@ async function getAllProfiles(): Promise<IAmbassador[]> {
                 fields: {
                     ...person.fields,
                     profilePicture: resolveAsset(person, reducedProfiles.includes!!)
+                
                 }
             }
         })

@@ -9,8 +9,8 @@ import SearchBar from '../molecules/SearchBar';
 import { IPerson } from '../../types/client/client';
 import PersonPreview from '../molecules/PersonPreview';
 import useProfileRepository from '../../state/ambassador/repository';
-import { IAsset, isAsset } from '../../types/cms';
-import { IAmbassador } from '../../types/cms/generated';
+import { IAsset, isAsset, isEntry, ILink } from '../../types/cms';
+import { IAmbassador, IProblemTag } from '../../types/cms/generated';
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -92,6 +92,8 @@ const SearchPage: React.FC = () => {
         return ambassadors.map((item) => {
             let data = item.fields;
             let asset = item.fields.profilePicture!!;
+            let tags = item.fields.problemTags;
+
             if (isAsset(asset)) {
                 console.log(item)
                 return {
@@ -102,12 +104,22 @@ const SearchPage: React.FC = () => {
                     positionTitle: data.positionTitle,
                     description: data.ambassadorDescription,
                     genderPronouns: data.preferredPronouns.join("/"),
-                    tags: data.problemTags
+                    tags: resolveTags(tags)
                 }
             }
             console.log(item)
             throw Error("FUCK")
         })
+    }
+
+    const resolveTags = (tags: (ILink<"Entry"> | IProblemTag)[]): string[] => {
+        let resolvedTags: string[] = [];
+
+        tags.forEach((tag) => {
+            if (isEntry(tag) && tag.fields.tagName) resolvedTags.push(tag.fields.tagName);
+        })
+
+        return resolvedTags;
     }
 
     return(
