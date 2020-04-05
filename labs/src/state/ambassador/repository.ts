@@ -60,8 +60,7 @@ async function getAllProfiles(): Promise<IAmbassador[]> {
                 ...person,
                 fields: {
                     ...person.fields,
-                    profilePicture: resolveAsset(person, reducedProfiles.includes!!)
-                
+                    profilePicture: resolveAsset(person, reducedProfiles.includes!!),
                 }
             }
         })

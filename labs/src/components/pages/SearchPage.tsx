@@ -108,7 +108,7 @@ const SearchPage: React.FC = () => {
                 }
             }
             console.log(item)
-            throw Error("FUCK")
+            throw Error("SHOOT YOU SHOULD HAVE FIXED THIS BY NOW")
         })
     }
 
