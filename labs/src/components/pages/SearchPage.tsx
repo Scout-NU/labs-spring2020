@@ -94,7 +94,6 @@ const SearchPage: React.FC = () => {
             let tags = item.fields.tags;
 
             if (isAsset(asset)) {
-                console.log('ugh')
                 console.log(item)
                 return {
                     id: item.sys.id,
