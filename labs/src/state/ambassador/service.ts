@@ -3,7 +3,7 @@ import { IManagaedAmbassador } from './model';
 import * as contentful from 'contentful-management';
 import client from '../root/client';
 import { Collection } from 'contentful-management/typings/collection';
-import { IAmbassador, IAmbassadorFields } from '../../types/cms/generated';
+import { IAmbassador, IAmbassadorFields, Ambassador } from '../../types/cms/generated';
 import { Resolved, IAsset, IEntry } from '../../types/cms/base';
 
 interface ContentfulIncludedLinks {
@@ -22,13 +22,13 @@ interface ContentfulBaseResponse<EntryType> {
 
 
 
-export interface IProfileRepository {
+export interface IProfileService {
     // TODO: Error stuff
     getAllProfiles(): Promise<IAmbassador[]>;
     // searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<void>; 
 }
 
-export default function useProfileRepository(): IProfileRepository {
+export default function useProfileService(): IProfileService {
     return {
         getAllProfiles: getAllProfiles
     }
@@ -53,31 +53,20 @@ async function getAllProfiles(): Promise<IAmbassador[]> {
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
 
     let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();
-    let withPictures: ContentfulBaseResponse<IAmbassador> = {
-        ...reducedProfiles,
-        items: reducedProfiles.items.map((person) => {
-            return {
-                ...person,
-                fields: {
-                    ...person.fields,
-                    profilePicture: resolveAsset(person, reducedProfiles.includes!!),
-                }
-            }
-        })
-    }
-
-    console.log(withPictures)
-    
-    // console.log(reducedProfiles.items)
-
-    // console.log(`assets `)
-    // console.log(withPictures)
-
-    return withPictures.items;
+    return reducedProfiles.items.map((person) => resolveAmbassador(person, reducedProfiles.includes!!))
 }
 
-function resolveAsset(person: IAmbassador, assets: ContentfulIncludedLinks): IAsset {
-    let assetId = person.fields.profilePicture.sys.id;
-    return assets.Asset.find((asset) => asset.sys.id === assetId)!!;
-    
+
+function resolveAmbassador(person: IAmbassador, assets: ContentfulIncludedLinks): IAmbassador {
+    let assetId = person?.fields?.profilePicture?.sys.id;
+    let tagIds = person?.fields?.tags?.map((tag) => tag.sys.id);
+
+    return {
+        ...person,
+        fields: {
+            ...person.fields,
+            profilePicture: assets.Asset.find((asset) => asset.sys.id === assetId)!!,
+            tags: tagIds?.map((id) => assets.Entry.find((entry) => entry.sys.id === id)!!)!!
+        }
+    }    
 }

@@ -5,19 +5,19 @@ import { DepartmentProject, IDepartmentProject } from "./department_project";
 import { IProblemTag, ProblemTag } from "./problem_tag";
 
 export interface IAmbassadorFields {
-  firstName: string;
-  lastName: string;
-  positionTitle: string;
-  department: ILink<'Entry'> | IDepartment;
-  ambassadorDescription: string;
-  profilePicture: ILink<'Asset'> | IAsset;
-  preferredPronouns: string[];
-  email: string;
-  priorityStatement: string;
-  problemTags: Array<ILink<'Entry'> | IProblemTag>;
-  relatedAmbassadors: Array<ILink<'Entry'> | IAmbassador>;
-  knowledgeableTopics: string[];
-  projects: Array<ILink<'Entry'> | IDepartmentProject>;
+  firstName?: string;
+  lastName?: string;
+  positionTitle?: string;
+  department?: ILink<'Entry'> | IDepartment;
+  ambassadorDescription?: string;
+  profilePicture?: ILink<'Asset'> | IAsset;
+  preferredPronouns?: string[];
+  email?: string;
+  priorityStatement?: string;
+  tags?: Array<ILink<'Entry'> | IProblemTag>;
+  relatedAmbassadors?: Array<ILink<'Entry'> | IAmbassador>;
+  knowledgeableTopics?: string[];
+  projects?: Array<ILink<'Entry'> | IDepartmentProject>;
 }
 
 /**
@@ -105,16 +105,9 @@ export class Ambassador extends Entry<IAmbassadorFields> implements IAmbassador 
     return this.fields.priorityStatement
   }
 
-  get problemTags(): Array<ProblemTag | null> | undefined {
-    return !this.fields.problemTags ? undefined :
-    this.fields.problemTags.map((item) =>
-      isEntry(item) ? wrap<'problemTag'>(item) : null
-    )
-  }
-
-  get problem_tags(): Array<ProblemTag | null> | undefined {
-    return !this.fields.problemTags ? undefined :
-    this.fields.problemTags.map((item) =>
+  get tags(): Array<ProblemTag | null> | undefined {
+    return !this.fields.tags ? undefined :
+    this.fields.tags.map((item) =>
       isEntry(item) ? wrap<'problemTag'>(item) : null
     )
   }

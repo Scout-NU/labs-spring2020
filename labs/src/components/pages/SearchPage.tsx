@@ -8,7 +8,7 @@ import devices from '../../styles/breakpoints';
 import SearchBar from '../molecules/SearchBar';
 import { IPerson } from '../../types/client/client';
 import PersonPreview from '../molecules/PersonPreview';
-import useProfileRepository from '../../state/ambassador/repository';
+import useProfileRepository from '../../state/ambassador/service';
 import { IAsset, isAsset, isEntry, ILink } from '../../types/cms';
 import { IAmbassador, IProblemTag } from '../../types/cms/generated';
 
@@ -84,27 +84,27 @@ const SearchPage: React.FC = () => {
 
     React.useEffect(() => {
         profileRepository.getAllProfiles()
-        .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log("yp"))
+        .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log(error))
     }, []);
 
     const mapAmbassadors = (ambassadors: IAmbassador[]): IPerson[] => {
-        // console.log(ambassadors)
         return ambassadors.map((item) => {
             let data = item.fields;
             let asset = item.fields.profilePicture!!;
-            let tags = item.fields.problemTags;
+            let tags = item.fields.tags;
 
             if (isAsset(asset)) {
+                console.log('ugh')
                 console.log(item)
                 return {
                     id: item.sys.id,
                     profileImageUrl: asset.fields.file.url!!,
-                    firstName: data.firstName,
-                    lastName: data.lastName,
-                    positionTitle: data.positionTitle,
-                    description: data.ambassadorDescription,
-                    genderPronouns: data.preferredPronouns.join("/"),
-                    tags: resolveTags(tags)
+                    firstName: data.firstName ? data.firstName : '',
+                    lastName: data.lastName ? data.lastName : '',
+                    positionTitle: data.positionTitle? data.positionTitle : '',
+                    description: data.ambassadorDescription? data.ambassadorDescription : '',
+                    genderPronouns: data.preferredPronouns ? data.preferredPronouns.join("/") : '',
+                    tags: tags? resolveTags(tags) : []
                 }
             }
             console.log(item)
