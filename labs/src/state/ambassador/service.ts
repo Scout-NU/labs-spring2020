@@ -1,5 +1,5 @@
 import { IAmbassador, IAmbassadorFields, IProblemTag } from '../../types/cms/generated';
-import { Resolved, IAsset, isEntry } from '../../types/cms/base';
+import { Resolved, IAsset, isEntry, ILink } from '../../types/cms/base';
 
 interface ContentfulIncludedLinks {
     Entry: any[];
@@ -30,12 +30,13 @@ export default function useProfileService(): IProfileService {
 const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador`;
 
 async function getAllProfiles(): Promise<IAmbassador[]> {
+    
     // return getProfilesWhere(allProfilesQuery)
-    return searchProfiles("",[],'');
+    return searchProfiles("",['City Planning', 'Problem Solving'],'');
 }
 
 
-async function searchProfiles(queryy: string, tagFilterss: IProblemTag[], departmentFilterr: string): Promise<IAmbassador[]> {
+async function searchProfiles(queryy: string, tagFilterss: string[], departmentFilterr: string): Promise<IAmbassador[]> {
     const query = "";
     const departmentFilter = "Mayor's Office of New Urban Mechanics";
 
@@ -51,23 +52,26 @@ async function searchProfiles(queryy: string, tagFilterss: IProblemTag[], depart
 }
 
 // Sadly we cannot filter by tag in a network call with Contentful, so it must be done client side for now. Alas.
-function filterByTag(desiredTags: IProblemTag[], ambassadors: IAmbassador[]): IAmbassador[] {
+function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbassador[] {
     // If there are no filters, don't filter.
     if (desiredTags.length === 0) return ambassadors
 
-    const tagFilters: Set<string> = new Set();
+    const tagFilters: Set<string> = new Set(desiredTags);
 
-    desiredTags.forEach((tag) => {
-        if (tag.fields.tagName !== undefined) {
-            tagFilters.add(tag.fields.tagName)
-        }
-     })
+    // desiredTags.forEach((tag) => {
+    //     if (tag.fields.tagName !== undefined) {
+    //         tagFilters.add(tag.fields.tagName)
+    //     }
+    //  })
 
     return ambassadors.filter((ambassador) => {
-        ambassador.fields.tags?.map((tag) => {
-            if (isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')) return true
+        var result = false;
+
+        ambassador.fields.tags?.forEach((tag) => {
+            if (isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')) result = true
         })
-        return false;
+        
+        return result;
     })
 }
 
