@@ -107,6 +107,7 @@ interface ISearchBarProps {
     suggestionTitle?: string;
     searchSuggestions: string[];
     onSearch: (query: string) => void;
+    onQueryContentsChanged: (currentContents: string) => void;
 }
 
 interface SearchBarData {
@@ -116,7 +117,7 @@ interface SearchBarData {
 const SearchBar: React.FC<ISearchBarProps> = props => {
     const [showSuggestions, toggleSuggestions] = React.useState(false);
     const formRef = React.useRef<FormHandles>(null);
-    let queryFieldName = 'query';
+    const queryFieldName = 'query';
 
     const onSubmit: SubmitHandler<SearchBarData> = (data) => {
         props.onSearch(data.query);
@@ -135,6 +136,10 @@ const SearchBar: React.FC<ISearchBarProps> = props => {
         }
     }
 
+    const onCharacterEntered = (e: React.ChangeEvent<HTMLInputElement>) => {
+        props.onQueryContentsChanged(e.target.value);
+    }
+
     return (
         <Form ref={formRef} onSubmit={onSubmit}>
             <SearchBarGroup>
@@ -145,6 +150,7 @@ const SearchBar: React.FC<ISearchBarProps> = props => {
                     autoComplete='off'
                     onFocus={() => toggleSuggestions(true)}
                     onBlur={() => toggleSuggestions(false)}
+                    onChange={(e) => onCharacterEntered(e)}
                     name={queryFieldName}
                     type='text'
                     placeholder={props.hintText}

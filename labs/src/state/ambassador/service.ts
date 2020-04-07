@@ -1,10 +1,5 @@
-import * as React from 'react';
-import { IManagaedAmbassador } from './model';
-import * as contentful from 'contentful-management';
-import client from '../root/client';
-import { Collection } from 'contentful-management/typings/collection';
-import { IAmbassador, IAmbassadorFields, Ambassador } from '../../types/cms/generated';
-import { Resolved, IAsset, IEntry } from '../../types/cms/base';
+import { IAmbassador, IAmbassadorFields, IProblemTag } from '../../types/cms/generated';
+import { Resolved, IAsset, isEntry } from '../../types/cms/base';
 
 interface ContentfulIncludedLinks {
     Entry: any[];
@@ -20,8 +15,6 @@ interface ContentfulBaseResponse<EntryType> {
     includes?: ContentfulIncludedLinks;
 }
 
-
-
 export interface IProfileService {
     // TODO: Error stuff
     getAllProfiles(): Promise<IAmbassador[]>;
@@ -34,30 +27,73 @@ export default function useProfileService(): IProfileService {
     }
 }
 
-const BASE_URL=`https://cdn.contentful.com/spaces/${process.env.REACT_APP_CONTENTFUL_SPACE}/environments/master`
+const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador`;
 
 async function getAllProfiles(): Promise<IAmbassador[]> {
-    const allProfilesQuery = `${BASE_URL}/entries?&content_type=ambassador`
-    const profileResponse = await fetch(
-            allProfilesQuery,
-            {
-                method: "GET",
-                headers: new Headers({
-                    Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-                })
-            })
-
-    if (!profileResponse.ok) {
-        throw Error(profileResponse.statusText);
-    }
-    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-
-    let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();
-    return reducedProfiles.items.map((person) => resolveAmbassador(person, reducedProfiles.includes!!))
+    // return getProfilesWhere(allProfilesQuery)
+    return searchProfiles("",[],'');
 }
 
 
-function resolveAmbassador(person: IAmbassador, assets: ContentfulIncludedLinks): IAmbassador {
+async function searchProfiles(queryy: string, tagFilterss: IProblemTag[], departmentFilterr: string): Promise<IAmbassador[]> {
+    const query = "";
+    const departmentFilter = "Mayor's Office of New Urban Mechanics";
+
+    // TODO: make field selection type safe
+    var searchQuery = `${allProfilesQuery}` +
+    `&fields.department.sys.contentType.sys.id=department` +
+    `&fields.department.fields.departmentName[match]=${""}` +
+    `&query=${query}`
+
+    let profiles = await getProfilesWhere(searchQuery);
+    console.log(profiles)
+    return filterByTag(tagFilterss, profiles)
+}
+
+// Sadly we cannot filter by tag in a network call with Contentful, so it must be done client side for now. Alas.
+function filterByTag(desiredTags: IProblemTag[], ambassadors: IAmbassador[]): IAmbassador[] {
+    // If there are no filters, don't filter.
+    if (desiredTags.length === 0) return ambassadors
+
+    const tagFilters: Set<string> = new Set();
+
+    desiredTags.forEach((tag) => {
+        if (tag.fields.tagName !== undefined) {
+            tagFilters.add(tag.fields.tagName)
+        }
+     })
+
+    return ambassadors.filter((ambassador) => {
+        ambassador.fields.tags?.map((tag) => {
+            if (isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')) return true
+        })
+        return false;
+    })
+}
+
+async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
+    const profileResponse = await fetch(
+        query,
+        {
+            method: "GET",
+            headers: new Headers({
+                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
+            })
+        })
+
+    if (!profileResponse.ok) {
+        let bodii = await profileResponse.json()
+        console.log(bodii)
+        // TODO: Make failed network request better
+        throw Error(`${profileResponse.status}\n${profileResponse.statusText}`)
+    };
+    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
+    let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();
+    return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
+}
+
+
+function resolveAmbassadorLinks(person: IAmbassador, assets: ContentfulIncludedLinks): IAmbassador {
     let assetId = person?.fields?.profilePicture?.sys.id;
     let tagIds = person?.fields?.tags?.map((tag) => tag.sys.id);
 
@@ -68,5 +104,5 @@ function resolveAmbassador(person: IAmbassador, assets: ContentfulIncludedLinks)
             profilePicture: assets.Asset.find((asset) => asset.sys.id === assetId)!!,
             tags: tagIds?.map((id) => assets.Entry.find((entry) => entry.sys.id === id)!!)!!
         }
-    }    
-}
+    }
+}    

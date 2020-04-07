@@ -9,12 +9,13 @@ import SearchBar from '../molecules/SearchBar';
 import { IPerson } from '../../types/client/client';
 import PersonPreview from '../molecules/PersonPreview';
 import useProfileRepository from '../../state/ambassador/service';
-import { IAsset, isAsset, isEntry, ILink } from '../../types/cms';
+import { isAsset, isEntry, ILink } from '../../types/cms';
 import { IAmbassador, IProblemTag } from '../../types/cms/generated';
 
 interface ISearchPageProps {
     results: IPerson[];
     suggestedSearches: string[];
+
 }
 
 const SearchContainer = styled.section`
@@ -25,7 +26,6 @@ const SearchContainer = styled.section`
 const HeaderCaption = styled.div`
     position: relative;
     text-align: left;
-    width: 60%;
     margin-top: 4em;
 
     @media ${devices.tablet} {
@@ -41,7 +41,7 @@ const PersonWrapper = styled(Col)`
 `
 
 const HeaderContainer = styled(Col)`
-    margin-bottom: 20vh;
+    margin-bottom: 5vh;
 `
 
 const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
@@ -50,14 +50,14 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
         <SearchContainer>
             <HeaderBlob/>
             <Row center='xs' middle='xs'>
-                <HeaderContainer xs={8}>
-                    <SearchBar hintText='Search by topic or name' searchSuggestions={props.suggestedSearches} onSearch={(query) => window.alert(`This search ain\'t real, but when it is it can tell you about ${query}!`)}/>
+                <HeaderContainer xs={10}>
                     <Row end='xs'>
                         <HeaderCaption>
                             <H2>Connect with City Hall</H2>
                             <H4>Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!</H4>
                         </HeaderCaption>
                     </Row>
+                    <SearchBar hintText='Search by topic or name' onQueryContentsChanged={(query) => console.log(query)} searchSuggestions={props.suggestedSearches} onSearch={(query) => window.alert(`This search ain\'t real, but when it is it can tell you about ${query}!`)}/>
                 </HeaderContainer>
                 <Col xs={11}>
                     <Row top='xs' center='xs' start='md'>
@@ -82,11 +82,13 @@ const SearchPage: React.FC = () => {
     const [ambassadors, setAmbassadors] = React.useState<IPerson[]>([]);
     const profileRepository = useProfileRepository();
 
+    // TODO: Parse current URL Params and do some kind of query based on that
     React.useEffect(() => {
         profileRepository.getAllProfiles()
         .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log(error))
     }, []);
 
+    // TODO: Move this into some kind of connector method
     const mapAmbassadors = (ambassadors: IAmbassador[]): IPerson[] => {
         return ambassadors.map((item) => {
             let data = item.fields;
@@ -94,7 +96,6 @@ const SearchPage: React.FC = () => {
             let tags = item.fields.tags;
 
             if (isAsset(asset)) {
-                console.log(item)
                 return {
                     id: item.sys.id,
                     profileImageUrl: asset.fields.file.url!!,
@@ -122,7 +123,7 @@ const SearchPage: React.FC = () => {
     }
 
     return(
-        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={ambassadors}/>
+        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={ambassadors} />
     )
 }
 
