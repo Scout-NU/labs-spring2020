@@ -1,5 +1,5 @@
-import { IAmbassador, IAmbassadorFields, IProblemTag } from '../../types/cms/generated';
-import { Resolved, IAsset, isEntry, ILink } from '../../types/cms/base';
+import { IAmbassador } from '../../types/cms/generated';
+import { Resolved, IAsset, isEntry } from '../../types/cms/base';
 
 interface ContentfulIncludedLinks {
     Entry: any[];
