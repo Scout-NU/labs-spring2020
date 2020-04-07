@@ -64,15 +64,8 @@ function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbass
     //     }
     //  })
 
-    return ambassadors.filter((ambassador) => {
-        var result = false;
-
-        ambassador.fields.tags?.forEach((tag) => {
-            if (isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')) result = true
-        })
-        
-        return result;
-    })
+    return ambassadors.filter((ambassador) => 
+        ambassador.fields.tags?.some((tag) => isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')))
 }
 
 async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
