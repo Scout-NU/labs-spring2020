@@ -16,39 +16,31 @@ interface ContentfulBaseResponse<EntryType> {
 }
 
 export interface IProfileService {
-    // TODO: Error stuff
     getAllProfiles(): Promise<IAmbassador[]>;
-    // searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<void>; 
+    searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<IAmbassador[]>; 
 }
 
 export default function useProfileService(): IProfileService {
     return {
-        getAllProfiles: getAllProfiles
+        getAllProfiles: getAllProfiles,
+        searchProfiles: searchProfiles
     }
 }
 
 const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador`;
 
 async function getAllProfiles(): Promise<IAmbassador[]> {
-    
-    // return getProfilesWhere(allProfilesQuery)
-    return searchProfiles("",['City Planning', 'Problem Solving'],'');
+    return getProfilesWhere(allProfilesQuery)
 }
 
-
-async function searchProfiles(queryy: string, tagFilterss: string[], departmentFilterr: string): Promise<IAmbassador[]> {
-    const query = "";
-    const departmentFilter = "Mayor's Office of New Urban Mechanics";
-
-    // TODO: make field selection type safe
+async function searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<IAmbassador[]> {
+    // TODO: make field selection type safe?
     var searchQuery = `${allProfilesQuery}` +
     `&fields.department.sys.contentType.sys.id=department` +
-    `&fields.department.fields.departmentName[match]=${""}` +
-    `&query=${query}`
+    `&fields.department.fields.departmentName[in]=${departmentFilters.join(',')}` +
+    `&query=${queryText}`
 
-    let profiles = await getProfilesWhere(searchQuery);
-    console.log(profiles)
-    return filterByTag(tagFilterss, profiles)
+    return filterByTag(topicFilters, await getProfilesWhere(searchQuery));
 }
 
 // Sadly we cannot filter by tag in a network call with Contentful, so it must be done client side for now. Alas.
@@ -79,8 +71,6 @@ async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
         })
 
     if (!profileResponse.ok) {
-        let bodii = await profileResponse.json()
-        console.log(bodii)
         // TODO: Make failed network request better
         throw Error(`${profileResponse.status}\n${profileResponse.statusText}`)
     };
