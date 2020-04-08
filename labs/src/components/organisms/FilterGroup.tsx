@@ -15,7 +15,7 @@ interface IFilterGroupProps {
 
 const FilterWrapper = styled(Row)`
     margin-top: 1em;
-
+    
     & > ${StyledFilterPopup} {
         margin-right: 1em;
     }
@@ -27,17 +27,16 @@ const ClearButton = styled(Button)`
 
 // TODO: Could make this dynamic, where filters are completely fetched. That will take some time and I am not going to do that right now.
 const FilterGroup: React.FC<IFilterGroupProps> = props => {
-
     return (
-        <FilterWrapper start='xs' middle='xs'>
+        <FilterWrapper center='xs' middle='xs' start='lg'>
             {props.filters.map((filter, i) => {
                 return (
-                    <Col key={i} xs={2}>
+                    <Col key={i} xs={6} lg={3}>
                         <SearchFilter filter={filter} onFiltersSelected={(v) => console.log(v)}/>
                     </Col>
                 )
             })}
-            <Col xs={2}>
+            <Col xs={12} lg={3}>
                 <ClearButton buttonStyle={ButtonStyle.CLEAR} onClick={() => console.log("Clear the filters.")}>Clear Filters</ClearButton>
             </Col>
         </FilterWrapper>
@@ -46,12 +45,6 @@ const FilterGroup: React.FC<IFilterGroupProps> = props => {
 
 interface ISearchGroupProps {
 
-}
-
-export const SearchGroup: React.FC<ISearchGroupProps> = props => {
-    return (
-        <div></div>
-    )
 }
 
 export default FilterGroup;
