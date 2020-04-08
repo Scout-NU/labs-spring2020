@@ -102,6 +102,10 @@ const SubmitButton = styled.button`
     }
 `
 
+const SearchWrapper = styled.div`
+    width: 100%;
+`
+
 interface ISearchBarProps {
     hintText: string;
     suggestionTitle?: string;
@@ -141,34 +145,36 @@ const SearchBar: React.FC<ISearchBarProps> = props => {
     }
 
     return (
-        <Form ref={formRef} onSubmit={onSubmit}>
-            <SearchBarGroup>
-                <SubmitButton type='submit'>
-                    <SearchIcon src={searchicon}/>
-                </SubmitButton>
-                <SearchInput 
-                    autoComplete='off'
-                    onFocus={() => toggleSuggestions(true)}
-                    onBlur={() => toggleSuggestions(false)}
-                    onChange={(e) => onCharacterEntered(e)}
-                    name={queryFieldName}
-                    type='text'
-                    placeholder={props.hintText}
-                />
-                <CloseButton src={closebutton} onClick={() => onClear()}/>
-            </SearchBarGroup>
+        <SearchWrapper>
+            <Form ref={formRef} onSubmit={onSubmit}>
+                <SearchBarGroup>
+                    <SubmitButton type='submit'>
+                        <SearchIcon src={searchicon}/>
+                    </SubmitButton>
+                    <SearchInput 
+                        autoComplete='off'
+                        onFocus={() => toggleSuggestions(true)}
+                        onBlur={() => toggleSuggestions(false)}
+                        onChange={(e) => onCharacterEntered(e)}
+                        name={queryFieldName}
+                        type='text'
+                        placeholder={props.hintText}
+                    />
+                    <CloseButton src={closebutton} onClick={() => onClear()}/>
+                </SearchBarGroup>
 
-            { showSuggestions && 
-                <SearchSuggestionsContainer>
-                    <SearchSuggestionsPopover>
-                        <SearchSuggestions>
-                            { props.searchSuggestions.map((value, i) => <li onMouseDown={() => addSuggestion(value)} key={i}> <SearchSuggestion> {value} </SearchSuggestion> </li> )}
-                        </SearchSuggestions>
-                    </SearchSuggestionsPopover>
-                </SearchSuggestionsContainer>
-            }
+                { showSuggestions && 
+                    <SearchSuggestionsContainer>
+                        <SearchSuggestionsPopover>
+                            <SearchSuggestions>
+                                { props.searchSuggestions.map((value, i) => <li onMouseDown={() => addSuggestion(value)} key={i}> <SearchSuggestion> {value} </SearchSuggestion> </li> )}
+                            </SearchSuggestions>
+                        </SearchSuggestionsPopover>
+                    </SearchSuggestionsContainer>
+                }
 
-        </Form>
+            </Form>
+        </SearchWrapper>
     )
 }
 

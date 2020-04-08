@@ -7,15 +7,38 @@ interface ButtonProps {
     onClick: () => void;
 }
 
+
 export enum ButtonStyle {
     PRIMARY,
-    SECONDARY
+    SECONDARY,
+    CLEAR
+}
+
+const mapStyleToBackgroundColor = (style: ButtonStyle): string => {
+    switch(style) {
+        case ButtonStyle.PRIMARY:
+            return lunchboxColors.gusher;
+        case ButtonStyle.SECONDARY:
+            return lunchboxColors.gusher;
+        case ButtonStyle.CLEAR:
+            return '#00000000';
+    }
+}
+
+const mapStyleToTextColor = (style: ButtonStyle): string => {
+    switch(style) {
+        case ButtonStyle.PRIMARY:
+        case ButtonStyle.SECONDARY:
+            return 'white';
+        case ButtonStyle.CLEAR:
+            return 'black';
+    }
 }
 
 export const StyledButton = styled.button<ButtonProps>`
     font-family: ${props => props.theme.typography.fontFamily };
-    background-color: ${props => props.buttonStyle === ButtonStyle.PRIMARY ? lunchboxColors.gusher : lunchboxColors.tangerine };
-    color: white;
+    background-color: ${props => mapStyleToBackgroundColor(props.buttonStyle)};
+    color: ${props => mapStyleToTextColor(props.buttonStyle)};
     padding: 1em 3.5em;
     text-transform: upcase;
     border-radius: 7px;

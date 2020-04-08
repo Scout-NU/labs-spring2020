@@ -28,3 +28,8 @@ interface IDepartmentResponsibility {
     title: string; 
     description: string;
 }
+
+export interface IFilter {
+    filterName: string;
+    filterOptions: string[];
+}

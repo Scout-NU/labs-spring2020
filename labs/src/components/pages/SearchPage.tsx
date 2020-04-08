@@ -11,11 +11,10 @@ import PersonPreview from '../molecules/PersonPreview';
 import useProfileRepository from '../../state/ambassador/service';
 import { isAsset, isEntry, ILink } from '../../types/cms';
 import { IAmbassador, IProblemTag } from '../../types/cms/generated';
+import SearchGroup from '../organisms/SearchGroup';
 
 interface ISearchPageProps {
     results: IPerson[];
-    suggestedSearches: string[];
-
 }
 
 const SearchContainer = styled.section`
@@ -57,7 +56,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
                             <H4>Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!</H4>
                         </HeaderCaption>
                     </Row>
-                    <SearchBar hintText='Search by topic or name' onQueryContentsChanged={(query) => console.log(query)} searchSuggestions={props.suggestedSearches} onSearch={(query) => window.alert(`This search ain\'t real, but when it is it can tell you about ${query}!`)}/>
+                    <SearchGroup />
                 </HeaderContainer>
                 <Col xs={11}>
                     <Row top='xs' center='xs' start='md'>
@@ -78,7 +77,6 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
 
 const SearchPage: React.FC = () => {
     const [searched, hasSearched] = React.useState(false);
-    const [searchSuggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
     const [ambassadors, setAmbassadors] = React.useState<IPerson[]>([]);
     const profileRepository = useProfileRepository();
 
@@ -123,7 +121,7 @@ const SearchPage: React.FC = () => {
     }
 
     return(
-        <DisconnectedSearchPage suggestedSearches={searchSuggestions} results={ambassadors} />
+        <DisconnectedSearchPage results={ambassadors} />
     )
 }
 

@@ -1,19 +1,6 @@
 import { IAmbassador } from '../../types/cms/generated';
-import { Resolved, IAsset, isEntry } from '../../types/cms/base';
+import { isEntry, ContentfulBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
 
-interface ContentfulIncludedLinks {
-    Entry: any[];
-    Asset: IAsset[];
-}
-
-interface ContentfulBaseResponse<EntryType> {
-    sys: any;
-    total: number;
-    skip: number;
-    limit: number;
-    items: Resolved<EntryType>[];
-    includes?: ContentfulIncludedLinks;
-}
 
 export interface IProfileService {
     getAllProfiles(): Promise<IAmbassador[]>;
