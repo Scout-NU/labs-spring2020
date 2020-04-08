@@ -5,6 +5,8 @@ import Button, { ButtonStyle } from '../atoms/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { IFilter } from '../../types/client/client';
 
+import SearchFilter from '../molecules/SearchFilter';
+
 
 interface IFilterGroupProps {
     filters: IFilter[];
@@ -25,19 +27,16 @@ const ClearButton = styled(Button)`
 
 // TODO: Could make this dynamic, where filters are completely fetched. That will take some time and I am not going to do that right now.
 const FilterGroup: React.FC<IFilterGroupProps> = props => {
+
     return (
         <FilterWrapper start='xs' middle='xs'>
-            <Col xs={2}>
-                <FilterPopup filterTitle={'Topics'}>
-                    hey
-                </FilterPopup>
-            </Col>
-            <Col xs={2}>
-                <FilterPopup filterTitle={'Departments'}>
-                    hey
-                </FilterPopup>
-            </Col>
-
+            {props.filters.map((filter, i) => {
+                return (
+                    <Col key={i} xs={2}>
+                        <SearchFilter filter={filter} onFiltersSelected={(v) => console.log(v)}/>
+                    </Col>
+                )
+            })}
             <Col xs={2}>
                 <ClearButton buttonStyle={ButtonStyle.CLEAR} onClick={() => console.log("Clear the filters.")}>Clear Filters</ClearButton>
             </Col>
