@@ -31,6 +31,7 @@ export const StyledFilterPopup = styled.div`
 
 const PopupWrapper = styled.div`
     position: absolute;
+    z-index: 999;
 `
 
 const FilterPopup: React.FC<IFilterPopupProps> = props => {

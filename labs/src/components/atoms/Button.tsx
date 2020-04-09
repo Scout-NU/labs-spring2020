@@ -4,13 +4,14 @@ import { lunchboxColors } from '../../theme/lunchbox';
 
 interface ButtonProps {
     buttonStyle: ButtonStyle;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 
 export enum ButtonStyle {
     PRIMARY,
     SECONDARY,
+    TERTIARY,
     CLEAR
 }
 
@@ -20,6 +21,8 @@ const mapStyleToBackgroundColor = (style: ButtonStyle): string => {
             return lunchboxColors.gusher;
         case ButtonStyle.SECONDARY:
             return lunchboxColors.gusher;
+        case ButtonStyle.TERTIARY:
+            return lunchboxColors.salad;
         case ButtonStyle.CLEAR:
             return '#00000000';
     }
@@ -29,6 +32,7 @@ const mapStyleToTextColor = (style: ButtonStyle): string => {
     switch(style) {
         case ButtonStyle.PRIMARY:
         case ButtonStyle.SECONDARY:
+        case ButtonStyle.TERTIARY:
             return 'white';
         case ButtonStyle.CLEAR:
             return 'black';
@@ -55,7 +59,7 @@ export const StyledButton = styled.button<ButtonProps>`
 
 const Button: React.FC<ButtonProps> = (props) => {
     return (
-        <StyledButton buttonStyle={props.buttonStyle} onClick={() => props.onClick()}>{props.children}</StyledButton>
+        <StyledButton buttonStyle={props.buttonStyle} onClick={() => { if (props.onClick) props.onClick() } }>{props.children}</StyledButton>
     )
 }
 

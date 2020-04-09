@@ -5,7 +5,7 @@ import { lunchboxColors } from '../../theme/lunchbox';
 
 const StyledInput = styled.input``;
 
-const StyledCheckbox = styled.label`
+const StyledCheckbox = styled.div`
     display: inline-flex;
     cursor: pointer;
     position: relative;
@@ -36,8 +36,8 @@ interface IInputProps  {
 
 const Input: React.FC<IInputProps & InputHTMLAttributes<HTMLInputElement>> = (props) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
-    const {fieldName, defaultValue = '', registerField } = useField(props.name);
-    const input = <StyledInput ref={inputRef} defaultValue={defaultValue} {...props}/>;
+    const {fieldName, registerField } = useField(props.name);
+    const input = <StyledInput ref={inputRef} {...props}/>;
     React.useEffect(() => {
         registerField({
             name: fieldName, 

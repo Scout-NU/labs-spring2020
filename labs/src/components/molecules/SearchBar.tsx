@@ -124,6 +124,7 @@ const SearchBar: React.FC<ISearchBarProps> = props => {
     const queryFieldName = 'query';
 
     const onSubmit: SubmitHandler<SearchBarData> = (data) => {
+        console.log("search")
         props.onSearch(data.query);
     };
 

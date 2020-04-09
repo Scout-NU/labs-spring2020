@@ -9,7 +9,6 @@ interface IPopupProps {
 const StyledPopup = styled.div<IPopupProps>`
     display: ${props => props.show ? 'initial' : 'none' };
     background-color: ${lunchboxColors.carton};
-    z-index: 999;
 `
 
 export const Popup: React.FC<IPopupProps> = props => {
