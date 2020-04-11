@@ -56,13 +56,15 @@ async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
                 Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
             })
         })
-
+        console.log("hello?")
     if (!profileResponse.ok) {
         // TODO: Make failed network request better
         throw Error(`${profileResponse.status}\n${profileResponse.statusText}`)
     };
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
     let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();
+    
+    console.log(reducedProfiles)
     return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
 }
 

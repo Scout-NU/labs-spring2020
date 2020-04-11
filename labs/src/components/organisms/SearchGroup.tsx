@@ -6,8 +6,7 @@ import { IFilter } from '../../types/client/client';
 import useProblemTagService from '../../state/problem-tags/service';
 import useDepartmentService from '../../state/department/service';
 import { IProblemTag, IDepartment } from '../../types/cms/generated';
-
-
+import { v4 as uuidv4 } from 'uuid';
 
 // TODO: add individual callbacks for filters and querying
 interface ISearchGroupProps {
@@ -45,7 +44,7 @@ const DisconnectedSearchGroup: React.FC<ISearchGroupProps> = props => {
         
                 <FilterGroup 
                     filters={props.filters}
-                    onSelectedFiltersChanged={(issues, departments) => onFiltersChanged(issues, departments)}
+                    onSelectedFiltersChanged={(filters) => console.log("logging disss")}
                 />
             </Col>
         </Row>
@@ -55,6 +54,8 @@ const DisconnectedSearchGroup: React.FC<ISearchGroupProps> = props => {
 const SearchGroup: React.FC = props => {
     const [suggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
     const [filters, setFilters] = React.useState<IFilter[]>([]);
+    const [issueTagFilters, setIssueTagFilters] = React.useState<IFilter[]>([]);
+    const [departmentFilters, setDepartmentFilters] = React.useState<IFilter[]>([]);
     const [loading, setLoading] = React.useState(true);
     const tagService = useProblemTagService();
     const departmentService = useDepartmentService();
@@ -78,7 +79,8 @@ const SearchGroup: React.FC = props => {
         items.forEach((item) => { if (item.fields.tagName) filterOptions.push(item.fields.tagName) })
         return {
             filterName: 'Topics',
-            filterOptions: filterOptions
+            filterOptions: filterOptions,
+            id: uuidv4()
         };
     }
 
@@ -87,7 +89,8 @@ const SearchGroup: React.FC = props => {
         items.forEach((item) => { if (item.fields.departmentName) filterOptions.push(item.fields.departmentName)})
         return {
             filterName: 'Departments',
-            filterOptions: filterOptions
+            filterOptions: filterOptions,
+            id: uuidv4()
         };
     }
 
