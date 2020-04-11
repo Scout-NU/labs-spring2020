@@ -54,8 +54,6 @@ const DisconnectedSearchGroup: React.FC<ISearchGroupProps> = props => {
 const SearchGroup: React.FC = props => {
     const [suggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
     const [filters, setFilters] = React.useState<IFilter[]>([]);
-    const [issueTagFilters, setIssueTagFilters] = React.useState<IFilter[]>([]);
-    const [departmentFilters, setDepartmentFilters] = React.useState<IFilter[]>([]);
     const [loading, setLoading] = React.useState(true);
     const tagService = useProblemTagService();
     const departmentService = useDepartmentService();
@@ -67,6 +65,7 @@ const SearchGroup: React.FC = props => {
            .then(res => {
                let [tags, departments] = res;
                setFilters([...filters, resolveTagFilters(tags), resolveDepartmentFilters(departments)])
+               setLoading(false);
             })
            .catch(error => console.log(error))
         }
@@ -92,6 +91,10 @@ const SearchGroup: React.FC = props => {
             filterOptions: filterOptions,
             id: uuidv4()
         };
+    }
+
+    if (loading) {
+        return (<div>...loading</div>)
     }
 
     return (

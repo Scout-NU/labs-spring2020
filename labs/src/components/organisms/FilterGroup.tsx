@@ -49,86 +49,78 @@ const ClearButton = styled(StyledButton)`
     }
 `
 
+interface IFilterGroupState {
+    filters: IFilter[];
+}
 
-// TODO: Could make this dynamic, where filters are completely fetched. That will take some time and I am not going to do that right now.
-const FilterGroup: React.FC<IFilterGroupProps> = props => {
-    const initializeFilters = (): Map<string, string[]> => {
-        let filters = new Map<string, string[]>();
-        props.filters.forEach((f) => filters.set(f.id, []));
-        return filters;
-    }
+class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> {
+    constructor(props: IFilterGroupProps) {
+        super(props);
+        this.onSubmit = this.onSubmit.bind(this);
+        this.onFilterChanged = this.onFilterChanged.bind(this);
+        this.buildOption = this.buildOption.bind(this);
 
-    const formRef = React.useRef<FormHandles>(null);
-    const initializedMap = initializeFilters()
-    const [selectedFilters, setSelectedFilters] = React.useState<Map<string, string[]>>(new Map());
-
-    // React.useEffect(() => {
-    //     setSelectedFilters(initializedMap)
-    // }, [initializedMap]);
-
-    // console.log(selectedFilters)
-    const onSubmit: SubmitHandler = (e) => {
-        console.log()
-        // props.onFiltersSelected(selectedFilters)
-    };
-
-    const onFilterChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let current = formRef.current
-        console.log(selectedFilters)
-
-        if (current) {
-            let filterId = e.target.name;
-            let value = e.target.value;
-            let selected = selectedFilters.get(filterId);
-
-            if (selected) {
-                if (selected.includes(value))  {
-                    setSelectedFilters(new Map(selectedFilters).set(filterId, selected.filter((v) => v !== value))) 
-                } else {
-                    setSelectedFilters(new Map(selectedFilters).set(filterId, [...selected, value]))
-                }
-            }
-            console.log(selectedFilters)
+        this.state = {
+            filters: props.filters.map((filter) => { return {...filter, filterOptions: [] }})
         }
     }
-
-
-    const clearFilters = () => {
-        // formRef.current?.reset();
-        // setSelectedFilters([]);
-        // formRef.current?.submitForm();
+    
+    onSubmit() {
+        this.props.onSelectedFiltersChanged(this.state.filters)
     }
 
-    const buildOption = (filterId: string, option: string, key: number) => {
+    onFilterChanged(e: React.ChangeEvent<HTMLInputElement>) {
+        let filterId = e.target.name;
+        let value = e.target.value;
+        let currentFilters = this.state.filters;
+
+        let newFilters = currentFilters.map((filter) => {
+                    if (filter.id === filterId) {
+                        let options = filter.filterOptions;
+                        return {
+                            ...filter,
+                            filterOptions: options.includes(value) ? options.filter((v) => v !== value) : [...options, value]
+                        }
+                    }
+
+                    return filter
+                })
+        
+        this.setState({filters: newFilters});
+    }
+
+    buildOption(filterId: string, option: string, key: number) {
         return (
             <FilterOption key={key} >
                 {/* TODO: Check mark isn't showing up */}
-                <Input type='checkbox' name={filterId} value={option} onChange={(e) => onFilterChanged(e)}/> 
+                <Input type='checkbox' name={filterId} value={option} onChange={(e) => this.onFilterChanged(e)}/> 
                 <CheckLabel>{option}</CheckLabel>
             </FilterOption>                     
         )
     }
 
-    return (
-        <Form ref={formRef} onSubmit={onSubmit}>     
-            <FilterWrapper center='xs' middle='xs' start='lg'>
-                { props.filters.map((filter, i) => {
-                    return (
-                        <Col key={i} xs={6} lg={3}>
-                            <SearchFilter title={filter.filterName}>
-                                {filter.filterOptions.map((option, key) => buildOption(filter.id, option, key))}
-                            </SearchFilter>
-                        </Col>
-                    )
-                })}
-                <Col xs={12} lg={3}>
-                    <ClearButton buttonStyle={ButtonStyle.CLEAR} onClick={() => console.log("Clear the filters.")}>
-                        Clear Filters
-                    </ClearButton>
-                </Col>
-            </FilterWrapper>
-        </Form> 
-    )
+    render() {
+        return (
+            <Form onSubmit={this.onSubmit}>     
+                <FilterWrapper center='xs' middle='xs' start='lg'>
+                    { this.props.filters.map((filter, i) => {
+                        return (
+                            <Col key={i} xs={6} lg={3}>
+                                <SearchFilter title={filter.filterName}>
+                                    {filter.filterOptions.map((option, key) => this.buildOption(filter.id, option, key))}
+                                </SearchFilter>
+                            </Col>
+                        )
+                    })}
+                    <Col xs={12} lg={3}>
+                        <ClearButton buttonStyle={ButtonStyle.CLEAR} onClick={() => console.log("Clear the filters.")}>
+                            Clear Filters
+                        </ClearButton>
+                    </Col>
+                </FilterWrapper>
+            </Form> 
+        )
+    }
 }
 
 
