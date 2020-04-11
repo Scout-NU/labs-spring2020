@@ -5,7 +5,7 @@ import { lunchboxColors } from '../../theme/lunchbox';
 
 const StyledInput = styled.input``;
 
-const StyledCheckbox = styled.div`
+export const StyledCheckbox = styled.div`
     display: inline-flex;
     cursor: pointer;
     position: relative;
@@ -26,8 +26,6 @@ const StyledCheckbox = styled.div`
         border: none;
         background-color: ${lunchboxColors.gusher};
     }
-
-
 `
 
 interface IInputProps  {

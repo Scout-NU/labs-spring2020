@@ -3,13 +3,11 @@ import styled from '../../theme/Theme';
 import Button, { StyledButton, ButtonStyle } from '../atoms/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { IFilter } from '../../types/client/client';
-import Input from '../atoms/Input';
 import SearchFilter from '../molecules/SearchFilter';
-import { Form} from '@unform/web';
-import { SubmitHandler, FormHandles } from '@unform/core';
 import { P } from '../atoms/Typography';
 import { StyledFilterPopup } from '../molecules/FilterPopup';
 import { lunchboxColors } from '../../theme/lunchbox';
+import { StyledCheckbox } from '../atoms/Input';
 
 interface IFilterGroupProps {
     filters: IFilter[];
@@ -37,16 +35,7 @@ const FilterWrapper = styled(Row)`
 `
 
 const ClearButton = styled(StyledButton)`
-    position: relative;
-    bottom: 0;
-    width: 50%;
     background-color: transparent;
-
-    &:hover {
-        transform: none;
-        background-color: ${lunchboxColors.egg};
-        color: black;
-    }
 `
 
 interface IFilterGroupState {
@@ -54,22 +43,26 @@ interface IFilterGroupState {
 }
 
 class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> {
+    private inputRefs: (HTMLInputElement | null)[];
+
     constructor(props: IFilterGroupProps) {
         super(props);
-        this.onSubmit = this.onSubmit.bind(this);
-        this.onFilterChanged = this.onFilterChanged.bind(this);
-        this.buildOption = this.buildOption.bind(this);
-
+        this.inputRefs = [];
         this.state = {
-            filters: props.filters.map((filter) => { return {...filter, filterOptions: [] }})
+            filters: this.baseState(props.filters)
         }
     }
+
+    baseState = (baseFilters: IFilter[]): IFilter[] => {
+        return baseFilters.map((filter) => { return {...filter, filterOptions: [] }})
+    }
     
-    onSubmit() {
+    onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         this.props.onSelectedFiltersChanged(this.state.filters)
     }
 
-    onFilterChanged(e: React.ChangeEvent<HTMLInputElement>) {
+    onFilterChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
         let filterId = e.target.name;
         let value = e.target.value;
         let currentFilters = this.state.filters;
@@ -89,19 +82,26 @@ class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> 
         this.setState({filters: newFilters});
     }
 
-    buildOption(filterId: string, option: string, key: number) {
+    buildOption = (filterId: string, option: string, key: number) => {
         return (
             <FilterOption key={key} >
                 {/* TODO: Check mark isn't showing up */}
-                <Input type='checkbox' name={filterId} value={option} onChange={(e) => this.onFilterChanged(e)}/> 
+                <StyledCheckbox>
+                    <input ref={e => this.inputRefs = [...this.inputRefs, e]} type='checkbox' name={filterId} value={option} onChange={(e) => this.onFilterChanged(e)}/> 
+                </StyledCheckbox>
                 <CheckLabel>{option}</CheckLabel>
             </FilterOption>                     
         )
     }
 
+    clearFilters = () => {
+        this.inputRefs.forEach((ref) => { if (ref) ref.checked = false });
+        this.setState({filters: this.baseState(this.props.filters)});
+    }
+
     render() {
         return (
-            <Form onSubmit={this.onSubmit}>     
+            <form onSubmit={this.onSubmit}>
                 <FilterWrapper center='xs' middle='xs' start='lg'>
                     { this.props.filters.map((filter, i) => {
                         return (
@@ -113,12 +113,12 @@ class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> 
                         )
                     })}
                     <Col xs={12} lg={3}>
-                        <ClearButton buttonStyle={ButtonStyle.CLEAR} onClick={() => console.log("Clear the filters.")}>
+                        <ClearButton buttonStyle={ButtonStyle.CLEAR} onClick={this.clearFilters}>
                             Clear Filters
                         </ClearButton>
                     </Col>
                 </FilterWrapper>
-            </Form> 
+            </form>
         )
     }
 }

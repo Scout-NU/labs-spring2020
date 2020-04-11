@@ -17,6 +17,7 @@
     "@unform/web": "^2.0.0",
     "contentful-ts-generator": "^0.2.5",
     "dotenv": "^8.2.0",
+    "formik": "^2.1.4",
     "graphql": "^14.6.0",
     "graphql-tag": "^2.10.3",
     "react": "^16.12.0",
