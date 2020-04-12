@@ -6,7 +6,7 @@ export interface IDepartmentService {
     getAllDepartments(): Promise<IDepartment[]>;
 }
 
-export default function useDepartmentService(): IDepartmentService {
+export default function getDepartmentService(): IDepartmentService {
     return {
         getAllDepartments: getAllDepartments,
     }

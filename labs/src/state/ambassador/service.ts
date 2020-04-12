@@ -4,7 +4,7 @@ import { isEntry, ContentfulBaseResponse, ContentfulIncludedLinks } from '../../
 
 export interface IProfileService {
     getAllProfiles(): Promise<IAmbassador[]>;
-    searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<IAmbassador[]>; 
+    searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]>; 
 }
 
 export default function useProfileService(): IProfileService {
@@ -20,14 +20,22 @@ async function getAllProfiles(): Promise<IAmbassador[]> {
     return getProfilesWhere(allProfilesQuery)
 }
 
-async function searchProfiles(queryText: string, departmentFilters: string[], topicFilters: string[]): Promise<IAmbassador[]> {
-    // TODO: make field selection type safe?
-    var searchQuery = `${allProfilesQuery}` +
-    `&fields.department.sys.contentType.sys.id=department` +
-    `&fields.department.fields.departmentName[in]=${departmentFilters.join(',')}` +
-    `&query=${queryText}`
+async function searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]> {
+    let departmentFilters = filters.get('departments');
+    let topicFilters = filters.get('topics');
 
-    return filterByTag(topicFilters, await getProfilesWhere(searchQuery));
+    // TODO: make field selection type safe?
+    var searchQuery = `${allProfilesQuery}&query=${queryText}`;
+
+    if (departmentFilters) {
+        searchQuery +=
+        `&fields.department.sys.contentType.sys.id=department` +
+        `&fields.department.fields.departmentName[in]=${departmentFilters.join(',')}`
+    }
+    
+    let result = await getProfilesWhere(searchQuery);
+
+    return topicFilters ? filterByTag(topicFilters, result) : result;
 }
 
 // Sadly we cannot filter by tag in a network call with Contentful, so it must be done client side for now. Alas.

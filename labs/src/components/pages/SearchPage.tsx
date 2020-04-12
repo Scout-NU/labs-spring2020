@@ -76,14 +76,31 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
 }
 
 const SearchPage: React.FC = () => {
-    const [searched, hasSearched] = React.useState(false);
     const [ambassadors, setAmbassadors] = React.useState<IPerson[]>([]);
     const profileRepository = useProfileRepository();
 
+    const searchAmbassadors = () => {
+        if (window.location.search === "") {
+            profileRepository.getAllProfiles()
+            .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log(error));
+        } else {
+            // TODO: pull into router?
+            let params = new URLSearchParams(window.location.search);
+            let query = params.get('query');
+            let parsedParams = new Map<string, string[]>();
+            
+            console.log(parsedParams)
+            profileRepository.searchProfiles(query ? query : '', parsedParams)
+        }
+    }
+
     // TODO: Parse current URL Params and do some kind of query based on that
     React.useEffect(() => {
-        profileRepository.getAllProfiles()
-        .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log(error))
+        async function search() {
+            searchAmbassadors();
+        }
+
+        search();
     }, []);
 
     // TODO: Move this into some kind of connector method

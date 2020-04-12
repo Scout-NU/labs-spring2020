@@ -6,7 +6,6 @@ import { IFilter } from '../../types/client/client';
 import SearchFilter from '../molecules/SearchFilter';
 import { P } from '../atoms/Typography';
 import { StyledFilterPopup } from '../molecules/FilterPopup';
-import { lunchboxColors } from '../../theme/lunchbox';
 import { StyledCheckbox } from '../atoms/Input';
 
 interface IFilterGroupProps {
@@ -47,16 +46,13 @@ class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> 
 
     constructor(props: IFilterGroupProps) {
         super(props);
+        console.log('new')
         this.inputRefs = [];
         this.state = {
-            filters: this.baseState(props.filters)
+            filters: props.filters
         }
     }
 
-    baseState = (baseFilters: IFilter[]): IFilter[] => {
-        return baseFilters.map((filter) => { return {...filter, filterOptions: [] }})
-    }
-    
     onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         this.props.onSelectedFiltersChanged(this.state.filters)
@@ -66,28 +62,36 @@ class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> 
         let filterId = e.target.name;
         let value = e.target.value;
         let currentFilters = this.state.filters;
-
         let newFilters = currentFilters.map((filter) => {
                     if (filter.id === filterId) {
-                        let options = filter.filterOptions;
+                        let selected = filter.selectedFilters;
                         return {
                             ...filter,
-                            filterOptions: options.includes(value) ? options.filter((v) => v !== value) : [...options, value]
+                            selectedFilters: selected.includes(value) ? selected.filter((v) => v !== value) : [...selected, value]
                         }
                     }
 
                     return filter
                 })
-        
+        console.log(this.state.filters)
+        console.log(newFilters)
+
         this.setState({filters: newFilters});
     }
 
-    buildOption = (filterId: string, option: string, key: number) => {
+    buildOption = (filterId: string, option: string, key: number, selected: boolean) => {
         return (
             <FilterOption key={key} >
                 {/* TODO: Check mark isn't showing up */}
                 <StyledCheckbox>
-                    <input ref={e => this.inputRefs = [...this.inputRefs, e]} type='checkbox' name={filterId} value={option} onChange={(e) => this.onFilterChanged(e)}/> 
+                    <input 
+                        ref={e => this.inputRefs = [...this.inputRefs, e]} 
+                        checked={selected} 
+                        type='checkbox' 
+                        name={filterId}
+                        value={option} 
+                        onChange={(e) => this.onFilterChanged(e)}
+                    /> 
                 </StyledCheckbox>
                 <CheckLabel>{option}</CheckLabel>
             </FilterOption>                     
@@ -96,18 +100,20 @@ class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> 
 
     clearFilters = () => {
         this.inputRefs.forEach((ref) => { if (ref) ref.checked = false });
-        this.setState({filters: this.baseState(this.props.filters)});
+        this.setState(
+            { filters: this.state.filters.map(filter => {return {...filter, selectedFilters: []}}) }, 
+            () => this.props.onSelectedFiltersChanged(this.state.filters));
     }
 
     render() {
         return (
             <form onSubmit={this.onSubmit}>
                 <FilterWrapper center='xs' middle='xs' start='lg'>
-                    { this.props.filters.map((filter, i) => {
+                    { this.state.filters.map((filter, i) => {
                         return (
                             <Col key={i} xs={6} lg={3}>
                                 <SearchFilter title={filter.filterName}>
-                                    {filter.filterOptions.map((option, key) => this.buildOption(filter.id, option, key))}
+                                    {filter.filterLabels.map((option, key) => this.buildOption(filter.id, option, key, filter.selectedFilters.includes(option)))}
                                 </SearchFilter>
                             </Col>
                         )

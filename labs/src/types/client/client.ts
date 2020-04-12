@@ -31,6 +31,7 @@ interface IDepartmentResponsibility {
 
 export interface IFilter {
     filterName: string;
-    filterOptions: string[];
+    filterLabels: string[];
+    selectedFilters: string[];
     id: string; // ID of the fitler. Should be unique.
 }

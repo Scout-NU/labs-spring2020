@@ -3,48 +3,35 @@ import SearchBar from '../molecules/SearchBar';
 import { Col, Row } from 'react-flexbox-grid';
 import FilterGroup from './FilterGroup';
 import { IFilter } from '../../types/client/client';
-import useProblemTagService from '../../state/problem-tags/service';
-import useDepartmentService from '../../state/department/service';
-import { IProblemTag, IDepartment } from '../../types/cms/generated';
 import { v4 as uuidv4 } from 'uuid';
+import Spinner from '../atoms/Spinner';
+import { URLFilterParser } from '../../state/util/filters';
+import useFilterService from '../../state/filter/service';
 
 // TODO: add individual callbacks for filters and querying
 interface ISearchGroupProps {
     searchSuggestions: string[];
     searchBarHintText: string;
     filters: IFilter[];
-    onSearch: (query: string, tagFilters: string[], departmentFilters: string[]) => void;
+    onSearch: (query: string) => void;
+    onSelectedFiltersChanged: (filters: IFilter[]) => void;
 }
-
 
 const DisconnectedSearchGroup: React.FC<ISearchGroupProps> = props => {
     const {searchBarHintText, onSearch} = props;
-
-    const onSearchBarSearched = (query: string) => {
-
-    }
-
-    const onQueryContentsChanged = (value: string) => {
-        console.log(value)
-    }
-
-    const onFiltersChanged = (issues: string[], departments: string[]) => {
-
-    }
-
     return (
         <Row>
             <Col xs={12}>
                 <SearchBar
                     searchSuggestions={props.searchSuggestions} 
                     hintText={searchBarHintText} 
-                    onQueryContentsChanged={(v) => onQueryContentsChanged(v)} 
-                    onSearch={(q) => onSearchBarSearched(q)}
+                    onQueryContentsChanged={(v) => Function.prototype } 
+                    onSearch={props.onSearch}
                 />
         
                 <FilterGroup 
                     filters={props.filters}
-                    onSelectedFiltersChanged={(filters) => console.log("logging disss")}
+                    onSelectedFiltersChanged={props.onSelectedFiltersChanged}
                 />
             </Col>
         </Row>
@@ -55,53 +42,67 @@ const SearchGroup: React.FC = props => {
     const [suggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
     const [filters, setFilters] = React.useState<IFilter[]>([]);
     const [loading, setLoading] = React.useState(true);
-    const tagService = useProblemTagService();
-    const departmentService = useDepartmentService();
+    const filterService = useFilterService();
     
     React.useEffect(() => {
         async function getFilters() {
-            // TODO: if one of these fails, does everything fail?
-           Promise.all([tagService.getAllProblemTags(), departmentService.getAllDepartments()])
-           .then(res => {
-               let [tags, departments] = res;
-               setFilters([...filters, resolveTagFilters(tags), resolveDepartmentFilters(departments)])
-               setLoading(false);
-            })
-           .catch(error => console.log(error))
+            let parsedFilters = new URLFilterParser(new URLSearchParams(window.location.search));
+            filterService.getAllFilters()
+            .then(res => {
+                setFilters(
+                    res.map(filter => 
+                        buildFilter(filter.filterLabels, 
+                        filter.filterCategory, 
+                        parsedFilters.getSelectedOptions(filter.filterCategory)))
+                )
+                setLoading(false)
+            })            
         }
-
         getFilters();
     }, []);
-    
-    const resolveTagFilters = (items: IProblemTag[]): IFilter => {
-        let filterOptions: string[] = []
-        items.forEach((item) => { if (item.fields.tagName) filterOptions.push(item.fields.tagName) })
+
+    const buildFilter = (filterLabels: string[], filterName: string, selectedFilters: string[]) => {
         return {
-            filterName: 'Topics',
-            filterOptions: filterOptions,
+            filterName: filterName,
+            filterLabels: filterLabels,
+            selectedFilters: selectedFilters,
             id: uuidv4()
         };
     }
+    
+    const onSelectedFiltersChanged = (filters: IFilter[]) => {
+        let params = new URLSearchParams(window.location.search);
+        filters.forEach(f => {
+            if (f.selectedFilters.length === 0) {
+                params.delete(f.filterName)
+            } else {
+                params.set(f.filterName, f.selectedFilters.join(','))
+            }
+        });
+        assignURL(params);
+    }
 
-    const resolveDepartmentFilters = (items: IDepartment[]): IFilter => {
-        let filterOptions: string[] = []
-        items.forEach((item) => { if (item.fields.departmentName) filterOptions.push(item.fields.departmentName)})
-        return {
-            filterName: 'Departments',
-            filterOptions: filterOptions,
-            id: uuidv4()
-        };
+    const onSearch = (query: string) => {
+        let params = new URLSearchParams(window.location.search);
+        params.set('query', query);
+        assignURL(params);
+    }
+
+    const assignURL = (params: URLSearchParams) => {
+        let baseSearchURL = `${window.location.origin}${window.location.pathname}?`;
+        window.location.assign(`${baseSearchURL}${params.toString()}`);
     }
 
     if (loading) {
-        return (<div>...loading</div>)
+        return (<Spinner/>)
     }
 
     return (
         <DisconnectedSearchGroup 
             searchSuggestions={suggestions}
             searchBarHintText={'Search by topic or name'}
-            onSearch={() => console.log("woo")}
+            onSelectedFiltersChanged={onSelectedFiltersChanged}
+            onSearch={onSearch}
             filters={filters}
         />
     )

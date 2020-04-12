@@ -6,7 +6,7 @@ export interface IProblemTagService {
     getAllProblemTags(): Promise<IProblemTag[]>;
 }
 
-export default function useProblemTagService(): IProblemTagService {
+export default function getProblemTagService(): IProblemTagService {
     return {
         getAllProblemTags: getAllProblemTags,
     }
