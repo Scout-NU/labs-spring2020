@@ -28,3 +28,8 @@ interface IDepartmentResponsibility {
     title: string; 
     description: string;
 }
+
+export interface ILink {
+    linkTitle: string;
+    linkURL: string;
+}
