@@ -1,100 +1,120 @@
 import React from 'react';
-import footer from '../../images/global/footer.svg';
+import footerPeople from '../../images/global/footer-people.svg';
 import monumlogo from '../../images/global/monumlogo.svg';
 import styled from '../../theme/Theme';
-import { Col, Row } from 'react-flexbox-grid';
-import { H4, NavigationLink } from '../atoms/Typography';
+import { NavigationLink, A } from '../atoms/Typography';
 import { lunchboxColors } from '../../theme/lunchbox';
-import Button, { ButtonStyle } from '../atoms/Button';
 import device from '../../styles/breakpoints';
-import { searchPageRoute, monumRoute, homePageRoute } from '../../var/routes';
+import { monumRoute } from '../../var/routes';
+import { ILink } from '../../types/client/client';
 
 interface IFooterProps {
-
+    footerLinks: ILink[];
+    departmentLink: ILink;
 }
 
 const FooterImage = styled.img`
-    width: 100%;
+    position: relative;
+    width: 10em;
     z-index: 0;
-`
-
-const FooterContent = styled.div`
-    background-color: ${ lunchboxColors.gusher };
-    width: 100%;
-`
-
-const FooterContentHeader = styled(H4)`
-    font-weight: bolder;
-    color: white;
-    margin-bottom: 1em;
+    left: 10%;
+    top: 40px;
 `
 
 const FooterLink = styled(NavigationLink)`
-    color: white;
-    font-weight: lighter;
-    margin-bottom: 1em;
-
-    &:visited {
-        color: white;
-    }
-`
-
-const FooterColumn = styled.div`
-    text-align: left;
-    padding-bottom: 4em;
-`
-
-const FooterRow = styled(Row)`
-    padding: 0 3em;
-
-    @media ${device.tablet} {
-        padding-top: 3em;
-    }
+    margin-left: 1em;
 `
 
 const MonumLogo = styled.img`
-    margin-bottom: 4em;
+    max-height: 5em;
 `
 
-const Footer: React.FC<IFooterProps> = props => {
+const StyledFooter = styled.footer`
+    width: 100%;
+`
+
+const FooterGroup = styled.div`
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    align-items: flex-end;
+
+    @media ${device.tablet} {
+        width: 100%;
+    }
+`
+
+const LinkGroup = styled(FooterGroup)`
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    @media ${device.tablet} {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        & ${NavigationLink} {
+            margin-bottom: 2em;
+        }
+    }
+`
+
+const FooterContent = styled.div`
+    display: flex;
+    flex-direction: row-reverse;
+    background-color: ${ lunchboxColors.poptart };
+    height: 5%;
+    padding: 3em 5em 3em 8em;
+    border-radius: 175px 0 0 0;
+    justify-content: space-around;
+
+    @media ${device.tablet} {
+        border-radius: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 3em 2em 3em;
+    }
+`
+
+const DisconnectedFooter: React.FC<IFooterProps> = props => {
     return (
-        <footer>
-            <Col xs>
-                <Row end='xs'>
-                    <FooterImage src={footer}/>
-                    <FooterContent>
-                        <FooterRow around='xs' center='xs' end='sm'>
-                            <Col xs={6} sm={4}>
-                                <FooterColumn>
-                                    <FooterContentHeader>How do I connect with City Hall?</FooterContentHeader>
-                                    <FooterLink to={searchPageRoute}>
-                                        Connect with City Hall
-                                    </FooterLink>
-                                </FooterColumn>
-                            </Col>
-                            <Col xs={6} sm={4}>
-                                <FooterColumn>
-                                    <FooterContentHeader>How do I write my email?</FooterContentHeader>
-                                    <FooterLink to={homePageRoute}>
-                                        Email resources
-                                    </FooterLink>
-                                    <Button buttonStyle={ButtonStyle.SECONDARY} onClick={() => console.log("help!") }>Help</Button>
-                                </FooterColumn>
-                            </Col>
-                        </FooterRow>
-                        <Col xs={10} xsOffset={1}>
-                            <Row start='xs' middle='xs'>
-                                <MonumLogo src={monumlogo}/>
-                                <FooterLink to={monumRoute}>
-                                    Mayor’s Office of New Urban Mechanics
-                                </FooterLink>
-                            </Row>
-                        </Col>
-                    </FooterContent>
-                </Row>
-                
-            </Col>
-        </footer>
+        <StyledFooter>
+            <FooterImage src={footerPeople}/>
+            <FooterContent>
+                <LinkGroup>
+                    {props.footerLinks.map((link, key) => {
+                        return (
+                            <FooterLink to={link.linkURL}>
+                                {link.linkTitle}
+                            </FooterLink>
+                        )
+                    })}
+                </LinkGroup>
+                <FooterGroup>
+                    <MonumLogo src={monumlogo}/>
+                    <A href={props.departmentLink.linkURL} target='_blank'>
+                        {props.departmentLink.linkTitle}
+                    </A>
+                </FooterGroup>  
+            </FooterContent>
+        </StyledFooter>
+    )
+}
+
+export const Footer: React.FC = props => {
+    const links: ILink[] = [
+        { linkTitle: 'FAQ', linkURL: '' },
+        { linkTitle: 'Conversation Guide', linkURL: '' },
+        { linkTitle: 'Email Us', linkURL: ''},
+     ]
+
+     const deplink = {
+         linkTitle: `MAYOR'S OFFICE OF NEW URBAN MECHANICS`,
+         linkURL: monumRoute
+     }
+
+    return (
+        <DisconnectedFooter footerLinks={links} departmentLink={deplink}/>
     )
 }
 

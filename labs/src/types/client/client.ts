@@ -35,3 +35,8 @@ export interface IFilter {
     selectedFilters: string[];
     id: string; // ID of the fitler. Should be unique.
 }
+
+export interface ILink {
+    linkTitle: string;
+    linkURL: string;
+}
