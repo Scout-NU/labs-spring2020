@@ -1,13 +1,11 @@
 import React from 'react';
-import footer from '../../images/global/footer-people.svg';
+import footerPeople from '../../images/global/footer-people.svg';
 import monumlogo from '../../images/global/monumlogo.svg';
 import styled from '../../theme/Theme';
-import { Col, Row } from 'react-flexbox-grid';
-import { H4, NavigationLink } from '../atoms/Typography';
+import { NavigationLink, A } from '../atoms/Typography';
 import { lunchboxColors } from '../../theme/lunchbox';
-import Button, { ButtonStyle } from '../atoms/Button';
 import device from '../../styles/breakpoints';
-import { searchPageRoute, monumRoute, homePageRoute } from '../../var/routes';
+import { monumRoute } from '../../var/routes';
 import { ILink } from '../../types/client/client';
 
 interface IFooterProps {
@@ -24,7 +22,6 @@ const FooterImage = styled.img`
 `
 
 const FooterLink = styled(NavigationLink)`
-    font-weight: bolder;
     margin-left: 1em;
 `
 
@@ -38,39 +35,53 @@ const StyledFooter = styled.footer`
 
 const FooterGroup = styled.div`
     display: flex;
+    flex-direction: row;
+    width: 50%;
     align-items: flex-end;
-    flex-basis: 100%;
 
     @media ${device.tablet} {
-        flex-direction: row;
-        flex-basis: 50%;
+        width: 100%;
+    }
+`
+
+const LinkGroup = styled(FooterGroup)`
+    align-items: flex-end;
+    justify-content: flex-end;
+
+    @media ${device.tablet} {
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+
+        & ${NavigationLink} {
+            margin-bottom: 2em;
+        }
     }
 `
 
 const FooterContent = styled.div`
-    flex: 0 1 auto;
-    flex-wrap: wrap;
+    display: flex;
     flex-direction: row-reverse;
     background-color: ${ lunchboxColors.poptart };
-    /* width: 100%; */
     height: 5%;
-    padding: 2em 5em 3em;
+    padding: 3em 5em 3em 8em;
     border-radius: 175px 0 0 0;
     justify-content: space-around;
 
     @media ${device.tablet} {
         border-radius: 0;
         flex-direction: row;
-        padding: 0 3em;
+        flex-wrap: wrap;
+        padding: 3em 2em 3em;
     }
 `
 
 const DisconnectedFooter: React.FC<IFooterProps> = props => {
     return (
         <StyledFooter>
-            <FooterImage src={footer}/>
+            <FooterImage src={footerPeople}/>
             <FooterContent>
-                <FooterGroup>
+                <LinkGroup>
                     {props.footerLinks.map((link, key) => {
                         return (
                             <FooterLink to={link.linkURL}>
@@ -78,12 +89,12 @@ const DisconnectedFooter: React.FC<IFooterProps> = props => {
                             </FooterLink>
                         )
                     })}
-                </FooterGroup>
+                </LinkGroup>
                 <FooterGroup>
                     <MonumLogo src={monumlogo}/>
-                    <FooterLink to={props.departmentLink.linkURL}>
+                    <A href={props.departmentLink.linkURL} target='_blank'>
                         {props.departmentLink.linkTitle}
-                    </FooterLink>
+                    </A>
                 </FooterGroup>  
             </FooterContent>
         </StyledFooter>
