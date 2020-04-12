@@ -8,9 +8,10 @@ import { lunchboxColors } from '../../theme/lunchbox';
 import Button, { ButtonStyle } from '../atoms/Button';
 import device from '../../styles/breakpoints';
 import { searchPageRoute, monumRoute, homePageRoute } from '../../var/routes';
+import { ILink } from '../../types/client/client';
 
 interface IFooterProps {
-
+    footerLinks: ILink[];
 }
 
 const FooterImage = styled.img`
@@ -19,29 +20,16 @@ const FooterImage = styled.img`
 `
 
 const FooterContent = styled.div`
-    background-color: ${ lunchboxColors.gusher };
+    background-color: ${ lunchboxColors.poptart };
     width: 100%;
-`
+    height: 5%;
+    padding: 0 3em 3em;
 
-const FooterContentHeader = styled(H4)`
-    font-weight: bolder;
-    color: white;
-    margin-bottom: 1em;
 `
 
 const FooterLink = styled(NavigationLink)`
-    color: white;
-    font-weight: lighter;
-    margin-bottom: 1em;
-
-    &:visited {
-        color: white;
-    }
-`
-
-const FooterColumn = styled.div`
-    text-align: left;
-    padding-bottom: 4em;
+    font-weight: bolder;
+    margin-left: 1em;
 `
 
 const FooterRow = styled(Row)`
@@ -53,48 +41,54 @@ const FooterRow = styled(Row)`
 `
 
 const MonumLogo = styled.img`
-    margin-bottom: 4em;
+    max-height: 5em;
 `
 
-const Footer: React.FC<IFooterProps> = props => {
+const DisconnectedFooter: React.FC<IFooterProps> = props => {
     return (
         <footer>
             <Col xs>
                 <Row end='xs'>
                     <FooterImage src={footer}/>
                     <FooterContent>
-                        <FooterRow around='xs' center='xs' end='sm'>
-                            <Col xs={6} sm={4}>
-                                <FooterColumn>
-                                    <FooterContentHeader>How do I connect with City Hall?</FooterContentHeader>
-                                    <FooterLink to={searchPageRoute}>
-                                        Connect with City Hall
+                        <FooterRow around='xs' bottom='xs' center='xs' end='sm'>
+                            <Col xs={6}>
+                                <Row start='xs' bottom='xs'>
+                                    <MonumLogo src={monumlogo}/>
+                                    <FooterLink to={monumRoute}>
+                                        Mayor’s Office of New Urban Mechanics
                                     </FooterLink>
-                                </FooterColumn>
-                            </Col>
-                            <Col xs={6} sm={4}>
-                                <FooterColumn>
-                                    <FooterContentHeader>How do I write my email?</FooterContentHeader>
-                                    <FooterLink to={homePageRoute}>
-                                        Email resources
-                                    </FooterLink>
-                                    <Button buttonStyle={ButtonStyle.SECONDARY} onClick={() => console.log("help!") }>Help</Button>
-                                </FooterColumn>
+                                </Row>
+                            </Col>  
+                            <Col xs={6}>
+                                <Row end='xs'>
+                                    {props.footerLinks.map((link, key) => {
+                                        return (
+                                            <FooterLink to={link.linkURL}>
+                                                {link.linkTitle}
+                                            </FooterLink>
+                                        )
+                                    })}
+                                </Row>
                             </Col>
                         </FooterRow>
-                        <Col xs={10} xsOffset={1}>
-                            <Row start='xs' middle='xs'>
-                                <MonumLogo src={monumlogo}/>
-                                <FooterLink to={monumRoute}>
-                                    Mayor’s Office of New Urban Mechanics
-                                </FooterLink>
-                            </Row>
-                        </Col>
                     </FooterContent>
                 </Row>
                 
             </Col>
         </footer>
+    )
+}
+
+export const Footer: React.FC = props => {
+    const links: ILink[] = [
+        { linkTitle: 'FAQ', linkURL: '' },
+        { linkTitle: 'Conversation Guide', linkURL: '' },
+        { linkTitle: 'Email Us', linkURL: ''},
+     ]
+
+    return (
+        <DisconnectedFooter footerLinks={links}/>
     )
 }
 
