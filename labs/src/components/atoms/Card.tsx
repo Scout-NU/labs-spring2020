@@ -6,6 +6,7 @@ const Card = styled.div`
     background-color: white;
     padding: 1em;
     transition: all .5s;
+    width: 100%;
 
     &::hover {
         transform: scale(1.2);

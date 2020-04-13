@@ -31,6 +31,7 @@ const MonumLogo = styled.img`
 
 const StyledFooter = styled.footer`
     width: 100%;
+    margin-top: 4em;
 `
 
 const FooterGroup = styled.div`
@@ -84,7 +85,7 @@ const DisconnectedFooter: React.FC<IFooterProps> = props => {
                 <LinkGroup>
                     {props.footerLinks.map((link, key) => {
                         return (
-                            <FooterLink to={link.linkURL}>
+                            <FooterLink key={key} to={link.linkURL}>
                                 {link.linkTitle}
                             </FooterLink>
                         )

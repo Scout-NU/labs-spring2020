@@ -122,11 +122,9 @@ interface SearchBarData {
 const SearchBar: React.FC<ISearchBarProps> = props => {
     const [showSuggestions, toggleSuggestions] = React.useState(false);
     const formRef = React.useRef<FormHandles>(null);
-    const [query, setQuery] = React.useState(props.startQuery);
     const queryFieldName = 'query';
 
     const onSubmit: SubmitHandler<SearchBarData> = (data) => {
-        console.log("search")
         props.onSearch(data.query);
     };
 
@@ -162,7 +160,7 @@ const SearchBar: React.FC<ISearchBarProps> = props => {
                         name={queryFieldName}
                         type='text'
                         placeholder={props.hintText}
-                        defaultValue={query}
+                        defaultValue={props.startQuery}
                     />
                     <CloseButton src={closebutton} onClick={() => onClear()}/>
                 </SearchBarGroup>
