@@ -46,8 +46,8 @@ class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> 
 
     constructor(props: IFilterGroupProps) {
         super(props);
-        console.log('new')
         this.inputRefs = [];
+        console.log(props.filters)
         this.state = {
             filters: props.filters
         }

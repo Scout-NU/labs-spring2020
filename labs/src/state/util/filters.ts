@@ -1,11 +1,14 @@
-export interface IFilterParser {
+import CaseInsensitiveMap from "./caseInsensitiveMap";
+
+export interface IQueryParser {
     getFilters: () => Map<string, string[]>;
     getSelectedOptions: (categoryName: string) => string[];
+    getQuery: () => string;
 }
 
 // TODO Test
-export class URLFilterParser implements IFilterParser {
-    private parsedFilters: Map<string, string[]> = new Map();
+export class URLQueryParser implements IQueryParser {
+    private parsedFilters: CaseInsensitiveMap<string, string[]> = new CaseInsensitiveMap();
 
     constructor(params: URLSearchParams) {
         let allParams = params.entries();
@@ -23,12 +26,18 @@ export class URLFilterParser implements IFilterParser {
     }
 
     getFilters(): Map<string, string[]> {
-        return new Map(this.parsedFilters);
+        return new CaseInsensitiveMap(this.parsedFilters);
     }
 
     getSelectedOptions(categoryName: string): string[] {
         let options = this.parsedFilters.get(categoryName);
         if (options) return options;
         return [];
+    }
+
+    getQuery(): string {
+        let query = this.parsedFilters.get('query');
+        if (query) return query[0];
+        return ''
     }
 }

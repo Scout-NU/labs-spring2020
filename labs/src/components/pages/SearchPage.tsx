@@ -1,17 +1,16 @@
 import React from 'react';
 import HeaderBlob from '../atoms/HeaderBlob';
-import { lunchboxColors } from '../../theme/lunchbox';
-import { H1, H4, H2 } from '../atoms/Typography';
+import { H4, H2 } from '../atoms/Typography';
 import { Col, Row } from 'react-flexbox-grid';
 import styled from '../../theme/Theme';
 import devices from '../../styles/breakpoints';
-import SearchBar from '../molecules/SearchBar';
 import { IPerson } from '../../types/client/client';
 import PersonPreview from '../molecules/PersonPreview';
 import useProfileRepository from '../../state/ambassador/service';
 import { isAsset, isEntry, ILink } from '../../types/cms';
 import { IAmbassador, IProblemTag } from '../../types/cms/generated';
 import SearchGroup from '../organisms/SearchGroup';
+import { URLQueryParser } from '../../state/util/filters';
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -85,12 +84,9 @@ const SearchPage: React.FC = () => {
             .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log(error));
         } else {
             // TODO: pull into router?
-            let params = new URLSearchParams(window.location.search);
-            let query = params.get('query');
-            let parsedParams = new Map<string, string[]>();
-            
-            console.log(parsedParams)
-            profileRepository.searchProfiles(query ? query : '', parsedParams)
+            let params = new URLQueryParser(new URLSearchParams(window.location.search));
+            profileRepository.searchProfiles(params.getQuery(), params.getFilters())
+            .then(res => {setAmbassadors(mapAmbassadors(res))}).catch(error => console.log(error));
         }
     }
 
