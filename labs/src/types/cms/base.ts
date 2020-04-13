@@ -7,6 +7,20 @@ export interface IEntry<TFields extends JsonObject> {
   fields: TFields
 }
 
+export interface ContentfulIncludedLinks {
+  Entry: any[];
+  Asset: IAsset[];
+}
+
+export interface ContentfulBaseResponse<EntryType> {
+  sys: any;
+  total: number;
+  skip: number;
+  limit: number;
+  items: Resolved<EntryType>[];
+  includes?: ContentfulIncludedLinks;
+}
+
 export class Entry<TFields extends JsonObject> implements IEntry<TFields> {
   public readonly sys!: ISys<'Entry'>
   public readonly fields!: TFields

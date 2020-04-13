@@ -14,7 +14,7 @@ const HeaderBlobContainer = styled.div`
     top: 0;
     z-index: -1;
 
-    width: 80%;
+    width: 95%;
     
     @media ${devices.laptop} {
         width: 100%;

@@ -21,7 +21,7 @@ export const H2 = styled.h2`
     font-family: ${ props => props.theme.typography.fontFamily };
     font-weight: ${ props => props.theme.typography.h2.fontWeight };
     font-size: ${ props => scaleFont(props.theme.typography.h2) };
-    margin: 0;
+    margin: 0 0 1em 0;
 `
 
 export const H3 = styled.h3`
@@ -35,7 +35,7 @@ export const H4 = styled.h4`
     font-family: ${ props => props.theme.typography.fontFamily };
     font-weight: ${ props => props.theme.typography.h4.fontWeight };
     font-size: ${ props => scaleFont(props.theme.typography.h4) };
-    margin: 0;
+    margin: 0 0 1em 0;
 `
 
 export const H5 = styled.h5`

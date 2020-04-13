@@ -29,7 +29,15 @@ interface IDepartmentResponsibility {
     description: string;
 }
 
+export interface IFilter {
+    filterName: string;
+    filterLabels: string[];
+    selectedFilters: string[];
+    id: string; // ID of the fitler. Should be unique.
+}
+
 export interface ILink {
     linkTitle: string;
     linkURL: string;
 }
+
