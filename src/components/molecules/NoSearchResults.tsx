@@ -53,7 +53,7 @@ const NoSearchResults: React.FC<INoSearchResultsProps> = props => {
         <Card>
             <NoResultsWrapper>
                 <ImageWrapper>
-                    <img src={noResults}/>
+                    <img src={noResults} alt='Sad person that is looking for something but cannot find it'/>
                 </ImageWrapper>
                 <TextWrapper>
                     <H5> {props.header} </H5>

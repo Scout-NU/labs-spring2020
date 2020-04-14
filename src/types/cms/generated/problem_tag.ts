@@ -16,7 +16,7 @@ export function isProblemTag(entry: IEntry<any>): entry is IProblemTag {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'problemTag'
+    entry.sys.contentType.sys.id === 'problemTag'
 }
 
 export class ProblemTag extends Entry<IProblemTagFields> implements IProblemTag {
