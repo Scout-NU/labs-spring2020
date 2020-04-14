@@ -10,10 +10,10 @@ import { IPerson } from '../../types/client/client';
 
 const SearchPage: React.FC = () => {
     const [ambassadors, setAmbassadors] = React.useState<IPerson[]>([]);
-    const profileRepository = useProfileRepository();
     const [loading, setLoading] = React.useState(true);
 
     const searchAmbassadors = () => {
+        let profileRepository = useProfileRepository();
         if (window.location.search === "") {
             profileRepository.getAllProfiles()
             .then(res => {

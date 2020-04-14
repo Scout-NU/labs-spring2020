@@ -10,10 +10,10 @@ const SearchGroup: React.FC = props => {
     const [filters, setFilters] = React.useState<IFilter[]>([]);
     const [query, setQuery] = React.useState("");
     const [loadingFilters, setLoading] = React.useState(true);
-    const filterService = getFilterService();
     
     React.useEffect(() => {
         async function getSearchData() {
+            let filterService = getFilterService();
             let parsedQuery = new URLQueryParser(new URLSearchParams(window.location.search));
             filterService.getAllFilters()
             .then(res => {

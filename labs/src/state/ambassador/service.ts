@@ -7,7 +7,7 @@ export interface IProfileService {
     searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]>; 
 }
 
-export default function useProfileService(): IProfileService {
+export default function getProfileService(): IProfileService {
     return {
         getAllProfiles: getAllProfiles,
         searchProfiles: searchProfiles
