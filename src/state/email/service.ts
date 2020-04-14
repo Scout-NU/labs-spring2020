@@ -5,7 +5,7 @@ interface IEmailResponse {
 
 
 export interface IEmailService {
-    sendEmail(): Promise<IEmailResponse>;
+    sendEmail(recipientEmail: string, message: string): Promise<IEmailResponse>;
 }
 
 export default function getEmailService(): IEmailService {
@@ -14,9 +14,27 @@ export default function getEmailService(): IEmailService {
     }
 }
 
-const emailBaseURL = `${process.env.REACT_APP_SENDGRID_SEND_URL}`;
+const emailBaseURL = `${process.env.REACT_APP_EMAIL_URL}`;
 
-async function sendEmail(): Promise<IEmailResponse> {
+async function sendEmail(recipientEmail: string, message: string): Promise<IEmailResponse> {
+    // ... Call email function here
+    const emailResponse = await fetch(
+        emailBaseURL,
+        {
+            method: "POST",
+            headers: new Headers({
+                "message": message,
+                "to": recipientEmail,
+            })
+        })
+
+    if (!emailResponse.ok) {
+        // TODO: Make failed network request better
+        throw Error(`${emailResponse.status}\n${emailResponse.statusText}`)
+    };
+
+    console.log(emailResponse);
+
     return {
         successful: true,
         message: 'idk man'

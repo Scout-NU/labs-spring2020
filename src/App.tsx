@@ -12,6 +12,7 @@ import {
   Route,
 } from "react-router-dom";
 import SearchPage from './connectors/pages/ConnectedSearchPage';
+import EmailForm from './components/organisms/EmailForm';
 
 
 const Site = styled.div`
@@ -48,6 +49,8 @@ const App: React.FC = () => {
                 <SearchPage />
               </Route>
               <Route path="/">
+              <EmailForm/>
+
                 <HomePage/>
               </Route>
             </Switch>
