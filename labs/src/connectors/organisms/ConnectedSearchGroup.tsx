@@ -1,7 +1,7 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { URLQueryParser } from '../../state/util/filters';
-import useFilterService from '../../state/filter/service';
+import getFilterService from '../../state/filter/service';
 import { IFilter } from '../../types/client/client';
 import DisconnectedSearchGroup from '../../components/organisms/SearchGroup';
 
@@ -10,7 +10,7 @@ const SearchGroup: React.FC = props => {
     const [filters, setFilters] = React.useState<IFilter[]>([]);
     const [query, setQuery] = React.useState("");
     const [loadingFilters, setLoading] = React.useState(true);
-    const filterService = useFilterService();
+    const filterService = getFilterService();
     
     React.useEffect(() => {
         async function getSearchData() {

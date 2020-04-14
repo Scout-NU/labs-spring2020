@@ -8,7 +8,7 @@ export interface IFilterService {
     getAllFilters(): Promise<IFilter[]>;
 }
 
-export default function useFilterService(): IFilterService {
+export default function getFilterService(): IFilterService {
     return {
         getAllFilters: getAllFilters,
     }
