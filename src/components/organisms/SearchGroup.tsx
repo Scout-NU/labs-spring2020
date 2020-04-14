@@ -3,7 +3,6 @@ import SearchBar from '../molecules/SearchBar';
 import { Col, Row } from 'react-flexbox-grid';
 import FilterGroup from './FilterGroup';
 import { IFilter } from '../../types/client/client';
-import Spinner from '../atoms/Spinner';
 
 
 // TODO: add individual callbacks for filters and querying

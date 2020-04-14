@@ -4,11 +4,8 @@ import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../theme/Theme';
-import Button, { ButtonStyle } from '../atoms/Button';
 import Card from '../atoms/Card';
 import TagGroup from '../molecules/TagGroup';
-import Tag from '../atoms/Tag';
-import { lunchboxColors } from '../../theme/lunchbox';
 
 
 interface IPersonPreviewProps {

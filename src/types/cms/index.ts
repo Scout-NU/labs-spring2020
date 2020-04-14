@@ -1,4 +1,3 @@
-import { IEntry, ILink } from './base'
 import { TypeDirectory } from './generated'
 
 export * from './base'

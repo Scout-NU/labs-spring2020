@@ -6,7 +6,7 @@ import { IFilter } from '../../types/client/client';
 import DisconnectedSearchGroup from '../../components/organisms/SearchGroup';
 
 const SearchGroup: React.FC = props => {
-    const [suggestions, setSuggestions] = React.useState<string[]>(['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing']);
+    const suggestions = ['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing'];
     const [filters, setFilters] = React.useState<IFilter[]>([]);
     const [query, setQuery] = React.useState("");
     const [loadingFilters, setLoading] = React.useState(true);
