@@ -1,11 +1,11 @@
 import React from 'react';
-import { IProfile, IPerson } from '../../types/client/client';
+import { IProfile } from '../../types/client/client';
 import HeaderBlob from '../atoms/HeaderBlob';
 import styled from '../../theme/Theme';
 import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import Button, { ButtonStyle } from '../atoms/Button';
-import { H1, H4, P, H3, H5 } from '../atoms/Typography';
+import { H1, P, H3 } from '../atoms/Typography';
 import TagGroup from '../molecules/TagGroup';
 import PersonPreview from '../molecules/PersonPreview';
 
@@ -113,7 +113,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                 </Row>
             </DepartmentSection>
             
-            { info.relatedPeople.length != 0 && 
+            { info.relatedPeople.length !== 0 && 
                 <RelatedPeopleSecton>
                     <Row center="xs">
                         <Col xs={10}>
@@ -139,15 +139,22 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
 
 const ProfilePage: React.FC = () => {
     // const person: IPerson = tempPeople[0];
-    const profile = {
-            
+    const profile: IProfile = {
+            firstName: 'no',
+            lastName: 'no',
+            id: 'no',
+            relatedPeople: [],
+            profileImageUrl: '',
+            positionTitle: '',
+            description: '',
+            genderPronouns: '',
+            tags: [],
             priorityStatement: 'I care about making walking safer and more enjoyable, and fixing the problems that frustrate our residents the most.',
             knowledgeableTopics: ['Paving sidewalks and streets', 'Keeping sidewalks clean', 'Adding and improving pedestrian crosswalks']
         }
 
     return (
-        <div></div>
-        // <DisconnectedProfilePage info={profile}/>
+        <DisconnectedProfilePage info={profile}/>
     )
 }
 

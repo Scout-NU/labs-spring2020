@@ -2,12 +2,12 @@ import React from 'react';
 import header from '../../images/home/home-header.svg';
 import vic from '../../images/home/vic-0.svg';
 import styled from '../../theme/Theme';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 import { lunchboxColors } from '../../theme/lunchbox';
 import JourneyStep, {StepContainer} from '../molecules/JourneyBlurb';
-import { P, H1, H2, H3, H4, NavigationLink, scaleFont } from '../atoms/Typography';
+import { H1, H2, H3, H4, scaleFont } from '../atoms/Typography';
 import devices from '../../styles/breakpoints';
-import Button, { StyledButton, ButtonStyle } from '../atoms/Button';
+import { StyledButton, ButtonStyle } from '../atoms/Button';
 
 
 interface IHomePageProps {

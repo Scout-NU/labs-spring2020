@@ -1,9 +1,6 @@
 import React from 'react'
-import vic from '../../images/home/vic-0.svg';
-
-import { Row } from 'react-flexbox-grid';
 import styled from '../../theme/Theme';
-import { H2, H4, P } from '../atoms/Typography';
+import { H2, P } from '../atoms/Typography';
 
 interface JourneyStepProps {
     title: string;

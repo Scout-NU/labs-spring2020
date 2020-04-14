@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '../../theme/Theme';
-import { P, NavigationLink } from '../atoms/Typography';
-import { Row, Col } from 'react-flexbox-grid';
+import { NavigationLink } from '../atoms/Typography';
 import devices from '../../styles/breakpoints';
 import burger from '../../images/global/burger.svg'
 import { lunchboxColors } from '../../theme/lunchbox';
@@ -103,7 +102,7 @@ export class Header extends React.Component<IHeaderProps> {
         if (node) {
             const display = node?.style.display;
 
-            if (display == 'none' || !display) {
+            if (display === 'none' || !display) {
                 node.style.display = 'flex';
             } else {
                 node.style.display = 'none';

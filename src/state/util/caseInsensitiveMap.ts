@@ -11,7 +11,7 @@ class CaseInsensitiveMap<T, U> extends Map<T, U> {
 
     getStringKey(key: T): T {
         if (typeof key === 'string') {
-            return <T><any>key.toLowerCase();
+            return (key.toLowerCase() as any) as T;
         }
 
         return key;

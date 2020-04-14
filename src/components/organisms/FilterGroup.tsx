@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '../../theme/Theme';
-import Button, { StyledButton, ButtonStyle } from '../atoms/Button';
+import { StyledButton, ButtonStyle } from '../atoms/Button';
 import { Row, Col } from 'react-flexbox-grid';
 import { IFilter } from '../../types/client/client';
 import SearchFilter from '../molecules/SearchFilter';
