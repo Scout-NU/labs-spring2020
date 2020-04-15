@@ -1,16 +1,18 @@
 import { IAmbassador } from '../../types/cms/generated';
-import { isEntry, ContentfulBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
+import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
 
 
 export interface IProfileService {
     getAllProfiles(): Promise<IAmbassador[]>;
     searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]>; 
+    getProfileById(id: string): Promise<IAmbassador>;
 }
 
 export default function getProfileService(): IProfileService {
     return {
         getAllProfiles: getAllProfiles,
-        searchProfiles: searchProfiles
+        searchProfiles: searchProfiles,
+        getProfileById: getProfileById
     }
 }
 
@@ -18,6 +20,12 @@ const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content
 
 async function getAllProfiles(): Promise<IAmbassador[]> {
     return getProfilesWhere(allProfilesQuery)
+}
+
+async function getProfileById(id: string): Promise<IAmbassador> {
+    let byIdQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries/${id}`
+    let profile = await getProfilesWhere(byIdQuery)
+    return profile[0];
 }
 
 async function searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]> {
@@ -69,7 +77,7 @@ async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
         throw Error(`${profileResponse.status}\n${profileResponse.statusText}`)
     };
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-    let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();    
+    let reducedProfiles: ContentfulListBaseResponse<IAmbassador> = await profileResponse.json();    
     return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
 }
 

@@ -12,7 +12,7 @@ export interface ContentfulIncludedLinks {
   Asset: IAsset[];
 }
 
-export interface ContentfulBaseResponse<EntryType> {
+export interface ContentfulListBaseResponse<EntryType> {
   sys: any;
   total: number;
   skip: number;

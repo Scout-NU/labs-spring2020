@@ -1,5 +1,5 @@
 import { IDepartment } from '../../types/cms/generated';
-import { ContentfulBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
+import { ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
 
 
 export interface IDepartmentService {
@@ -34,7 +34,7 @@ async function getDepartmentsWhere(query: string): Promise<IDepartment[]> {
         throw Error(`${departmentResponse.status}\n${departmentResponse.statusText}`)
     };
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-    let reducedDepartments: ContentfulBaseResponse<IDepartment> = await departmentResponse.json();
+    let reducedDepartments: ContentfulListBaseResponse<IDepartment> = await departmentResponse.json();
     return reducedDepartments.items.map((department) => resolveDepartmentLinks(department, reducedDepartments.includes!!))
 }
 

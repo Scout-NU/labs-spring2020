@@ -1,36 +1,49 @@
+import IEmailParameters from "../../types/cms/email";
+
+
 interface IEmailResponse {
     successful: boolean;
     message: string;
 }
 
-
 export interface IEmailService {
-    sendEmail(recipientEmail: string, message: string): Promise<IEmailResponse>;
+    sendAmbassadorEmail(ambassadorId: string, senderEmail: string, emailSubject: string, emailMessage: string): Promise<IEmailResponse>;
 }
 
 export default function getEmailService(): IEmailService {
     return {
-        sendEmail: sendEmail
+        sendAmbassadorEmail: sendAmbassadorEmail
     }
 }
 
 const emailBaseURL = `${process.env.REACT_APP_EMAIL_URL}`;
 
-async function sendEmail(recipientEmail: string, message: string): Promise<IEmailResponse> {
-    // ... Call email function here
+
+async function sendAmbassadorEmail(ambassadorId: string, senderEmail: string, emailSubject: string, emailMessage: string): Promise<IEmailResponse> {
+    const emailHeaders: IEmailParameters = {
+        ambassadorId: ambassadorId,
+        content: {
+            senderEmail: senderEmail,
+            emailSubject: emailSubject,
+            emailMessage: emailMessage
+        }
+    }
+
+    const data = JSON.stringify(emailHeaders);
+    console.log(data)
     const emailResponse = await fetch(
         emailBaseURL,
         {
             method: "POST",
             headers: new Headers({
-                "message": message,
-                "to": recipientEmail,
+                data: JSON.stringify(emailHeaders)
             })
         })
 
     if (!emailResponse.ok) {
         // TODO: Make failed network request better
-        throw Error(`${emailResponse.status}\n${emailResponse.statusText}`)
+        console.log(emailResponse)
+        // throw Error(`${emailResponse.status}\n${emailResponse.statusText}`)
     };
 
     console.log(emailResponse);

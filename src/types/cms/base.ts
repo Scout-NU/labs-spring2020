@@ -12,13 +12,18 @@ export interface ContentfulIncludedLinks {
   Asset: IAsset[];
 }
 
-export interface ContentfulBaseResponse<EntryType> {
+export interface ContentfulListBaseResponse<EntryType> {
   sys: any;
   total: number;
   skip: number;
   limit: number;
   items: Resolved<EntryType>[];
   includes?: ContentfulIncludedLinks;
+}
+
+export interface ContentfulSingleBaseResponse<EntryFieldType> {
+  sys: any;
+  fields: EntryFieldType;
 }
 
 export class Entry<TFields extends JsonObject> implements IEntry<TFields> {

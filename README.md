@@ -1,44 +1,45 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# [Student Action Portal](https://monum-site.netlify.com/)
 
-## Available Scripts
 
-In the project directory, you can run:
+## Development
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### 1. Install Dependencies
+Run `yarn install` to install dependencies.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+#### 2. Set up .env
+This app uses environment variables to keep secrets safe. Netlify is configured to take care of these variables in production, but you need to configure your environment with them manually. In the root of your repository, create a file called `.env`. **Never commit this file to source control.** The `.gitignore` file prevents this from happening by nature. 
 
-### `yarn test`
+Your `.env` should contain the following values in order for everything to work properly (without the comments):
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+// Found in Contentful settings
+REACT_APP_CONTENTFUL_API_KEY="" 
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+// Space ID and branch are also found in Contentful settings
+REACT_APP_CMS_BASE_URL="https://cdn.contentful.com/spaces/<CONTENFUL SPACE ID>/environments/<BRANCH>" 
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+// You will have to create a SendGrid API key for yourself (write it down!)
+REACT_APP_SENDGRID_API_KEY="" 
 
-### `yarn eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+// This an email that is a verified sender in SendGrid
+REACT_APP_SENDER_EMAIL="" 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+// This is the route to the AWS Lambda function that send the emails
+REACT_APP_EMAIL_URL="/.netlify/functions/sendemail" 
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+#### 3. Start local development server
+1. Open a Terminal window. Run `yarn start` to launch the development server at `http://localhost:3000`.
+2. Open another Terminal window. Run `yarn start:lambda`. This will launch the local Netlify lambda server at `http://localhost:9000`.
 
-## Learn More
+This allows this app to send emails without having to configure a Node.js server. See the docs on [Netlify Create React App Lambda](https://github.com/netlify/create-react-app-lambda), and [Netlify Lambda](https://github.com/netlify/netlify-lambda#netlify-lambda) for more context on what is going on.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Deployment
+This project is currently deployed with Netlify. It makes use of Netlify's continuous integration features, no there should be no manual deploys or builds (i.e., you should not be running either `netlify deploy` or `yarn build` manually).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+When you want to deploy something to production, make a pull request with your branch against `develop`. Netlify checks will run to make sure nothing is wrong. If they pass, you can merge, and a new version will be deployed to the live site.
