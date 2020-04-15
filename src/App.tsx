@@ -49,8 +49,6 @@ const App: React.FC = () => {
                 <SearchPage />
               </Route>
               <Route path="/">
-              <EmailForm/>
-
                 <HomePage/>
               </Route>
             </Switch>
