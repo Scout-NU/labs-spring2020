@@ -20,7 +20,7 @@
     "jsx": "react"
   },
   "include": [
-    "src"
+    "src", "webpack.functions.js", "built-lambda/sendemail/sendemail.js"
   ],
   "types": [
     "contentful-management"

@@ -1,5 +1,5 @@
 import { IProblemTag } from '../../types/cms/generated';
-import { ContentfulBaseResponse } from '../../types/cms/base';
+import { ContentfulListBaseResponse } from '../../types/cms/base';
 
 
 export interface IProblemTagService {
@@ -34,6 +34,6 @@ async function getProblemTagsWhere(query: string): Promise<IProblemTag[]> {
         throw Error(`${problemTagResponse.status}\n${problemTagResponse.statusText}`)
     };
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-    let reducedTags: ContentfulBaseResponse<IProblemTag> = await problemTagResponse.json();
+    let reducedTags: ContentfulListBaseResponse<IProblemTag> = await problemTagResponse.json();
     return reducedTags.items;
 }

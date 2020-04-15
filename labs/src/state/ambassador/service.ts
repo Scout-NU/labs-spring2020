@@ -1,5 +1,5 @@
 import { IAmbassador } from '../../types/cms/generated';
-import { isEntry, ContentfulBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
+import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
 
 
 export interface IProfileService {
@@ -69,7 +69,7 @@ async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
         throw Error(`${profileResponse.status}\n${profileResponse.statusText}`)
     };
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-    let reducedProfiles: ContentfulBaseResponse<IAmbassador> = await profileResponse.json();    
+    let reducedProfiles: ContentfulListBaseResponse<IAmbassador> = await profileResponse.json();    
     return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
 }
 
