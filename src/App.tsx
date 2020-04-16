@@ -12,7 +12,6 @@ import {
   Route,
 } from "react-router-dom";
 import SearchPage from './connectors/pages/ConnectedSearchPage';
-import EmailForm from './components/organisms/EmailForm';
 
 
 const Site = styled.div`

@@ -19,21 +19,17 @@ const SearchPage: React.FC = () => {
                 let data = item.fields;
                 let asset = item.fields.profilePicture!!;
                 let tags = item.fields.tags;
-
-                if (isAsset(asset)) {
-                    return {
-                        id: item.sys.id,
-                        profileImageUrl: asset.fields.file.url!!,
-                        firstName: data.firstName ? data.firstName : '',
-                        lastName: data.lastName ? data.lastName : '',
-                        positionTitle: data.positionTitle? data.positionTitle : '',
-                        description: data.ambassadorDescription? data.ambassadorDescription : '',
-                        genderPronouns: data.preferredPronouns ? data.preferredPronouns.join("/") : '',
-                        tags: tags? resolveTags(tags) : []
-                    }
+                
+                return {
+                    id: item.sys.id,
+                    profileImageUrl: isAsset(asset) && asset.fields.file.url ? asset.fields.file.url : '',
+                    firstName: data.firstName ? data.firstName : '',
+                    lastName: data.lastName ? data.lastName : '',
+                    positionTitle: data.positionTitle? data.positionTitle : '',
+                    description: data.ambassadorDescription? data.ambassadorDescription : '',
+                    genderPronouns: data.preferredPronouns ? data.preferredPronouns.join("/") : '',
+                    tags: tags? resolveTags(tags) : []
                 }
-                console.log(item)
-                throw Error("SHOOT YOU SHOULD HAVE FIXED THIS BY NOW")
             })
         }
 
