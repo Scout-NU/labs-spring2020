@@ -7,7 +7,6 @@ export const P = styled.p`
     font-family: ${ props => props.theme.typography.fontFamily };
     font-size: ${ props => scaleFont(props.theme.typography.p) };
     line-height: ${ props => scaleFont({ fontMax: props.theme.typography.p.lineHeightMax, fontMin: props.theme.typography.p.lineHeightMin })};
-
 `
 
 export const H1 = styled.h1`
