@@ -63,9 +63,9 @@ export const StyledButton = styled.button<ButtonProps>`
     }
 `
 
-const Button: React.FC<ButtonProps> = (props) => {
+const Button: React.FC<React.ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps> = (props) => {
     return (
-        <StyledButton buttonStyle={props.buttonStyle} onClick={() => { if (props.onClick) props.onClick() } }>{props.children}</StyledButton>
+        <StyledButton {...props} buttonStyle={props.buttonStyle} onClick={() => { if (props.onClick) props.onClick() } }>{props.children}</StyledButton>
     )
 }
 
