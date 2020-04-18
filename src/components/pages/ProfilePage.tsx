@@ -67,8 +67,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                     <Col xs={12} sm={11}>
                         <Row center="xs" start="xs">
                             <ProfileActionsWrapper xs={12} sm={4}>
-                                <CircleImage imageUrl={info.profileImageUrl} size='300px'/>
-                                <Button buttonStyle={ButtonStyle.SECONDARY} onClick={() => window.alert('No help yet!')}> Three steps for a great email </Button>
+                                <CircleImage imageUrl={info.profileImageUrl} size='300'/>
                                 <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => window.alert('No emailing yet!')}>Email me</Button>
                             </ProfileActionsWrapper>
 

@@ -14,7 +14,6 @@ const ProfilePage: React.FC = () => {
         async function getProfile() {
             const profileRepository = getProfileService();
             let id = window.location.pathname.split('/').pop();
-            console.log(id)
             
             if (!id) { 
                 setLoading(false);
@@ -23,9 +22,10 @@ const ProfilePage: React.FC = () => {
             else {
                 profileRepository.getProfileById(id)
                 .then(res => {
+                    console.log(mapAmbassadorToProfile(res))
                     setProfile(mapAmbassadorToProfile(res));
                     setLoading(false);
-                }).catch(error => { setLoading(false); });
+                }).catch(error => { console.log(error); setLoading(false); });
             }
         }
 
