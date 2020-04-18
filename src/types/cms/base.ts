@@ -24,6 +24,7 @@ export interface ContentfulListBaseResponse<EntryType> {
 export interface ContentfulSingleBaseResponse<EntryFieldType> {
   sys: any;
   fields: EntryFieldType;
+  includes?: ContentfulIncludedLinks;
 }
 
 export class Entry<TFields extends JsonObject> implements IEntry<TFields> {

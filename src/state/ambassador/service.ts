@@ -1,5 +1,6 @@
 import { IAmbassador } from '../../types/cms/generated';
 import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
+import { makeContentManagementGetRequest, validateResponse } from '../util/http';
 
 
 export interface IProfileService {
@@ -23,9 +24,9 @@ async function getAllProfiles(): Promise<IAmbassador[]> {
 }
 
 async function getProfileById(id: string): Promise<IAmbassador> {
-    let byIdQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries/${id}`
-    let profile = await getProfilesWhere(byIdQuery)
-    return profile[0];
+    let byIdQuery = `${allProfilesQuery}&sys.id=${id}`
+    let profiles = await getProfilesWhere(byIdQuery);
+    return profiles[0];  
 }
 
 async function searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]> {
@@ -46,39 +47,24 @@ async function searchProfiles(queryText: string, filters: Map<string, string[]>)
     return topicFilters ? filterByTag(topicFilters, result) : result;
 }
 
+
+async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
+    const profileResponse = await makeContentManagementGetRequest(query);
+    validateResponse(profileResponse);
+
+    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
+    let reducedProfiles: ContentfulListBaseResponse<IAmbassador> = await profileResponse.json();    
+    return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
+}
+
+
 // Sadly we cannot filter by tag in a network call with Contentful, so it must be done client side for now. Alas.
 function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbassador[] {
     // If there are no filters, don't filter.
     if (desiredTags.length === 0) return ambassadors
-
     const tagFilters: Set<string> = new Set(desiredTags);
-
-    // desiredTags.forEach((tag) => {
-    //     if (tag.fields.tagName !== undefined) {
-    //         tagFilters.add(tag.fields.tagName)
-    //     }
-    //  })
-
     return ambassadors.filter((ambassador) => 
         ambassador.fields.tags?.some((tag) => isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')))
-}
-
-async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
-    const profileResponse = await fetch(
-        query,
-        {
-            method: "GET",
-            headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-            })
-        })
-    if (!profileResponse.ok) {
-        // TODO: Make failed network request better
-        throw Error(`${profileResponse.status}\n${profileResponse.statusText}`)
-    };
-    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-    let reducedProfiles: ContentfulListBaseResponse<IAmbassador> = await profileResponse.json();    
-    return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
 }
 
 
@@ -95,3 +81,4 @@ function resolveAmbassadorLinks(person: IAmbassador, assets: ContentfulIncludedL
         }
     }
 }    
+

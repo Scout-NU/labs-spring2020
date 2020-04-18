@@ -2,7 +2,7 @@ import CaseInsensitiveMap from "./caseInsensitiveMap";
 
 export interface IQueryParser {
     getFilters: () => Map<string, string[]>;
-    getSelectedOptions: (categoryName: string) => string[];
+    getValuesForParameter: (categoryName: string) => string[];
     getQuery: () => string;
 }
 
@@ -29,7 +29,7 @@ export class URLQueryParser implements IQueryParser {
         return new CaseInsensitiveMap(this.parsedFilters);
     }
 
-    getSelectedOptions(categoryName: string): string[] {
+    getValuesForParameter(categoryName: string): string[] {
         let options = this.parsedFilters.get(categoryName);
         if (options) return options;
         return [];

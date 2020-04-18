@@ -3,15 +3,17 @@ import HomePage from './components/pages/HomePage';
 import lunchbox from './theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
 import { Header } from './components/organisms/Header';
-import ProfilePage from './components/pages/ProfilePage';
+import ProfilePage from './connectors/pages/ConnectedProfilePage';
 import Footer from './components/organisms/Footer';
 import styled from './theme/Theme';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 import SearchPage from './connectors/pages/ConnectedSearchPage';
+import NotFoundPage from './components/pages/404';
 
 
 const Site = styled.div`
@@ -41,15 +43,13 @@ const App: React.FC = () => {
           <Content>
             <Header/>
             <Switch>
-              <Route path="/profile">
-                <ProfilePage />
+              <Route path="/profile/:id" component={ProfilePage}/>
+              <Route path="/search" component={SearchPage}/>
+              <Route exact path="/home" component={HomePage}/>
+              <Route exact path="/">
+                <Redirect to={"/home"}/>
               </Route>
-              <Route path="/search">
-                <SearchPage />
-              </Route>
-              <Route path="/">
-                <HomePage/>
-              </Route>
+              <Route path="*" component={NotFoundPage}/>
             </Switch>
           </Content>
           <Footer/>

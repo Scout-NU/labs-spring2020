@@ -137,25 +137,4 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
     )
 }
 
-const ProfilePage: React.FC = () => {
-    // const person: IPerson = tempPeople[0];
-    const profile: IProfile = {
-            firstName: 'no',
-            lastName: 'no',
-            id: 'no',
-            relatedPeople: [],
-            profileImageUrl: '',
-            positionTitle: '',
-            description: '',
-            genderPronouns: '',
-            tags: [],
-            priorityStatement: 'I care about making walking safer and more enjoyable, and fixing the problems that frustrate our residents the most.',
-            knowledgeableTopics: ['Paving sidewalks and streets', 'Keeping sidewalks clean', 'Adding and improving pedestrian crosswalks']
-        }
-
-    return (
-        <DisconnectedProfilePage info={profile}/>
-    )
-}
-
-export default ProfilePage;
+export default DisconnectedProfilePage;

@@ -3,7 +3,7 @@ import DisconnectedSearchPage from "../../components/pages/SearchPage";
 import useProfileRepository from '../../state/ambassador/service';
 import { isAsset, isEntry, ILink } from '../../types/cms';
 import { IAmbassador, IProblemTag } from '../../types/cms/generated';
-import { URLQueryParser } from '../../state/util/filters';
+import { URLQueryParser } from '../../state/util/url';
 import { ISearchPageContent } from '../../types/client/page/searchPage';
 import { IPerson } from '../../types/client/client';
 
