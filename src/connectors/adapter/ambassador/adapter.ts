@@ -23,7 +23,8 @@ export function mapAmbassadorToPerson(ambassador: IAmbassador): IPerson {
         description: data.ambassadorDescription? data.ambassadorDescription : '',
         genderPronouns: data.preferredPronouns ? data.preferredPronouns.join("/") : '',
         tags: tags? resolveTags(tags) : [],
-        department: data.department ? resolveDepartmentType(resolveDepartmentLink(data.department)) : null
+        department: data.department ? resolveDepartmentType(resolveDepartmentLink(data.department)) : null,
+        
     }
 }
 

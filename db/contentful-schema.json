@@ -12,7 +12,7 @@
         "id": "ambassador",
         "type": "ContentType",
         "createdAt": "2020-04-01T02:26:55.307Z",
-        "updatedAt": "2020-04-01T04:54:08.342Z",
+        "updatedAt": "2020-04-19T02:34:05.923Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -20,8 +20,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 43,
-        "publishedAt": "2020-04-01T04:54:08.342Z",
+        "publishedVersion": 51,
+        "publishedAt": "2020-04-19T02:34:05.923Z",
         "firstPublishedAt": "2020-04-01T02:26:55.485Z",
         "createdBy": {
           "sys": {
@@ -37,8 +37,8 @@
             "id": "3pX7YsOjpb7mSbVTnW0pJN"
           }
         },
-        "publishedCounter": 22,
-        "version": 44,
+        "publishedCounter": 26,
+        "version": 52,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -168,22 +168,6 @@
           "omitted": false
         },
         {
-          "id": "problemTags",
-          "name": "Problem Tags",
-          "type": "Array",
-          "localized": false,
-          "required": false,
-          "validations": [
-          ],
-          "disabled": false,
-          "omitted": false,
-          "items": {
-            "type": "Symbol",
-            "validations": [
-            ]
-          }
-        },
-        {
           "id": "relatedAmbassadors",
           "name": "Related Ambassadors",
           "type": "Array",
@@ -236,7 +220,29 @@
             "validations": [
               {
                 "linkContentType": [
-                  "departmentProject"
+                  "ambassadorProjectAssociation"
+                ]
+              }
+            ],
+            "linkType": "Entry"
+          }
+        },
+        {
+          "id": "tags",
+          "name": "Problem Tags",
+          "type": "Array",
+          "localized": false,
+          "required": false,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false,
+          "items": {
+            "type": "Link",
+            "validations": [
+              {
+                "linkContentType": [
+                  "problemTag"
                 ]
               }
             ],
@@ -408,7 +414,7 @@
         "id": "departmentProject",
         "type": "ContentType",
         "createdAt": "2020-04-01T03:00:24.008Z",
-        "updatedAt": "2020-04-01T03:00:24.210Z",
+        "updatedAt": "2020-04-19T02:16:36.122Z",
         "environment": {
           "sys": {
             "id": "master",
@@ -416,8 +422,8 @@
             "linkType": "Environment"
           }
         },
-        "publishedVersion": 1,
-        "publishedAt": "2020-04-01T03:00:24.210Z",
+        "publishedVersion": 5,
+        "publishedAt": "2020-04-19T02:16:36.122Z",
         "firstPublishedAt": "2020-04-01T03:00:24.210Z",
         "createdBy": {
           "sys": {
@@ -433,8 +439,8 @@
             "id": "3pX7YsOjpb7mSbVTnW0pJN"
           }
         },
-        "publishedCounter": 1,
-        "version": 2,
+        "publishedCounter": 3,
+        "version": 6,
         "publishedBy": {
           "sys": {
             "type": "Link",
@@ -448,37 +454,9 @@
       "description": "",
       "fields": [
         {
-          "id": "department",
-          "name": "Department",
-          "type": "Link",
-          "localized": false,
-          "required": false,
-          "validations": [
-            {
-              "linkContentType": [
-                "department"
-              ]
-            }
-          ],
-          "disabled": false,
-          "omitted": false,
-          "linkType": "Entry"
-        },
-        {
           "id": "title",
           "name": "Title",
           "type": "Symbol",
-          "localized": false,
-          "required": false,
-          "validations": [
-          ],
-          "disabled": false,
-          "omitted": false
-        },
-        {
-          "id": "description",
-          "name": "Description",
-          "type": "Text",
           "localized": false,
           "required": false,
           "validations": [
@@ -499,6 +477,151 @@
           "linkType": "Asset"
         }
       ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "silnjjl59l7l"
+          }
+        },
+        "id": "form",
+        "type": "ContentType",
+        "createdAt": "2020-04-16T23:26:17.273Z",
+        "updatedAt": "2020-04-16T23:36:29.413Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 3,
+        "publishedAt": "2020-04-16T23:36:29.413Z",
+        "firstPublishedAt": "2020-04-16T23:26:17.445Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "3pX7YsOjpb7mSbVTnW0pJN"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "3pX7YsOjpb7mSbVTnW0pJN"
+          }
+        },
+        "publishedCounter": 2,
+        "version": 4,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "3pX7YsOjpb7mSbVTnW0pJN"
+          }
+        }
+      },
+      "displayField": null,
+      "name": "Form",
+      "description": "",
+      "fields": [
+        {
+          "id": "formFields",
+          "name": "formFields",
+          "type": "Object",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
+    },
+    {
+      "sys": {
+        "space": {
+          "sys": {
+            "type": "Link",
+            "linkType": "Space",
+            "id": "silnjjl59l7l"
+          }
+        },
+        "id": "ambassadorProjectAssociation",
+        "type": "ContentType",
+        "createdAt": "2020-04-19T02:32:30.984Z",
+        "updatedAt": "2020-04-19T02:57:58.651Z",
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        },
+        "publishedVersion": 3,
+        "publishedAt": "2020-04-19T02:57:58.651Z",
+        "firstPublishedAt": "2020-04-19T02:32:31.305Z",
+        "createdBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "3pX7YsOjpb7mSbVTnW0pJN"
+          }
+        },
+        "updatedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "3pX7YsOjpb7mSbVTnW0pJN"
+          }
+        },
+        "publishedCounter": 2,
+        "version": 4,
+        "publishedBy": {
+          "sys": {
+            "type": "Link",
+            "linkType": "User",
+            "id": "3pX7YsOjpb7mSbVTnW0pJN"
+          }
+        }
+      },
+      "displayField": "ambassadorNotes",
+      "name": "AmbassadorProjectAssociation",
+      "description": "",
+      "fields": [
+        {
+          "id": "departmentProject",
+          "name": "Department Project",
+          "type": "Link",
+          "localized": false,
+          "required": true,
+          "validations": [
+            {
+              "linkContentType": [
+                "departmentProject"
+              ]
+            }
+          ],
+          "disabled": false,
+          "omitted": false,
+          "linkType": "Entry"
+        },
+        {
+          "id": "ambassadorNotes",
+          "name": "AmbassadorNotes",
+          "type": "Text",
+          "localized": false,
+          "required": true,
+          "validations": [
+          ],
+          "disabled": false,
+          "omitted": false
+        }
+      ]
     }
   ],
   "editorInterfaces": [
@@ -513,7 +636,7 @@
             "linkType": "Space"
           }
         },
-        "version": 44,
+        "version": 52,
         "createdAt": "2020-04-01T02:26:55.597Z",
         "createdBy": {
           "sys": {
@@ -522,7 +645,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2020-04-01T04:54:08.766Z",
+        "updatedAt": "2020-04-19T02:34:06.236Z",
         "updatedBy": {
           "sys": {
             "id": "3pX7YsOjpb7mSbVTnW0pJN",
@@ -592,11 +715,6 @@
           "widgetNamespace": "builtin"
         },
         {
-          "fieldId": "problemTags",
-          "widgetId": "tagEditor",
-          "widgetNamespace": "builtin"
-        },
-        {
           "fieldId": "relatedAmbassadors",
           "settings": {
             "bulkEditing": false
@@ -611,6 +729,14 @@
         },
         {
           "fieldId": "projects",
+          "settings": {
+            "bulkEditing": false
+          },
+          "widgetId": "entryLinksEditor",
+          "widgetNamespace": "builtin"
+        },
+        {
+          "fieldId": "tags",
           "settings": {
             "bulkEditing": false
           },
@@ -742,7 +868,7 @@
             "linkType": "Space"
           }
         },
-        "version": 2,
+        "version": 6,
         "createdAt": "2020-04-01T03:00:24.277Z",
         "createdBy": {
           "sys": {
@@ -751,7 +877,7 @@
             "linkType": "User"
           }
         },
-        "updatedAt": "2020-04-01T03:00:24.613Z",
+        "updatedAt": "2020-04-19T02:16:36.629Z",
         "updatedBy": {
           "sys": {
             "id": "3pX7YsOjpb7mSbVTnW0pJN",
@@ -776,23 +902,126 @@
       },
       "controls": [
         {
-          "fieldId": "department",
-          "widgetId": "entryLinkEditor",
-          "widgetNamespace": "builtin"
-        },
-        {
           "fieldId": "title",
           "widgetId": "singleLine",
           "widgetNamespace": "builtin"
         },
         {
-          "fieldId": "description",
-          "widgetId": "markdown",
+          "fieldId": "projectImage",
+          "widgetId": "assetLinkEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "silnjjl59l7l",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 4,
+        "createdAt": "2020-04-16T23:26:17.503Z",
+        "createdBy": {
+          "sys": {
+            "id": "3pX7YsOjpb7mSbVTnW0pJN",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2020-04-16T23:36:29.815Z",
+        "updatedBy": {
+          "sys": {
+            "id": "3pX7YsOjpb7mSbVTnW0pJN",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "form",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "formFields",
+          "settings": {
+            "helpText": "This JSON object defines what the fields are. The fields here MUST adhere to this guide! https://github.com/adhocteam/fml#form-markup-language-spec"
+          },
+          "widgetId": "objectEditor",
+          "widgetNamespace": "builtin"
+        }
+      ]
+    },
+    {
+      "sys": {
+        "id": "default",
+        "type": "EditorInterface",
+        "space": {
+          "sys": {
+            "id": "silnjjl59l7l",
+            "type": "Link",
+            "linkType": "Space"
+          }
+        },
+        "version": 4,
+        "createdAt": "2020-04-19T02:32:31.362Z",
+        "createdBy": {
+          "sys": {
+            "id": "3pX7YsOjpb7mSbVTnW0pJN",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "updatedAt": "2020-04-19T02:57:59.044Z",
+        "updatedBy": {
+          "sys": {
+            "id": "3pX7YsOjpb7mSbVTnW0pJN",
+            "type": "Link",
+            "linkType": "User"
+          }
+        },
+        "contentType": {
+          "sys": {
+            "id": "ambassadorProjectAssociation",
+            "type": "Link",
+            "linkType": "ContentType"
+          }
+        },
+        "environment": {
+          "sys": {
+            "id": "master",
+            "type": "Link",
+            "linkType": "Environment"
+          }
+        }
+      },
+      "controls": [
+        {
+          "fieldId": "departmentProject",
+          "widgetId": "entryCardEditor",
           "widgetNamespace": "builtin"
         },
         {
-          "fieldId": "projectImage",
-          "widgetId": "assetLinkEditor",
+          "fieldId": "ambassadorNotes",
+          "settings": {
+            "helpText": "Description of the project from an Ambassador's perspective. "
+          },
+          "widgetId": "markdown",
           "widgetNamespace": "builtin"
         }
       ]
