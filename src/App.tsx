@@ -1,11 +1,11 @@
 import React from 'react';
 import HomePage from './components/pages/HomePage';
-import lunchbox from './theme/lunchbox';
+import lunchbox from './styles/theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
 import { Header } from './components/organisms/Header';
 import ProfilePage from './connectors/pages/ConnectedProfilePage';
 import Footer from './components/organisms/Footer';
-import styled from './theme/Theme';
+import styled from './styles/theme/Theme';
 import {
   BrowserRouter as Router,
   Switch,

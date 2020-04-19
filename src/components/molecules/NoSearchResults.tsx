@@ -1,10 +1,10 @@
 import React from 'react';
 import noResults from '../../images/search/noresults.svg';
 import Card from '../atoms/Card';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import { H5, P } from '../atoms/Typography';
 import { Ul } from '../atoms/List';
-import devices from '../../styles/breakpoints';
+import devices from '../../styles/variables/breakpoints';
 
 interface INoSearchResultsProps {
     header: string;

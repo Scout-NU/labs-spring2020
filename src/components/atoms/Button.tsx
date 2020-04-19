@@ -1,6 +1,6 @@
-import styled from "../../theme/Theme";
+import styled from "../../styles/theme/Theme";
 import React from 'react';
-import { lunchboxColors } from '../../theme/lunchbox';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
 
 interface ButtonProps {
     buttonStyle: ButtonStyle;

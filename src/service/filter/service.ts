@@ -1,8 +1,8 @@
-import IFilter from "../../types/cms/generated/filter";
+import IFilter from "../../types/backend/model/filter";
 import getProblemTagService from "../problem-tags/service";
 import getDepartmentService from "../department/service";
-import { IProblemTag } from "../../types/cms/generated";
-import { IDepartment } from "../../types/cms/generated";
+import { IProblemTag } from "../../types/backend/model";
+import { IDepartment } from "../../types/backend/model";
 
 export interface IFilterService {
     getAllFilters(): Promise<IFilter[]>;

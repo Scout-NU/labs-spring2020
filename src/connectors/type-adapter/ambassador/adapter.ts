@@ -1,7 +1,7 @@
-import { IAmbassador, IProblemTag, IDepartment } from "../../../types/cms/generated";
-import { IPerson, IProfile } from "../../../types/client/client";
-import { isAsset, isEntry, ILink, IEntry } from "../../../types/cms";
+import { IAmbassador, IProblemTag, IDepartment } from "../../../types/backend/model";
+import { IPerson, IProfile } from "../../../types/client/model";
 import { resolveDepartmentType } from "../department/adapter";
+import { isAsset, ILink, IEntry, isEntry } from "../../../types/backend/base";
 
 
 

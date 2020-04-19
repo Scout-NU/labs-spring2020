@@ -1,5 +1,5 @@
-import { IProblemTag } from '../../types/cms/generated';
-import { ContentfulListBaseResponse } from '../../types/cms/base';
+import { IProblemTag } from '../../types/backend/model';
+import { ContentfulListBaseResponse } from '../../types/backend/base';
 
 
 export interface IProblemTagService {

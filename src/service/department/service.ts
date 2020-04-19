@@ -1,5 +1,5 @@
-import { IDepartment } from '../../types/cms/generated';
-import { ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
+import { IDepartment } from '../../types/backend/model';
+import { ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
 
 
 export interface IDepartmentService {

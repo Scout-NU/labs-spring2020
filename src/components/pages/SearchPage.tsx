@@ -2,12 +2,12 @@ import React from 'react';
 import HeaderBlob from '../atoms/HeaderBlob';
 import { H4, H2 } from '../atoms/Typography';
 import { Col, Row } from 'react-flexbox-grid';
-import styled from '../../theme/Theme';
-import devices from '../../styles/breakpoints';
-import { IPerson } from '../../types/client/client';
+import styled from '../../styles/theme/Theme';
+import devices from '../../styles/variables/breakpoints';
+import { IPerson } from '../../types/client/model';
 import PersonPreview from '../molecules/PersonPreview';
 import NoSearchResults from '../molecules/NoSearchResults';
-import { ISearchPageContent } from '../../types/client/page/searchPage';
+import { ISearchPageContent } from '../../types/client/page';
 import Spinner from '../atoms/Spinner';
 import SearchGroup from '../../connectors/organisms/ConnectedSearchGroup';
 

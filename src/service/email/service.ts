@@ -1,4 +1,4 @@
-import IEmailParameters from "../../types/cms/email";
+import IEmailParameters from "../../types/backend/email";
 
 
 interface IEmailResponse {

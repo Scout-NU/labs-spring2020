@@ -1,5 +1,5 @@
 import React from 'react';
-import getEmailService from '../../state/email/service';
+import getEmailService from '../../service/email/service';
 
 
 interface IEmailFormProps {

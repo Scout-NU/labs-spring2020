@@ -1,8 +1,8 @@
 import React from 'react';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import { StyledButton, ButtonStyle } from '../atoms/Button';
 import { Row, Col } from 'react-flexbox-grid';
-import { IFilter } from '../../types/client/client';
+import { IFilter } from '../../types/client/model';
 import SearchFilter from '../molecules/SearchFilter';
 import { P } from '../atoms/Typography';
 import { StyledFilterPopup } from '../molecules/FilterPopup';

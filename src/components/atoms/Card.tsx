@@ -1,4 +1,4 @@
-import styled from "../../theme/Theme";
+import styled from "../../styles/theme/Theme";
 
 const Card = styled.div`
     border-radius: 15px;

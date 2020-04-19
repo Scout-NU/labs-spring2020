@@ -1,11 +1,11 @@
 import React from 'react';
 import DisconnectedSearchPage from "../../components/pages/SearchPage";
-import getProfileService from '../../state/ambassador/service';
-import { IAmbassador } from '../../types/cms/generated';
-import { URLQueryParser } from '../../state/util/url';
-import { ISearchPageContent } from '../../types/client/page/searchPage';
-import { IPerson } from '../../types/client/client';
-import { resolveAmbassadorType } from '../adapter/ambassador/adapter';
+import getProfileService from '../../service/ambassador/service';
+import { IAmbassador } from '../../types/backend/model';
+import { URLQueryParser } from '../../service/util/url';
+import { ISearchPageContent } from '../../types/client/page';
+import { IPerson } from '../../types/client/model';
+import { resolveAmbassadorType } from '../type-adapter/ambassador/adapter';
 
 
 const SearchPage: React.FC = () => {

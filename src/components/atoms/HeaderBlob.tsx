@@ -1,6 +1,6 @@
-import styled from "../../theme/Theme";
-import devices from '../../styles/breakpoints';
-import { lunchboxColors } from "../../theme/lunchbox";
+import styled from "../../styles/theme/Theme";
+import devices from '../../styles/variables/breakpoints';
+import { lunchboxColors } from "../../styles/theme/lunchbox";
 import headerblob from '../../images/global/headerblob.svg';
 import React from 'react';
 

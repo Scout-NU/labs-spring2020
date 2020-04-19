@@ -1,8 +1,8 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { URLQueryParser } from '../../state/util/url';
-import getFilterService from '../../state/filter/service';
-import { IFilter } from '../../types/client/client';
+import { URLQueryParser } from '../../service/util/url';
+import getFilterService from '../../service/filter/service';
+import { IFilter } from '../../types/client/model';
 import DisconnectedSearchGroup from '../../components/organisms/SearchGroup';
 
 const SearchGroup: React.FC = props => {

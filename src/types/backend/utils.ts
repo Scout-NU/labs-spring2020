@@ -1,4 +1,4 @@
-import { IEntry, isEntry, isLink, JsonObject, Resolved } from '.'
+import { IEntry, isEntry, isLink, JsonObject, Resolved } from './base';
 
 /**
  * Returns a boolean indicating whether the given entry is resolved to a certain

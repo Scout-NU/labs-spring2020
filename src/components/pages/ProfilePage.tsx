@@ -1,7 +1,7 @@
 import React from 'react';
-import { IProfile } from '../../types/client/client';
+import { IProfile } from '../../types/client/model';
 import HeaderBlob from '../atoms/HeaderBlob';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import Button, { ButtonStyle } from '../atoms/Button';

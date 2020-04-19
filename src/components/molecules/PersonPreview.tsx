@@ -1,9 +1,9 @@
 import React from 'react';
-import { IPerson } from '../../types/client/client';
+import { IPerson } from '../../types/client/model';
 import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import Card from '../atoms/Card';
 import TagGroup from '../molecules/TagGroup';
 

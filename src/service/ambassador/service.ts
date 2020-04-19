@@ -1,5 +1,5 @@
-import { IAmbassador } from '../../types/cms/generated';
-import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
+import { IAmbassador } from '../../types/backend/model';
+import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
 import { makeContentManagementGetRequest, validateResponse } from '../util/http';
 import { resolveDepartmentLinks } from '../department/service';
 

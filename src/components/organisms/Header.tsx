@@ -1,9 +1,9 @@
 import React from 'react';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import { NavigationLink } from '../atoms/Typography';
-import devices from '../../styles/breakpoints';
+import devices from '../../styles/variables/breakpoints';
 import burger from '../../images/global/burger.svg'
-import { lunchboxColors } from '../../theme/lunchbox';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
 import closebutton from '../../images/global/closebutton.svg';
 import { searchPageRoute, homePageRoute, helpPageRoute } from '../../var/routes';
 
