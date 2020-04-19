@@ -22,7 +22,6 @@ const ProfilePage: React.FC = () => {
             else {
                 profileRepository.getProfileById(id)
                 .then(res => {
-                    console.log(mapAmbassadorToProfile(res))
                     setProfile(mapAmbassadorToProfile(res));
                     setLoading(false);
                 }).catch(error => { console.log(error); setLoading(false); });

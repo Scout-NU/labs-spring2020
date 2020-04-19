@@ -12,3 +12,9 @@ export const Ul = styled.ul`
         margin-left: -1em;
     }
 `
+
+export const Li = styled.li`
+    & * {
+        margin: .5em 0;
+    }
+`

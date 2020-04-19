@@ -1,6 +1,7 @@
 import { IAmbassador } from '../../types/cms/generated';
 import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/cms/base';
 import { makeContentManagementGetRequest, validateResponse } from '../util/http';
+import { resolveDepartmentLinks } from '../department/service';
 
 
 export interface IProfileService {
@@ -71,14 +72,15 @@ function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbass
 function resolveAmbassadorLinks(person: IAmbassador, assets: ContentfulIncludedLinks): IAmbassador {
     let assetId = person?.fields?.profilePicture?.sys.id;
     let tagIds = person?.fields?.tags?.map((tag) => tag.sys.id);
-
+    let departmentId = person.fields.department?.sys.id;
+    // TODO: This is pretty bad, need to add better typing
     return {
         ...person,
         fields: {
             ...person.fields,
             profilePicture: assets.Asset.find((asset) => asset.sys.id === assetId)!!,
-            tags: tagIds?.map((id) => assets.Entry.find((entry) => entry.sys.id === id)!!)!!
+            tags: tagIds?.map((id) => assets.Entry.find((entry) => entry.sys.id === id)!!)!!,
+            department: resolveDepartmentLinks(assets.Entry.find((entry) => entry.sys.id === departmentId)!!, assets)
         }
     }
-}    
-
+}

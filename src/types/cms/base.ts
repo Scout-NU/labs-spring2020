@@ -8,7 +8,7 @@ export interface IEntry<TFields extends JsonObject> {
 }
 
 export interface ContentfulIncludedLinks {
-  Entry: any[];
+Entry: any[];
   Asset: IAsset[];
 }
 

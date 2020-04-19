@@ -5,7 +5,7 @@ import { IAmbassador } from '../../types/cms/generated';
 import { URLQueryParser } from '../../state/util/url';
 import { ISearchPageContent } from '../../types/client/page/searchPage';
 import { IPerson } from '../../types/client/client';
-import { mapAmbassadorsToPerson } from '../adapter/ambassador/adapter';
+import { resolveAmbassadorType } from '../adapter/ambassador/adapter';
 
 
 const SearchPage: React.FC = () => {
@@ -25,7 +25,7 @@ const SearchPage: React.FC = () => {
                 ambassadors = profileRepository.searchProfiles(params.getQuery(), params.getFilters());
             }
             ambassadors.then(res => {
-                setAmbassadors(mapAmbassadorsToPerson(res))
+                setAmbassadors(resolveAmbassadorType(res))
                 setLoading(false);
             }).catch(error => console.log(error));
         }

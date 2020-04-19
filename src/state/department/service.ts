@@ -39,7 +39,7 @@ async function getDepartmentsWhere(query: string): Promise<IDepartment[]> {
 }
 
 
-function resolveDepartmentLinks(department: IDepartment, assets: ContentfulIncludedLinks): IDepartment {
+export function resolveDepartmentLinks(department: IDepartment, assets: ContentfulIncludedLinks): IDepartment {
     let assetId = department?.fields?.departmentImage?.sys.id;
 
     return {

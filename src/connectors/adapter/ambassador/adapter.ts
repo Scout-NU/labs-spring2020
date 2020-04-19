@@ -1,10 +1,11 @@
-import { IAmbassador, IProblemTag } from "../../../types/cms/generated";
+import { IAmbassador, IProblemTag, IDepartment } from "../../../types/cms/generated";
 import { IPerson, IProfile } from "../../../types/client/client";
-import { isAsset, isEntry, ILink } from "../../../types/cms";
+import { isAsset, isEntry, ILink, IEntry } from "../../../types/cms";
+import { resolveDepartmentType } from "../department/adapter";
 
 
 
-export function mapAmbassadorsToPerson(ambassadors: IAmbassador[]): IPerson[] {
+export function resolveAmbassadorType(ambassadors: IAmbassador[]): IPerson[] {
     return ambassadors.map((item) => mapAmbassadorToPerson(item));
 }
 
@@ -12,7 +13,7 @@ export function mapAmbassadorToPerson(ambassador: IAmbassador): IPerson {
     let data = ambassador.fields;
     let asset = ambassador.fields.profilePicture!!;
     let tags = ambassador.fields.tags;
-    
+    // TODO: Better default fields lol
     return {
         id: ambassador.sys.id,
         profileImageUrl: isAsset(asset) && asset.fields.file.url ? asset.fields.file.url : '',
@@ -21,7 +22,8 @@ export function mapAmbassadorToPerson(ambassador: IAmbassador): IPerson {
         positionTitle: data.positionTitle? data.positionTitle : '',
         description: data.ambassadorDescription? data.ambassadorDescription : '',
         genderPronouns: data.preferredPronouns ? data.preferredPronouns.join("/") : '',
-        tags: tags? resolveTags(tags) : []
+        tags: tags? resolveTags(tags) : [],
+        department: data.department ? resolveDepartmentType(resolveDepartmentLink(data.department)) : null
     }
 }
 
@@ -31,29 +33,32 @@ export function mapAmbassadorToProfile(ambassador: IAmbassador): IProfile {
 
     return {
         ...person,
-        relatedPeople: data.relatedAmbassadors ? mapAmbassadorsToPerson(resolveRelatedAmbassadors(data.relatedAmbassadors)) : [],
+        relatedPeople: data.relatedAmbassadors ? resolveAmbassadorType(resolveAmbassadorLinks(data.relatedAmbassadors)) : [],
         priorityStatement: data.priorityStatement ? data.priorityStatement : '',
         knowledgeableTopics: data.knowledgeableTopics ? data.knowledgeableTopics : [],
     }
 }
 
-// TODO: Can also make this abstract
-function resolveRelatedAmbassadors(ambassadors: (ILink<"Entry"> | IAmbassador)[]): IAmbassador[] {
-    let resolvedAmbassadors: IAmbassador[] = [];
+function resolveAmbassadorLinks(ambassadors: (ILink<"Entry"> | IAmbassador)[]): IAmbassador[] {
+    return resolveEntryLinks<IAmbassador>(ambassadors);
+}
 
-    ambassadors.forEach((ambassador) => {
-        if (isEntry(ambassador)) resolvedAmbassadors.push(ambassador);
-    })
-
-    return resolvedAmbassadors;
+function resolveDepartmentLink(department: (ILink<"Entry"> | IDepartment)): IDepartment {
+    return resolveEntryLinks<IDepartment>([department])[0];
 }
 
 function resolveTags(tags: (ILink<"Entry"> | IProblemTag)[]): string[] {
     let resolvedTags: string[] = [];
+    resolveEntryLinks<IProblemTag>(tags).forEach(t => {if (t.fields.tagName) resolvedTags.push(t.fields.tagName)});
+    return resolvedTags;
+}
 
-    tags.forEach((tag) => {
-        if (isEntry(tag) && tag.fields.tagName) resolvedTags.push(tag.fields.tagName);
+function resolveEntryLinks<EntryType extends IEntry<any>>(entries: (ILink<"Entry"> | EntryType)[]): EntryType[] {
+    let resolvedEntries: EntryType[] = [];
+
+    entries.forEach((entry) => {
+        if (isEntry(entry)) resolvedEntries.push(entry);
     })
 
-    return resolvedTags;
+    return resolvedEntries;
 }
