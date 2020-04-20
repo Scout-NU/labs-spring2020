@@ -1,4 +1,4 @@
-import { IAmbassadorProjectAssociation, IDepartmentProject } from "../../../types/backend/model";
+import { IAmbassadorProjectAssociation } from "../../../types/backend/model";
 import { IPersonProject } from "../../../types/client/model";
 import { resolveAssetLink, resolveEntryLink } from "../../../types/backend/base";
 

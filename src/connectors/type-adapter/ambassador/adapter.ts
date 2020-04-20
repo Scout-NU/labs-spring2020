@@ -5,7 +5,6 @@ import { isAsset, ILink, resolveEntryLinks } from "../../../types/backend/base";
 import { resolveAmbassadorProjectTypes } from "../ambassador_project/adapter";
 
 
-
 export function resolveAmbassadorType(ambassadors: IAmbassador[]): IPerson[] {
     return ambassadors.map((item) => mapAmbassadorToPerson(item));
 }

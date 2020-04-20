@@ -1,4 +1,5 @@
 import { IEntry, isEntry, isLink, JsonObject, Resolved, ILink, ContentfulIncludedLinks, IAsset } from './base';
+import { isArray } from 'util';
 
 /**
  * Returns a boolean indicating whether the given entry is resolved to a certain
@@ -65,23 +66,21 @@ export function resolveEntry<EntryType extends IEntry<any>>(entry: EntryType, li
   let resolvedEntry = Object.assign({}, entry);
 
   fieldKeys.forEach(key => {
-      let value = entry.fields[key];
-      
-      if (isLink(value)) resolvedEntry.fields[key] = resolveLink(value, links);
-      
-      else if (Array.isArray(value)) {
-          let resolvedList = value.map(v => {
-              if (isEntry(v)) return resolveEntry(v, links);
-              if (isLink(v)) return resolveLink(v, links);
-              return v;
-          });
-          resolvedEntry.fields[key] = resolvedList;
-      } 
-      
-      else resolvedEntry.fields[key] = value;
+    resolvedEntry.fields[key] = resolveValue(entry.fields[key], links);
   });
 
   return resolvedEntry;
+}
+
+function resolveValue(item: any, links: ContentfulIncludedLinks): any {
+    if (isEntry(item)) return resolveEntry(item, links);
+    else if (isLink(item)) return resolveLink(item, links);
+    else if (Array.isArray(item)) return resolveArray(item, links);  
+    return item;
+} 
+
+function resolveArray(items: any[], links: ContentfulIncludedLinks): any[] {
+    return items.map(v => resolveValue(v, links));
 }
 
 /**
