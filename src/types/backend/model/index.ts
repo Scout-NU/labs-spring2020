@@ -52,3 +52,24 @@ export function wrap(entry: IEntry<any>): IEntry<any> {
       throw new Error('Unknown content type:' + id)
   }
 }
+
+
+export function wrapAny(entry: IEntry<any>): IEntry<any> {
+  const id = entry.sys.contentType.sys.id
+  switch (id) {
+    case 'ambassador':
+      return new C.Ambassador(entry)
+    case 'department':
+      return new C.Department(entry)
+    case 'problemTag':
+      return new C.ProblemTag(entry)
+    case 'departmentProject':
+      return new C.DepartmentProject(entry)
+    case 'form':
+      return new C.Form(entry)
+    case 'ambassadorProjectAssociation':
+      return new C.AmbassadorProjectAssociation(entry)
+    default:
+      throw new Error('Unknown content type:' + id)
+  }
+}

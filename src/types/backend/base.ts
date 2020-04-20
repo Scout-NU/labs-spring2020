@@ -8,7 +8,7 @@ export interface IEntry<TFields extends JsonObject> {
 }
 
 export interface ContentfulIncludedLinks {
-Entry: any[];
+  Entry: IEntry<any>[];
   Asset: IAsset[];
 }
 
@@ -73,6 +73,25 @@ export function isEntry(obj: any): obj is IEntry<any> {
   return obj && obj.sys && obj.sys.type === 'Entry'
 }
 
+/**
+ * Resolves a list of entries if they exist.
+ * @param entries 
+ */
+export function resolveEntryLinks<EntryType extends IEntry<any>>(entries: (ILink<"Entry"> | EntryType)[]): EntryType[] {
+  let resolvedEntries: EntryType[] = [];
+
+  entries.forEach((entry) => {
+    let resolved = resolveEntryLink(entry)
+    if (resolved) resolvedEntries.push(resolved);
+  })
+
+  return resolvedEntries;
+}
+
+export function resolveEntryLink<EntryType extends IEntry<any>>(entry: (ILink<"Entry"> | EntryType)): EntryType | undefined {
+    if (isEntry(entry)) return entry;
+}
+
 interface IAssetFields {
   title?: string,
   description?: string,
@@ -127,6 +146,14 @@ export class Asset implements IAsset {
  */
 export function isAsset(obj: any): obj is IAsset {
   return obj && obj.sys && obj.sys.type === 'Asset'
+}
+
+/**
+ * Resolves an asset if it is not a link.
+ * @param asset 
+ */
+export function resolveAssetLink(asset: (ILink<"Asset"> | IAsset)): IAsset | undefined {
+  if (isAsset(asset)) return asset;
 }
 
 export interface ILink<Type extends string> {

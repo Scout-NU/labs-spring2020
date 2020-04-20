@@ -1,7 +1,8 @@
-import { IAmbassador, IProblemTag, IDepartment } from "../../../types/backend/model";
+import { IAmbassador, IProblemTag, IDepartment, IAmbassadorProjectAssociation } from "../../../types/backend/model";
 import { IPerson, IProfile } from "../../../types/client/model";
 import { resolveDepartmentType } from "../department/adapter";
-import { isAsset, ILink, IEntry, isEntry } from "../../../types/backend/base";
+import { isAsset, ILink, resolveEntryLinks } from "../../../types/backend/base";
+import { resolveAmbassadorProjectTypes } from "../ambassador_project/adapter";
 
 
 
@@ -31,12 +32,14 @@ export function mapAmbassadorToPerson(ambassador: IAmbassador): IPerson {
 export function mapAmbassadorToProfile(ambassador: IAmbassador): IProfile {
     let data = ambassador.fields;
     let person = mapAmbassadorToPerson(ambassador);
+    let projects = data.projects ? resolveAmbassadorProjectTypes(resolveProjectLinks(data.projects)) : []
 
     return {
         ...person,
         relatedPeople: data.relatedAmbassadors ? resolveAmbassadorType(resolveAmbassadorLinks(data.relatedAmbassadors)) : [],
         priorityStatement: data.priorityStatement ? data.priorityStatement : '',
         knowledgeableTopics: data.knowledgeableTopics ? data.knowledgeableTopics : [],
+        projects: projects
     }
 }
 
@@ -48,18 +51,12 @@ function resolveDepartmentLink(department: (ILink<"Entry"> | IDepartment)): IDep
     return resolveEntryLinks<IDepartment>([department])[0];
 }
 
+function resolveProjectLinks(projects: (ILink<"Entry"> | IAmbassadorProjectAssociation)[]): IAmbassadorProjectAssociation[] {
+    return resolveEntryLinks<IAmbassadorProjectAssociation>(projects);
+}
+
 function resolveTags(tags: (ILink<"Entry"> | IProblemTag)[]): string[] {
     let resolvedTags: string[] = [];
     resolveEntryLinks<IProblemTag>(tags).forEach(t => {if (t.fields.tagName) resolvedTags.push(t.fields.tagName)});
     return resolvedTags;
-}
-
-function resolveEntryLinks<EntryType extends IEntry<any>>(entries: (ILink<"Entry"> | EntryType)[]): EntryType[] {
-    let resolvedEntries: EntryType[] = [];
-
-    entries.forEach((entry) => {
-        if (isEntry(entry)) resolvedEntries.push(entry);
-    })
-
-    return resolvedEntries;
 }

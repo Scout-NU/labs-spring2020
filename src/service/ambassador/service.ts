@@ -1,8 +1,7 @@
-import { IAmbassador } from '../../types/backend/model';
+import { IAmbassador, IAmbassadorProjectAssociation, IDepartmentProject } from '../../types/backend/model';
 import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
+import { resolveEntry } from '../../types/backend/utils';
 import { makeContentManagementGetRequest, validateResponse } from '../util/http';
-import { resolveDepartmentLinks } from '../department/service';
-
 
 export interface IProfileService {
     getAllProfiles(): Promise<IAmbassador[]>;
@@ -18,7 +17,7 @@ export default function getProfileService(): IProfileService {
     }
 }
 
-const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador`;
+const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador&include=2`;
 
 async function getAllProfiles(): Promise<IAmbassador[]> {
     return getProfilesWhere(allProfilesQuery)
@@ -55,9 +54,8 @@ async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
 
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
     let reducedProfiles: ContentfulListBaseResponse<IAmbassador> = await profileResponse.json();    
-    return reducedProfiles.items.map((person) => resolveAmbassadorLinks(person, reducedProfiles.includes!!))
+    return reducedProfiles.items.map((person) => resolveEntry(person, reducedProfiles.includes!!))
 }
-
 
 // Sadly we cannot filter by tag in a network call with Contentful, so it must be done client side for now. Alas.
 function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbassador[] {
@@ -66,21 +64,4 @@ function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbass
     const tagFilters: Set<string> = new Set(desiredTags);
     return ambassadors.filter((ambassador) => 
         ambassador.fields.tags?.some((tag) => isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')))
-}
-
-
-function resolveAmbassadorLinks(person: IAmbassador, assets: ContentfulIncludedLinks): IAmbassador {
-    let assetId = person?.fields?.profilePicture?.sys.id;
-    let tagIds = person?.fields?.tags?.map((tag) => tag.sys.id);
-    let departmentId = person.fields.department?.sys.id;
-    // TODO: This is pretty bad, need to add better typing
-    return {
-        ...person,
-        fields: {
-            ...person.fields,
-            profilePicture: assets.Asset.find((asset) => asset.sys.id === assetId)!!,
-            tags: tagIds?.map((id) => assets.Entry.find((entry) => entry.sys.id === id)!!)!!,
-            department: resolveDepartmentLinks(assets.Entry.find((entry) => entry.sys.id === departmentId)!!, assets)
-        }
-    }
 }
