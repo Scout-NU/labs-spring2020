@@ -6,14 +6,10 @@ import { Header } from './components/organisms/Header';
 import ProfilePage from './connectors/pages/ConnectedProfilePage';
 import Footer from './components/organisms/Footer';
 import styled from './styles/theme/Theme';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import SearchPage from './connectors/pages/ConnectedSearchPage';
 import NotFoundPage from './components/pages/404';
+import { homePageRoute, homeRedirectRoute, searchPageRoute, profileRoute } from './var/routes';
 
 
 const Site = styled.div`
@@ -42,11 +38,11 @@ const App: React.FC = () => {
           <Content>
             <Header/>
             <Switch>
-              <Route path="/profile/:id" component={ProfilePage}/>
-              <Route path="/search" component={SearchPage}/>
-              <Route exact path="/home" component={HomePage}/>
-              <Route exact path="/">
-                <Redirect to={"/home"}/>
+              <Route path={`${profileRoute}/:id`} component={ProfilePage}/>
+              <Route path={searchPageRoute} component={SearchPage}/>
+              <Route exact path={homePageRoute} component={HomePage}/>
+              <Route exact path={homeRedirectRoute}>
+                <Redirect to={homePageRoute}/>
               </Route>
               <Route path="*" component={NotFoundPage}/>
             </Switch>

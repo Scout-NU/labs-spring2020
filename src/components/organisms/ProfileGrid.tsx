@@ -19,7 +19,7 @@ const ProfileGrid: React.FC<IProfileGridProps> = props => {
             {props.profiles.map((value, i) => {
                 return (
                     <PersonWrapper key={i} xs={11} md={6} lg={4}>
-                        <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.firstName}`)} profile={value} key={i}/>
+                        <PersonPreview profile={value} key={i}/>
                     </PersonWrapper>
                 )
             })}

@@ -6,11 +6,12 @@ import { H5, P } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import Card from '../atoms/Card';
 import TagGroup from '../molecules/TagGroup';
+import { Redirect } from 'react-router';
+import { profileRoute } from '../../var/routes';
 
 
 interface IPersonPreviewProps {
     profile: IPerson;
-    onSelected: () => void;
 }
 
 const JobTitle = styled(P)`
@@ -60,6 +61,8 @@ const Fade = styled.div`
 `
 
 const PersonPreview: React.FC<IPersonPreviewProps> = props => {
+    const [showProfile, setShowProfile] = React.useState(false);
+
     let info = props.profile;
     const cardHeight = 635;
 
@@ -68,9 +71,19 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
         if (text.length <= maxChars) return text;
         return `${text.substr(0, text.lastIndexOf(' ', maxChars))}...`;
     }
+
+    // TODO: Pull this out? Unsure
+    const onClick = () => {
+        setShowProfile(true);
+    }
+
+    if (showProfile) {
+        window.location.assign(`${profileRoute}/${props.profile.id}`)
+        // return (<Redirect to={`${profileRoute}/${props.profile.id}`}/>)
+    }
     
     return (
-        <PreviewCard>
+        <PreviewCard onClick={onClick}>
             <Row center='xs'>
                 <Col xs>
                     <ProfileImageContainer>

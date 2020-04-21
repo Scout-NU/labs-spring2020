@@ -10,6 +10,8 @@ interface IPageSectionProps {
 
 export const StyledPageSection = styled.section`
     margin-bottom: 6em;
+    display: flex;
+    flex-direction: column;
 `
 
 const PageSection: React.FC<IPageSectionProps> = props => {
