@@ -1,5 +1,5 @@
 import { IAmbassador } from '../../types/backend/model';
-import { isEntry, ContentfulListBaseResponse } from '../../types/backend/base';
+import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
 import { resolveEntry } from '../../types/backend/utils';
 import { makeContentManagementGetRequest, validateResponse } from '../util/http';
 
@@ -20,13 +20,13 @@ export default function getProfileService(): IProfileService {
 const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador&include=2`;
 
 async function getAllProfiles(): Promise<IAmbassador[]> {
-    return getProfilesWhere(allProfilesQuery)
+    return parseProfileResponse(await getProfilesWhere(allProfilesQuery), true)
 }
 
 async function getProfileById(id: string): Promise<IAmbassador> {
     let byIdQuery = `${allProfilesQuery}&sys.id=${id}`
     let profiles = await getProfilesWhere(byIdQuery);
-    return profiles[0];  
+    return parseProfileResponse(profiles)[0];  
 }
 
 async function searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]> {
@@ -41,9 +41,10 @@ async function searchProfiles(queryText: string, filters: Map<string, string[]>)
         `&fields.department.sys.contentType.sys.id=department` +
         `&fields.department.fields.departmentName[in]=${departmentFilters.join(',')}`
     }
-    
-    let result = await getProfilesWhere(searchQuery);
 
+    searchQuery += `&select=sys.id,fields.firstName`
+    
+    let result = parseProfileResponse(await getProfilesWhere(searchQuery), true);
     return topicFilters ? filterByTag(topicFilters, result) : result;
 }
 
@@ -56,11 +57,14 @@ function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbass
         ambassador.fields.tags?.some((tag) => isEntry(tag) && tagFilters.has(tag.fields.tagName ? tag.fields.tagName : '')))
 }
 
-async function getProfilesWhere(query: string): Promise<IAmbassador[]> {
+async function getProfilesWhere(query: string): Promise<ContentfulListBaseResponse<IAmbassador>> {
     const profileResponse = await makeContentManagementGetRequest(query);
     validateResponse(profileResponse);
+    return await profileResponse.json();
+}
 
-    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
-    let reducedProfiles: ContentfulListBaseResponse<IAmbassador> = await profileResponse.json();    
-    return reducedProfiles.items.map((person) => resolveEntry(person, reducedProfiles.includes!!))
+// TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
+// See utils.ts#resolveEntry for why we might not care about broken links for the moment.
+function parseProfileResponse(response: ContentfulListBaseResponse<IAmbassador>, ignoreMissingLinks: boolean = false): IAmbassador[] {
+    return response.items.map((person) => resolveEntry(person, response.includes!!, ignoreMissingLinks))
 }

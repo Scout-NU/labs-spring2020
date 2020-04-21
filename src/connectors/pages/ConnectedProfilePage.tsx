@@ -5,10 +5,16 @@ import getProfileService from '../../service/ambassador/service';
 import NotFoundPage from '../../components/pages/404';
 import Spinner from '../../components/atoms/Spinner';
 import { mapAmbassadorToProfile } from '../type-adapter/ambassador/adapter';
+import EmailForm from '../../components/organisms/EmailForm';
 
 const ProfilePage: React.FC = () => {
     const [loading, setLoading] = React.useState(true);
     const [profile, setProfile] = React.useState<IProfile | null>(null);
+    const [showForm, toggleForm] = React.useState(false);
+
+    const emailRequested = () => {
+        toggleForm(!showForm);
+    }
 
     React.useEffect(() => {
         async function getProfile() {
@@ -38,7 +44,10 @@ const ProfilePage: React.FC = () => {
 
     if (profile && !loading) {
         return (
-            <DisconnectedProfilePage info={profile}/>
+            <>
+                {showForm && <EmailForm/>}
+                <DisconnectedProfilePage onEmailButtonPressed={emailRequested} info={profile}/>
+            </>
         )
     }
 

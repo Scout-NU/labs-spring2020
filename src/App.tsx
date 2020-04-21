@@ -17,22 +17,21 @@ import NotFoundPage from './components/pages/404';
 
 
 const Site = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 `
 
 const Content = styled.div`
-  flex: 1 0 auto;
-  width: 100%;
+    flex: 1 0 auto;
+    width: 100%;
 
-  &:after {
-    content: '\00a0';
-    display: block;
-    height: 0;
-    visibility: hidden;
-  }
+    &:after {
+        content: '\00a0';
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
 `
 
 const App: React.FC = () => {

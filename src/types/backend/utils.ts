@@ -61,26 +61,38 @@ export function expectResolved<TProps extends JsonObject>(
  * an error will be thrown. If this is the case, it's likely that the includes argument did not include the correct depth. See the Contenful API
  * documentation for more details on this.
  */
-export function resolveEntry<EntryType extends IEntry<any>>(entry: EntryType, links: ContentfulIncludedLinks): EntryType {
+export function resolveEntry<EntryType extends IEntry<any>>(entry: EntryType, links: ContentfulIncludedLinks, ignoreMissingLinks: boolean = false): EntryType {
   let fieldKeys = Object.keys(entry.fields);
   let resolvedEntry = Object.assign({}, entry);
 
-  fieldKeys.forEach(key => {
-    resolvedEntry.fields[key] = resolveValue(entry.fields[key], links);
-  });
+  fieldKeys.forEach(key => resolvedEntry.fields[key] = resolveValue(entry.fields[key], links, ignoreMissingLinks));
 
   return resolvedEntry;
 }
 
-function resolveValue(item: any, links: ContentfulIncludedLinks): any {
+function resolveValue(item: any, links: ContentfulIncludedLinks, ignoreMissingLinks: boolean): any {
     if (isEntry(item)) return resolveEntry(item, links);
-    else if (isLink(item)) return resolveLink(item, links);
-    else if (Array.isArray(item)) return resolveArray(item, links);  
+    else if (isLink(item)) {
+        try {
+            return resolveLink(item, links);
+        } 
+        catch(e) {
+          /* 
+            TODO: This is super annoying. 
+            For some reason, if you query for a given content type, and that content type has related content of the same type,
+            and that linked content is present in the returned values for the search, that content is NOT put in the includes array (resolved links).
+            This means that this function will not be able to find it. This breaks search. Putting this workaround for functions that need to do that.
+          */
+          if (ignoreMissingLinks) return undefined;
+          throw new Error(e);
+        }
+      }
+    else if (Array.isArray(item)) return resolveArray(item, links, ignoreMissingLinks);  
     return item;
 } 
 
-function resolveArray(items: any[], links: ContentfulIncludedLinks): any[] {
-    return items.map(v => resolveValue(v, links));
+function resolveArray(items: any[], links: ContentfulIncludedLinks, ignoreMissingLinks: boolean): any[] {
+    return items.map(v => resolveValue(v, links, ignoreMissingLinks));
 }
 
 /**
@@ -103,6 +115,7 @@ function resolveLink(link: ILink<string>, links: ContentfulIncludedLinks): IEntr
       default:
           throw Error(`Invalid link type. Cannot resolve Link of Type ${type}`);
       }
+  
   if (!resolved) throw Error("Entry was not present in provided links. Check the depth at which content was fetched.");
   if (isEntry(resolved)) return resolveEntry(resolved, links);
   return resolved;
