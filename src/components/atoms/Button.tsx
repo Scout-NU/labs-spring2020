@@ -1,6 +1,7 @@
-import styled from "../../theme/Theme";
+import styled from "../../styles/theme/Theme";
 import React from 'react';
-import { lunchboxColors } from '../../theme/lunchbox';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
+import { A } from "./Typography";
 
 interface ButtonProps {
     buttonStyle: ButtonStyle;
@@ -49,8 +50,13 @@ export const StyledButton = styled.button<ButtonProps>`
     border: none;
     font-size: 16px;
     font-weight: bolder;
+    width: fit-content;
 
     transition: all .1s ease-in-out;
+
+    & ${A} {
+        color: white;
+    }
 
     &:hover {
         transform: scale(1.05);

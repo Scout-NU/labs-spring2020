@@ -1,5 +1,5 @@
-import styled from "../../theme/Theme";
-import { lunchboxColors } from "../../theme/lunchbox";
+import styled from "../../styles/theme/Theme";
+import { lunchboxColors } from "../../styles/theme/lunchbox";
 
 
 export const Ul = styled.ul`
@@ -10,5 +10,11 @@ export const Ul = styled.ul`
         color: ${lunchboxColors.salad};
         display: inline-block;
         margin-left: -1em;
+    }
+`
+
+export const Li = styled.li`
+    & * {
+        margin: .5em 0;
     }
 `

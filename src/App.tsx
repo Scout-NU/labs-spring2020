@@ -1,36 +1,33 @@
 import React from 'react';
 import HomePage from './components/pages/HomePage';
-import lunchbox from './theme/lunchbox';
+import lunchbox from './styles/theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
 import { Header } from './components/organisms/Header';
-import ProfilePage from './components/pages/ProfilePage';
+import ProfilePage from './connectors/pages/ConnectedProfilePage';
 import Footer from './components/organisms/Footer';
-import styled from './theme/Theme';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import styled from './styles/theme/Theme';
+import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import SearchPage from './connectors/pages/ConnectedSearchPage';
+import NotFoundPage from './components/pages/404';
+import { homePageRoute, homeRedirectRoute, searchPageRoute, profileRoute } from './var/routes';
 
 
 const Site = styled.div`
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 `
 
 const Content = styled.div`
-  flex: 1 0 auto;
-  width: 100%;
+    flex: 1 0 auto;
+    width: 100%;
 
-  &:after {
-    content: '\00a0';
-    display: block;
-    height: 0;
-    visibility: hidden;
-  }
+    &:after {
+        content: '\00a0';
+        display: block;
+        height: 0;
+        visibility: hidden;
+    }
 `
 
 const App: React.FC = () => {
@@ -41,15 +38,13 @@ const App: React.FC = () => {
           <Content>
             <Header/>
             <Switch>
-              <Route path="/profile">
-                <ProfilePage />
+              <Route path={`${profileRoute}/:id`} component={ProfilePage}/>
+              <Route path={searchPageRoute} component={SearchPage}/>
+              <Route exact path={homePageRoute} component={HomePage}/>
+              <Route exact path={homeRedirectRoute}>
+                <Redirect to={homePageRoute}/>
               </Route>
-              <Route path="/search">
-                <SearchPage />
-              </Route>
-              <Route path="/">
-                <HomePage/>
-              </Route>
+              <Route path="*" component={NotFoundPage}/>
             </Switch>
           </Content>
           <Footer/>

@@ -1,10 +1,10 @@
 import { MailService } from '@sendgrid/mail';
 import { MailDataRequired } from '@sendgrid/helpers/classes/mail';
 import { Context, APIGatewayEvent } from 'aws-lambda'
-import IEmailParameters from '../types/cms/email';
-import { IAmbassadorFields } from '../types/cms/generated';
-import { ContentfulSingleBaseResponse } from '../types/cms';
+import IEmailParameters from '../types/backend/email';
+import { IAmbassadorFields } from '../types/backend/model';
 import fetch, { Headers } from 'node-fetch';
+import { ContentfulSingleBaseResponse } from '../types/backend/base';
 
 // Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
 export async function handler(event: APIGatewayEvent, context: Context) {

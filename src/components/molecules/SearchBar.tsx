@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from '../../theme/Theme';
-import { lunchboxColors } from '../../theme/lunchbox';
+import styled from '../../styles/theme/Theme';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
 import searchicon from '../../images/global/search.svg';
 import closebutton from '../../images/global/closebutton.svg';
 import { Form } from '@unform/web';

@@ -1,5 +1,5 @@
-import styled from '../../theme/Theme';
-import { breakPoints } from '../../styles/breakpoints';
+import styled from '../../styles/theme/Theme';
+import { breakPoints } from '../../styles/variables/breakpoints';
 import { Link } from 'react-router-dom';
 import { css } from 'styled-components';
 

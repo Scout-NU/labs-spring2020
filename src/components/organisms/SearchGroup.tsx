@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from '../molecules/SearchBar';
 import { Col, Row } from 'react-flexbox-grid';
 import FilterGroup from './FilterGroup';
-import { IFilter } from '../../types/client/client';
+import { IFilter } from '../../types/client/model';
 
 
 // TODO: add individual callbacks for filters and querying

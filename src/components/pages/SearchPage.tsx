@@ -2,14 +2,14 @@ import React from 'react';
 import HeaderBlob from '../atoms/HeaderBlob';
 import { H4, H2 } from '../atoms/Typography';
 import { Col, Row } from 'react-flexbox-grid';
-import styled from '../../theme/Theme';
-import devices from '../../styles/breakpoints';
-import { IPerson } from '../../types/client/client';
-import PersonPreview from '../molecules/PersonPreview';
+import styled from '../../styles/theme/Theme';
+import devices from '../../styles/variables/breakpoints';
+import { IPerson } from '../../types/client/model';
 import NoSearchResults from '../molecules/NoSearchResults';
-import { ISearchPageContent } from '../../types/client/page/searchPage';
+import { ISearchPageContent } from '../../types/client/page';
 import Spinner from '../atoms/Spinner';
 import SearchGroup from '../../connectors/organisms/ConnectedSearchGroup';
+import ProfileGrid from '../organisms/ProfileGrid';
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -20,6 +20,7 @@ interface ISearchPageProps {
 const SearchContainer = styled.section`
     text-align: left;
     margin-top: 15vh;
+    
 `
 
 const HeaderCaption = styled.div`
@@ -49,13 +50,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
             if (results.length === 0) {
                 return (<NoSearchResults header={pageContent.noSearchResultsHeader} alternateOptions={pageContent.noSearchResultsAlternateOptions} />)
             }
-            return results.map((value, i) => {
-                return (
-                    <PersonWrapper key={i} xs={11} md={6} lg={4}>
-                        <PersonPreview onSelected={() => console.log(`Someone wants to meet ${value.firstName}`)} profile={value} key={i}/>
-                    </PersonWrapper>
-                )
-            })
+            return <ProfileGrid profiles={results}/>
         }
         return (<Spinner/>)
     }
@@ -74,9 +69,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
                     <SearchGroup />
                 </HeaderContainer>
                 <Col xs={10}>
-                    <Row top='xs' center='xs'>
-                        { renderSearchResults() }
-                    </Row>
+                    { renderSearchResults() }
                 </Col>
             </Row>
         </SearchContainer>

@@ -1,11 +1,11 @@
 import React from 'react';
 import DisconnectedSearchPage from "../../components/pages/SearchPage";
-import getProfileService from '../../state/ambassador/service';
-import { isAsset, isEntry, ILink } from '../../types/cms';
-import { IAmbassador, IProblemTag } from '../../types/cms/generated';
-import { URLQueryParser } from '../../state/util/filters';
-import { ISearchPageContent } from '../../types/client/page/searchPage';
-import { IPerson } from '../../types/client/client';
+import getProfileService from '../../service/ambassador/service';
+import { IAmbassador } from '../../types/backend/model';
+import { URLQueryParser } from '../../service/util/url';
+import { ISearchPageContent } from '../../types/client/page';
+import { IPerson } from '../../types/client/model';
+import { resolveAmbassadorType } from '../type-adapter/ambassador/adapter';
 
 
 const SearchPage: React.FC = () => {
@@ -13,53 +13,21 @@ const SearchPage: React.FC = () => {
     const [loading, setLoading] = React.useState(true);
     
     React.useEffect(() => {
-        // TODO: Move this into some kind of connector method
-        const mapAmbassadors = (ambassadors: IAmbassador[]): IPerson[] => {
-            return ambassadors.map((item) => {
-                let data = item.fields;
-                let asset = item.fields.profilePicture!!;
-                let tags = item.fields.tags;
-                
-                return {
-                    id: item.sys.id,
-                    profileImageUrl: isAsset(asset) && asset.fields.file.url ? asset.fields.file.url : '',
-                    firstName: data.firstName ? data.firstName : '',
-                    lastName: data.lastName ? data.lastName : '',
-                    positionTitle: data.positionTitle? data.positionTitle : '',
-                    description: data.ambassadorDescription? data.ambassadorDescription : '',
-                    genderPronouns: data.preferredPronouns ? data.preferredPronouns.join("/") : '',
-                    tags: tags? resolveTags(tags) : []
-                }
-            })
-        }
-
-        const resolveTags = (tags: (ILink<"Entry"> | IProblemTag)[]): string[] => {
-            let resolvedTags: string[] = [];
-
-            tags.forEach((tag) => {
-                if (isEntry(tag) && tag.fields.tagName) resolvedTags.push(tag.fields.tagName);
-            })
-
-            return resolvedTags;
-        }
+        const isQueryPresent = () => window.location.search === "";
 
         async function search() {
             const profileRepository = getProfileService();
-
-            if (window.location.search === "") {
-                profileRepository.getAllProfiles()
-                .then(res => {
-                    setAmbassadors(mapAmbassadors(res))
-                    setLoading(false);
-                }).catch(error => console.log(error));
+            var ambassadors: Promise<IAmbassador[]>;
+            if (isQueryPresent()) {
+                ambassadors = profileRepository.getAllProfiles();
             } else {
                 let params = new URLQueryParser(new URLSearchParams(window.location.search));
-                profileRepository.searchProfiles(params.getQuery(), params.getFilters())
-                .then(res => {
-                    setAmbassadors(mapAmbassadors(res));
-                    setLoading(false);
-                }).catch(error => console.log(error));
+                ambassadors = profileRepository.searchProfiles(params.getQuery(), params.getFilters());
             }
+            ambassadors.then(res => {
+                setAmbassadors(resolveAmbassadorType(res))
+                setLoading(false);
+            }).catch(error => console.log(error));
         }
         search();
     }, []);

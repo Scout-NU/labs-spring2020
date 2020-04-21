@@ -1,12 +1,12 @@
 import React from 'react';
 import footerPeople from '../../images/global/footer-people.svg';
 import monumlogo from '../../images/global/monumlogo.svg';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import { NavigationLink, A } from '../atoms/Typography';
-import { lunchboxColors } from '../../theme/lunchbox';
-import device from '../../styles/breakpoints';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
+import device from '../../styles/variables/breakpoints';
 import { monumRoute } from '../../var/routes';
-import { ILink } from '../../types/client/client';
+import { ILink } from '../../types/client/model';
 
 interface IFooterProps {
     footerLinks: ILink[];

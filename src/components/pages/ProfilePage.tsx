@@ -1,34 +1,43 @@
 import React from 'react';
-import { IProfile } from '../../types/client/client';
+import { IProfile } from '../../types/client/model';
 import HeaderBlob from '../atoms/HeaderBlob';
-import styled from '../../theme/Theme';
+import styled from '../../styles/theme/Theme';
 import { Row, Col } from 'react-flexbox-grid';
 import CircleImage from '../atoms/CircleImage';
-import Button, { ButtonStyle } from '../atoms/Button';
-import { H1, P, H3 } from '../atoms/Typography';
+import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
+import { H1, P, H4, H5, A } from '../atoms/Typography';
 import TagGroup from '../molecules/TagGroup';
-import PersonPreview from '../molecules/PersonPreview';
+import { Ul, Li } from '../atoms/List';
+import Card from '../atoms/Card';
+import ProfileGrid from '../organisms/ProfileGrid';
+import ProjectGrid from '../organisms/ProjectGrid';
+import PageSection, { StyledPageSection } from '../molecules/PageSection';
+import PageHeader from '../molecules/PageHeader';
+import devices from '../../styles/variables/breakpoints';
 
 
 interface IProfilePageProps {
     info: IProfile;
+    onEmailButtonPressed: () => void;
 }
 
-const HeaderSection = styled.div`
-    margin: 10em 0 8em;
+
+const AboutMeCard = styled(Card)`
+    margin-top: 3em;
+    padding: 5em;
     text-align: left;
-`
 
-const DepartmentSection = styled.div`
-    margin-bottom: 6em;
-`
-
-const RelatedPeopleSecton = styled.div`
-    margin-bottom: 4em;
+    @media ${devices.laptop} {
+        padding: 3em;
+    }
 `
 
 const ProfileInformationWrapper = styled.div`
     text-align: left;
+
+    & p {
+        display: inline-block;
+    }
 `
 
 const ProfileActionsWrapper = styled(Col)`
@@ -41,121 +50,98 @@ const GreetingText = styled(H1)`
     font-weight: normal;
 `
 
-const AskMeText = styled(P)`
+const ProfileSubheader = styled(P)`
     font-weight: bolder;
     text-transform: uppercase;
+    margin: 0;
 `
 
-const PriorityStatement = styled(P)`
-    font-weight: bolder;
+const KnowledgeableTopics = styled(Ul)`
+    margin-top: 0;
+`
+
+const PositionTitleText= styled(H5)`
+    font-weight: normal;
+`
+
+const PriorityStatement = styled(H4)`
     font-style: italic;
+    font-weight: normal;
+    margin: 1.5em 0 2em 1em;
 `
 
-const DepartmentResponsibilitiesWrapper = styled.div`
-    border: 1px solid black;
-    padding: 4em;
+const DepartmentLink = styled(A)`
+    margin-top: 2em;
+    font-weight: normal;
+`
+
+const ProjectSection = styled(StyledPageSection)`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    & ${StyledButton} {
+        margin-top: 2em;
+    }
 `
 
 const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
-    const info = props.info;
+    const {
+        profileImageUrl, relatedPeople, description,
+        firstName, lastName, positionTitle, priorityStatement, 
+        knowledgeableTopics, projects, tags 
+    } = props.info;
     
     return (
         <>
-            <HeaderSection>
-                <HeaderBlob/>
-                <Row end="xs">
-                    <Col xs={12} sm={11}>
-                        <Row center="xs" start="xs">
-                            <ProfileActionsWrapper xs={12} sm={4}>
-                                <CircleImage imageUrl={info.profileImageUrl} size='300px'/>
-                                <Button buttonStyle={ButtonStyle.SECONDARY} onClick={() => window.alert('No help yet!')}> Three steps for a great email </Button>
-                                <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => window.alert('No emailing yet!')}>Email me</Button>
-                            </ProfileActionsWrapper>
+            <PageHeader> 
+                <Row center="xs" start="xs">
+                    <ProfileActionsWrapper xs={12} lg={4}>
+                        <CircleImage imageUrl={profileImageUrl} size='300'/>
+                        <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => props.onEmailButtonPressed()}>Email me</Button>
+                    </ProfileActionsWrapper>
 
-                            <Col xs={12} sm={6}>
-                                <ProfileInformationWrapper>
-                                    <GreetingText>Hello, my name is</GreetingText>
-                                    <H1>{`${info.firstName} ${info.lastName}`}</H1>
-                                    {/* <H4>{info.department.title}</H4> */}
-                                    <PriorityStatement>{info.priorityStatement}</PriorityStatement>
-                                    <P>{info.description}</P>
-                                    <AskMeText>Ask me about:</AskMeText>
-                                    <ul>
-                                        {/* {info.knowledgeableTopics.map((value, i) => <li key={i}><P>{value}</P></li>)} */}
-                                    </ul>
-                                </ProfileInformationWrapper>
-                                <TagGroup tags={info.tags}/>
-                            </Col>
-                        </Row>
+                    <Col xs={12} lg={6}>
+                        <ProfileInformationWrapper>
+                            <GreetingText>Hello, my name is</GreetingText>
+                            <H1>{`${firstName} ${lastName}`} <P>(She/Her)</P></H1>                             
+                            <PositionTitleText>{positionTitle}, {props.info.department?.departmentName}</PositionTitleText>
+                            <PriorityStatement>"{priorityStatement}"</PriorityStatement>
+                            <ProfileSubheader>Ask me about:</ProfileSubheader>
+                            <KnowledgeableTopics>
+                                {knowledgeableTopics.map((value, i) => <Li key={i}><P>{value}</P></Li>)}
+                            </KnowledgeableTopics>
+                        </ProfileInformationWrapper>
+                        <TagGroup tags={tags}/>
                     </Col>
                 </Row>
-            </HeaderSection>
+            </PageHeader>
 
-            <DepartmentSection>
-                <Row center="xs">
-                    <Col xs={10}>
-                        <DepartmentResponsibilitiesWrapper>
-                            <Row start="xs">
-                                <Col xs={12}>
-                                    <H3>Here's what we do</H3>
-                                </Col>
-                                {/* {info.department.responsibilities.map((value, i) => {
-                                    return(
-                                        <Col key={i} xs={4}>
-                                            <H5>{value.title}</H5>
-                                            <P>{value.description}</P>
-                                        </Col>
-                                    )
-                                })} */}
-                            </Row>
-                        </DepartmentResponsibilitiesWrapper>
-                    </Col>
-                </Row>
-            </DepartmentSection>
-            
-            { info.relatedPeople.length !== 0 && 
-                <RelatedPeopleSecton>
-                    <Row center="xs">
-                        <Col xs={10}>
-                            <Row start="xs">
-                                <Col xs={12}>
-                                    <H3>Related people</H3>
-                                </Col>
-                                {info.relatedPeople.map((value, i) => {
-                                    return(
-                                        <Col key={i} xs={6}>
-                                            <PersonPreview profile={value} onSelected={() => window.alert("doesnt go anywhere yet")}/>
-                                        </Col>
-                                    )
-                                })}
-                            </Row>
-                        </Col>
-                    </Row>
-                </RelatedPeopleSecton>
+            <PageSection>
+                <AboutMeCard>
+                    <ProfileSubheader>About Me</ProfileSubheader>
+                    <P>{description}</P>
+                    <DepartmentLink href={props.info.department?.departmentUrl} target="_blank">
+                        <P>Learn more at the {props.info.department?.departmentName}</P>
+                    </DepartmentLink>
+                </AboutMeCard>
+            </PageSection>
+
+            {projects.length !== 0 &&
+                <ProjectSection title="Here's what I've worked on">
+                    <ProjectGrid projects={projects}/>
+                    <Button buttonStyle={ButtonStyle.PRIMARY}>
+                        <A href={props.info.department?.departmentUrl} target='_blank'>See more of our work</A>
+                    </Button>
+                </ProjectSection>
+            }
+
+            { relatedPeople.length !== 0 && 
+                <PageSection title="Related people">
+                    <ProfileGrid profiles={relatedPeople}/>
+                </PageSection>
             }
         </>
     )
 }
 
-const ProfilePage: React.FC = () => {
-    // const person: IPerson = tempPeople[0];
-    const profile: IProfile = {
-            firstName: 'no',
-            lastName: 'no',
-            id: 'no',
-            relatedPeople: [],
-            profileImageUrl: '',
-            positionTitle: '',
-            description: '',
-            genderPronouns: '',
-            tags: [],
-            priorityStatement: 'I care about making walking safer and more enjoyable, and fixing the problems that frustrate our residents the most.',
-            knowledgeableTopics: ['Paving sidewalks and streets', 'Keeping sidewalks clean', 'Adding and improving pedestrian crosswalks']
-        }
-
-    return (
-        <DisconnectedProfilePage info={profile}/>
-    )
-}
-
-export default ProfilePage;
+export default DisconnectedProfilePage;

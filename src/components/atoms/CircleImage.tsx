@@ -1,4 +1,4 @@
-import styled from "../../theme/Theme";
+import styled from "../../styles/theme/Theme";
 
 interface ICircleImageProps {
     imageUrl: string;

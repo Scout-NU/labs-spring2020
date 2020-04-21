@@ -1,6 +1,6 @@
 import React from 'react';
-import styled from '../../theme/Theme';
-import { lunchboxColors } from '../../theme/lunchbox';
+import styled from '../../styles/theme/Theme';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
 
 interface IPopupProps {
     show: boolean;

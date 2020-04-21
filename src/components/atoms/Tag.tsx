@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from "../../theme/Theme";
+import styled from "../../styles/theme/Theme";
 import { P } from "./Typography";
 
 

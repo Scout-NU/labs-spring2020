@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 import { useField } from '@unform/core';
-import styled from '../../theme/Theme';
-import { lunchboxColors } from '../../theme/lunchbox';
+import styled from '../../styles/theme/Theme';
+import { lunchboxColors } from '../../styles/theme/lunchbox';
 
 const StyledInput = styled.input``;
 
