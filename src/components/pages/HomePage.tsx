@@ -10,7 +10,6 @@ import { searchPageRoute, helpPageRoute } from '../../var/routes';
 import stepone from '../../images/home/stepone.svg';
 import steptwo from '../../images/home/steptwo.svg';
 import stepthree from '../../images/home/stepthree.svg';
-import Card from '../atoms/Card';
 import { IPerson } from '../../types/client/model';
 import PersonPreview from '../molecules/PersonPreview';
 
@@ -23,10 +22,20 @@ const HomePageWrapper = styled.div`
     background-color: ${lunchboxColors.icepack};
 `
 
+const SAPBanner = styled.div`
+    position: absolute;
+    padding: 1em 1em 1em 11%;
+    background-color: white;
+    border-radius: 0 2px 2px 0;
+    z-index: 1;
+    top: 5%;
+`
+
 const HeaderContent = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 6em;
 
     & button {
         margin-top: 4em;
@@ -163,6 +172,9 @@ const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
 
     return (
         <HomePageWrapper>
+            <SAPBanner>
+                <H5>STUDENT ACTION PORTAL</H5>
+            </SAPBanner>
             <PageHeader headerVariant={HeaderVariant.FIRST}>
                 <HeaderPeople src={headerPeople}/>
                 <HeaderContent>
