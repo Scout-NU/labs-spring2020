@@ -2,8 +2,17 @@ import React, { InputHTMLAttributes } from 'react';
 import { useField } from '@unform/core';
 import styled from '../../styles/theme/Theme';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
+import { InputFontProperties } from './Typography';
 
-const StyledInput = styled.input``;
+
+export const StyledTextInput = styled.input`
+    border: 3px solid blue;
+    width: 100%;
+    min-height: 3em;
+    padding: 1em;
+    font-family: 'montserrat';
+    ${InputFontProperties};
+`
 
 export const StyledCheckbox = styled.div`
     display: inline-flex;
@@ -35,7 +44,7 @@ interface IInputProps  {
 const Input: React.FC<IInputProps & InputHTMLAttributes<HTMLInputElement>> = (props) => {
     const inputRef = React.useRef<HTMLInputElement>(null);
     const {fieldName, registerField } = useField(props.name);
-    const input = <StyledInput ref={inputRef} {...props}/>;
+    const input = <StyledTextInput ref={inputRef} {...props}/>;
     React.useEffect(() => {
         registerField({
             name: fieldName, 
@@ -43,9 +52,12 @@ const Input: React.FC<IInputProps & InputHTMLAttributes<HTMLInputElement>> = (pr
             path: 'value',
         });
     }, [fieldName, registerField]);
-
-    if (props.type === 'checkbox') return <StyledCheckbox> {input} </StyledCheckbox>
-    return input;
+    switch(props.type) {
+        case 'checkbox':
+            return <StyledCheckbox> {input} </StyledCheckbox>;
+        default:
+            return input;
+    }
 }
 
 export default Input;

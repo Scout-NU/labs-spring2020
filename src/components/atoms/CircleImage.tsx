@@ -2,7 +2,13 @@ import styled from "../../styles/theme/Theme";
 
 interface ICircleImageProps {
     imageUrl: string;
-    size: string;
+    size: CircleImageSize;
+}
+
+export enum CircleImageSize {
+    SMALL = '80',
+    MEDIUM = '200',
+    LARGE = '300'
 }
 
 const CircleImage = styled.img<ICircleImageProps>`

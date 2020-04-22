@@ -10,11 +10,6 @@ import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
 const ProfilePage: React.FC = () => {
     const [loading, setLoading] = React.useState(true);
     const [profile, setProfile] = React.useState<IProfile | null>(null);
-    const [showForm, toggleForm] = React.useState(false);
-
-    const emailRequested = () => {
-        toggleForm(!showForm);
-    }
 
     React.useEffect(() => {
         async function getProfile() {
@@ -44,10 +39,7 @@ const ProfilePage: React.FC = () => {
 
     if (profile && !loading) {
         return (
-            <>
-                {showForm && <EmailForm/>}
-                <DisconnectedProfilePage onEmailButtonPressed={emailRequested} info={profile}/>
-            </>
+          <DisconnectedProfilePage info={profile}/>
         )
     }
 

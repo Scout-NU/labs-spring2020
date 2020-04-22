@@ -3,7 +3,6 @@ import IEmailParameters from "../../types/backend/email";
 
 interface IEmailResponse {
     successful: boolean;
-    message: string;
 }
 
 export interface IEmailService {
@@ -49,7 +48,6 @@ async function sendAmbassadorEmail(ambassadorId: string, senderEmail: string, em
     console.log(emailResponse);
 
     return {
-        successful: true,
-        message: 'idk man'
+        successful: emailResponse.ok
     }
 }

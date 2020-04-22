@@ -1,13 +1,14 @@
 import React from 'react';
 import { IPerson } from '../../types/client/model';
 import { Row, Col } from 'react-flexbox-grid';
-import CircleImage from '../atoms/CircleImage';
+import CircleImage, { CircleImageSize } from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import Card from '../atoms/Card';
 import TagGroup from '../molecules/TagGroup';
 import { Redirect } from 'react-router';
 import { profileRoute } from '../../var/routes';
+import PersonProfileImageGroup from './PersonProfileImageGroup';
 
 
 interface IPersonPreviewProps {
@@ -27,14 +28,6 @@ const PreviewCard = styled(Card)`
     &:hover {
         transform: scale(1.05);
     }
-`
-
-const DepartmentImage = styled(CircleImage)`
-    position: absolute;
-    background-color: white;
-    border: 1px solid black;
-    right: 20%;
-    bottom: 0;
 `
 
 // TODO: Can probably improve the way these are sized.
@@ -86,10 +79,7 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
         <PreviewCard onClick={onClick}>
             <Row center='xs'>
                 <Col xs>
-                    <ProfileImageContainer>
-                        <CircleImage imageUrl={info.profileImageUrl} size={`${Math.round(.25 * cardHeight)}`} />
-                        <DepartmentImage imageUrl={`//images.ctfassets.net/silnjjl59l7l/518KgfzCDMu8mnn3aMXk1V/9de3a4b78f513656115b70c16d269ca8/newurbanmechanics.svg?h=252`} size='60'/>
-                    </ProfileImageContainer>
+                    <PersonProfileImageGroup profileImageUrl={info.profileImageUrl} departmentImageUrl={info.department?.departmentImage} size={CircleImageSize.MEDIUM}/>
                     <H5>{`${info.firstName} ${info.lastName}`}</H5>
                     <JobTitle>{info.positionTitle}</JobTitle>
                     <P>{shorten(info.description, 100)}</P>

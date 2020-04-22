@@ -7,7 +7,6 @@ export const P = styled.p`
     font-family: ${ props => props.theme.typography.fontFamily };
     font-size: ${ props => scaleFont(props.theme.typography.p) };
     line-height: ${ props => scaleFont({ fontMax: props.theme.typography.p.lineHeightMax, fontMin: props.theme.typography.p.lineHeightMin })};
-
 `
 
 export const H1 = styled.h1`
@@ -43,6 +42,12 @@ export const H5 = styled.h5`
     font-weight: ${ props => props.theme.typography.h5.fontWeight };
     font-size: ${ props => scaleFont(props.theme.typography.h5) };
     margin: 0;
+`
+
+export const InputFontProperties = css`
+    font-family: ${ props => props.theme.typography.fontFamily };
+    font-weight: ${ props => props.theme.typography.p.fontWeight };
+    font-size: ${ props => scaleFont(props.theme.typography.p) };
 `
 
 const LinkStyle = css`
