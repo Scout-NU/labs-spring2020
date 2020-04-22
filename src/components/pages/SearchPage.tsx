@@ -1,5 +1,4 @@
 import React from 'react';
-import HeaderBlob from '../atoms/HeaderBlob';
 import { H4, H2 } from '../atoms/Typography';
 import { Col, Row } from 'react-flexbox-grid';
 import styled from '../../styles/theme/Theme';
@@ -57,7 +56,6 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
     return (
         <>
         <SearchContainer>
-            <HeaderBlob/>
             <Row center='xs' middle='xs'>
                 <HeaderContainer xs={10}>
                     <Row end='xs'>
