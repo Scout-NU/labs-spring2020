@@ -1,170 +1,217 @@
 import React from 'react';
-import header from '../../images/home/home-header.svg';
-import vic from '../../images/home/vic-0.svg';
 import styled from '../../styles/theme/Theme';
-import { Row, Col } from 'react-flexbox-grid';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
-import JourneyStep, {StepContainer} from '../molecules/JourneyBlurb';
-import { H1, H2, H3, H4, scaleFont } from '../atoms/Typography';
+import { H1, H5, H4, NavigationLink, H3, P } from '../atoms/Typography';
 import devices from '../../styles/variables/breakpoints';
-import { StyledButton, ButtonStyle } from '../atoms/Button';
+import Button, { ButtonStyle } from '../atoms/Button';
+import PageHeader, { HeaderVariant } from '../molecules/PageHeader';
+import headerPeople from '../../images/home/home-header-people.svg';
+import { searchPageRoute, helpPageRoute } from '../../var/routes';
+import stepone from '../../images/home/stepone.svg';
+import steptwo from '../../images/home/steptwo.svg';
+import stepthree from '../../images/home/stepthree.svg';
+import Card from '../atoms/Card';
+import { IPerson } from '../../types/client/model';
+import PersonPreview from '../molecules/PersonPreview';
 
 
-interface IHomePageProps {
-
+interface IDisconnectedHomePageProps {
+    carouselItems: IPerson[];
 }
 
-const HeaderSection = styled.section`
+const HomePageWrapper = styled.div`
     background-color: ${lunchboxColors.icepack};
 `
 
-const HeaderImage = styled.img`
-    position: relative;
-    width: 80%;
+const HeaderContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    & button {
+        margin-top: 4em;
+    }
+
+    & ${NavigationLink} {
+        color: white;
+    }
+`
+
+const PageSubheader = styled(H5)`
+    font-weight: normal;
+    margin-top: 2em;
+`
+
+const HomePageContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 8em;
+`
+
+const HeaderPeople = styled.img`
+    position: absolute;
+    width: 30%;
+    z-index: 0;
+    left: 60%;
+    bottom: -7.5%;
+    z-index: 1;
 
     @media ${devices.laptop} {
-        top: -5px;
+        bottom: -5.5%;
+    }
+
+    @media ${devices.tablet} {
+        bottom: -3.5%;
+    }
+`
+
+const ConnectionSteps = styled.div`
+    display: flex;
+    align-content: space-around;
+    flex-wrap: wrap;
+    margin: 4em 0;
+    padding: 0 10%;
+`
+
+const ConnectionStep = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    padding: 0 2em;
+
+    & img {
+        height: 50%;
+        margin-bottom: 3em;
+    }
+
+    @media ${devices.tablet} {
         width: 100%;
-        min-height: 70vh;
-    }
-`
+        margin-bottom: 4em;
 
-const JourneyImage = styled.img`
-    height: 40vw;
-`
-
-const HeaderCaption = styled.div`
-    position: absolute;
-    left: 25%;
-    top: 25%;
-    width: 55%;
-    text-align: left;
-
-
-    @media ${devices.tablet} {
-        left: auto;
-        top: 10vh;
-        width: 70%;
-    }
-`
-
-const JourneyBlurb = styled.div`
-    width: 50%;
-    text-align: left;
-    margin-left: 2em;
-
-    @media ${devices.tablet} {
-        width: 60%;
-    }
-`
-
-const LetsGoButton = styled(StyledButton)`
-    background-color: ${lunchboxColors.gusher};
-    font-size: ${ props => scaleFont(props.theme.typography.h4) };
-    border-radius: 500px;
-    color: white;
-    padding: 1em 2em;
-    font-family: ${ props => props.theme.typography.fontFamily };
-    font-weight: bolder;
-    margin: 2em 0;
-`
-
-// TODO: Break this out into its own compoonent
-const JourneySteps = styled.div`
-
-    & ${StepContainer}:nth-child(even) {
-        flex-direction: row-reverse;
-    };
-
-    @media ${devices.tablet} {
-        ${StepContainer} {
-            flex-direction: row;
-        };
-    }
-
-`
-
-const HomePage: React.FC<IHomePageProps> = props => {
-    const blurbs = [
-        {
-            title: "At first, Vic felt stuck",
-            text: "For this project, I wanted to find a topic I actually cared about. The streets in my neighborhood are old, but I didn’t see how that connected to civics. Then, my teacher told us about this website...",
-            imageName: "vic-1",
-            textFirst: true
-        },
-        {
-            title: "The filters really helped",
-            text: "I searched for “street” and started to find some people in City Hall to connect with. A few options came up, including Jane Doe at the Public Works Department.",
-            imageName: "vic-2",
-            textFirst: false
-        },
-        {
-            title: "Emailing Kate at City Hall",
-            text: "I saw on Kate Jay’s profile that she works on making walking safer. I also felt like we both cared about the same things, so I really wanted to email her. I was still nervous about emailing Kate, but the email form helped a lot.",
-            imageName: "vic-3",
-            textFirst: true
-        },
-        {
-            title: "Kate’s profile gave Vic a great idea",
-            text: "I looked at the “Here’s what we do” section on her profile and noticed how Kate and her team are trying to make walking around Boston easier and safer. It made me think about the crosswalk near my school. It’s old, which makes crossing dangerous. I’d seen lots of other new crosswalks around the city, and wondered why mine wasn’t fixed yet.",
-            imageName: "vic-4",
-            textFirst: false
-        },
-        {
-            title: "Emailing Kate",
-            text: "In my email, I introduced myself and my group’s project. I also told her about the crosswalk near my school and asked,  “Why do some crosswalks get fixed before others?” Within a week, Kate emailed me back! She shared a lot of interesting information, like how the Public Works Department uses a specific system to decide which sidewalks need to be fixed before others.",
-            imageName: "vic-5",
-            textFirst: true
-        },
-        {
-            title: "Vic found a focus",
-            text: "Talking with Kate from City Hall helped me connect my project idea to what’s happening in City Hall. Now, my group and I have a clear path to what our project will focus on: improving the sidewalks near my school!",
-            imageName: "vic-6",
-            textFirst: false
+        & img {
+            align-self: center;
+            width: 50%;
         }
-    ]
+    }
+`
+
+const CATIntroWrapper = styled.div`
+    background-color: white;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+
+    & > div {
+        width: 50%;
+
+        @media ${devices.laptop} {
+            min-width: 100%;
+        }
+    }
+`
+
+const CATInformation = styled.div`
+    display: flex;
+    flex-direction: column;
+    padding: 5em 5em 0 10%;
+
+    & button {
+        margin: 1.75em 0;
+    }
+
+    & > ${NavigationLink} {
+        color: ${lunchboxColors.gusher};
+    }
+
+    & button > ${NavigationLink} {
+        color: white;
+    }
+
+    @media ${devices.laptop} {
+        padding: 5em;
+    }
+`
+
+const CATSearchText = styled(H4)`
+    color: dimgray;
+    font-weight: bolder;
+    margin: 3em 0 0 0;
+`
+
+const CATCarouselItem = styled.div`
+    display: flex;
+    min-width: 80%;
+    margin: 4em 0 4em 4em;
+`
+
+const CATCarousel = styled.div`
+    display: flex;
+    background-color: ${lunchboxColors.carton};
+    padding-right: 4em;
+    overflow: scroll;
+    overscroll-behavior-x: none;
+
+    & ${CATCarouselItem}:last-child {
+        padding-right: 4em;
+        min-width: calc(80% + 4em);
+    }
+`
+
+const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
+    const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={searchPageRoute}>Explore Profiles</NavigationLink></Button>
 
     return (
-        <>
-        <HeaderSection>
-            <Col xs>
-                <Row center='xs' end='md'>         
-                    <HeaderImage src={header}/>
-                    <HeaderCaption>
-                        <H3>Let's talk about</H3>
-                        <H1>Action Civics in Boston!</H1>
-                        <H4>Connect with someone in City Hall and plan your action civics project.</H4>
-                    </HeaderCaption>
-           
-                    <Col xs={10}>
-                        <Row start='xs' middle='xs'>
-                            <JourneyImage src={vic}/>
-                            <JourneyBlurb>
-                                <H2>Meet Vic!</H2>
-                                <H4>Hi, I’m Vic! I’m a high school student in Boston. Scroll to see my journey through my action civics project.</H4>
-                            </JourneyBlurb>
-                        </Row>
-                    </Col>
-                </Row>
-            </Col>
-        </HeaderSection>
+        <HomePageWrapper>
+            <PageHeader headerVariant={HeaderVariant.FIRST}>
+                <HeaderPeople src={headerPeople}/>
+                <HeaderContent>
+                    <H1>Connect with people in Boston City Hall</H1>
+                    <PageSubheader>Create meaningful change in your community, backed by your friends in local government.</PageSubheader>
+                    {exploreProfilesButton}
+                </HeaderContent>
+            </PageHeader>
 
-        <section>
-            <Col xs>
-                <Row center='xs'>
-                    <Col xs={10}>
-                        <JourneySteps>
-                            { blurbs.map((item, i) => <JourneyStep key={i} title={item.title} text={item.text} textFirst={item.textFirst} imageName={item.imageName} />)}
-                        </JourneySteps>
-                    </Col>
-                </Row>
-            </Col>
-        </section>
-        <Row middle='xs' center='xs'>
-            <LetsGoButton buttonStyle={ButtonStyle.PRIMARY} onClick={() => console.log("let's go :)")}>Let's go!</LetsGoButton>
-        </Row>
-        </>
+            <HomePageContent>
+                <H3>How it works</H3>
+                <ConnectionSteps>
+                    <ConnectionStep>
+                        <img src={stepone}/>
+                        <H5>Forming your focus</H5>
+                        <P>Think about what civics-related topics you want to know more about and use those to help guide your search.</P>
+                    </ConnectionStep>
+                    <ConnectionStep>
+                        <img src={steptwo}/>
+                        <H5>Finding an expert</H5>
+                        <P>Browse through City Hall profiles to find somebody you’d like to learn from.</P>
+                    </ConnectionStep>
+                    <ConnectionStep>
+                        <img src={stepthree}/>
+                        <H5>Connecting with City Hall</H5>
+                        <P>Send an email to your chosen City Hall contact and they will provide you with information and guidance.</P>
+                    </ConnectionStep>
+                </ConnectionSteps>
+                <CATIntroWrapper>
+                    <CATInformation>
+                        <H3>The Civics Action Team is here to help.</H3>
+                        <P>One of the best ways to research a topic is understanding how it impacts your own community. A local expert can connect you to resources, opportunities, and information to help you make change in your community.</P>
+                        <CATSearchText>Start your search.</CATSearchText>
+                        {exploreProfilesButton}
+                        <NavigationLink to={helpPageRoute}>Not quite sure what to say?</NavigationLink>
+                    </CATInformation>
+                    <CATCarousel>
+                        {props.carouselItems.map((item, key) => {
+                            return (
+                                <CATCarouselItem key={key}>
+                                    <PersonPreview profile={item}/>
+                                </CATCarouselItem>
+                            )
+                        } )}
+                    </CATCarousel>
+                </CATIntroWrapper>
+            </HomePageContent>
+        </HomePageWrapper>
     )
 }
 
-export default HomePage;
+export default DisconnectedHomePage;

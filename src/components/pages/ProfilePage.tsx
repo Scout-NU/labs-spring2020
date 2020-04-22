@@ -2,7 +2,7 @@ import React from 'react';
 import { IProfile } from '../../types/client/model';
 import styled from '../../styles/theme/Theme';
 import { Row, Col } from 'react-flexbox-grid';
-import CircleImage, { CircleImageSize } from '../atoms/CircleImage';
+import { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
 import { H1, P, H4, H5, A } from '../atoms/Typography';
 import TagGroup from '../molecules/TagGroup';
@@ -11,7 +11,7 @@ import Card from '../atoms/Card';
 import ProfileGrid from '../organisms/ProfileGrid';
 import ProjectGrid from '../organisms/ProjectGrid';
 import PageSection, { StyledPageSection } from '../molecules/PageSection';
-import PageHeader from '../molecules/PageHeader';
+import PageHeader, { HeaderVariant } from '../molecules/PageHeader';
 import devices from '../../styles/variables/breakpoints';
 import Modal from '../atoms/Modal';
 import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
@@ -27,6 +27,8 @@ const AboutMeCard = styled(Card)`
     margin-top: 3em;
     padding: 5em;
     text-align: left;
+    margin-top: -20%;
+    z-index: 1;
 
     @media ${devices.laptop} {
         padding: 3em;
@@ -96,7 +98,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
     
     return (
         <>
-            <PageHeader> 
+            <PageHeader headerVariant={HeaderVariant.THIRD}> 
                 <Row center="xs" >
                     <ProfileActionsWrapper xs={12} md={4}>
                         <PersonProfileImageGroup profileImageUrl={profileImageUrl} departmentImageUrl={department?.departmentImage} size={CircleImageSize.LARGE} />
