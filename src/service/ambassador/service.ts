@@ -4,7 +4,7 @@ import { resolveEntry } from '../../types/backend/utils';
 import { makeContentManagementGetRequest, validateResponse } from '../util/http';
 
 export interface IProfileService {
-    getAllProfiles(): Promise<IAmbassador[]>;
+    getAllProfiles(limit?: number): Promise<IAmbassador[]>;
     searchProfiles(queryText: string, filters: Map<string, string[]>): Promise<IAmbassador[]>; 
     getProfileById(id: string): Promise<IAmbassador>;
 }
@@ -19,8 +19,8 @@ export default function getProfileService(): IProfileService {
 
 const allProfilesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=ambassador&include=2`;
 
-async function getAllProfiles(): Promise<IAmbassador[]> {
-    return parseProfileResponse(await getProfilesWhere(allProfilesQuery), true)
+async function getAllProfiles(limit: number = 100): Promise<IAmbassador[]> {
+    return parseProfileResponse(await getProfilesWhere(`${allProfilesQuery}&limit=${limit}`), true)
 }
 
 async function getProfileById(id: string): Promise<IAmbassador> {

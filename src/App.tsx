@@ -1,5 +1,5 @@
 import React from 'react';
-import HomePage from './components/pages/HomePage';
+import HomePage from './connectors/pages/ConnectedHomePage';
 import lunchbox from './styles/theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
 import { Header } from './components/organisms/Header';

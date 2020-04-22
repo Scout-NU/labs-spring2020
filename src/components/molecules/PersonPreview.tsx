@@ -30,13 +30,6 @@ const PreviewCard = styled(Card)`
     }
 `
 
-// TODO: Can probably improve the way these are sized.
-const ProfileImageContainer = styled.div`
-    margin-bottom: 1em;
-    position: relative;
-    /* width: 250px;  */
-`
-
 const CardRule = styled.hr`
     border-top: .5px solid lightgray;
 `

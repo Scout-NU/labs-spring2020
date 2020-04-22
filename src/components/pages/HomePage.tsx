@@ -11,10 +11,12 @@ import stepone from '../../images/home/stepone.svg';
 import steptwo from '../../images/home/steptwo.svg';
 import stepthree from '../../images/home/stepthree.svg';
 import Card from '../atoms/Card';
+import { IPerson } from '../../types/client/model';
+import PersonPreview from '../molecules/PersonPreview';
 
 
-interface IHomePageProps {
-
+interface IDisconnectedHomePageProps {
+    carouselItems: IPerson[];
 }
 
 const HomePageWrapper = styled.div`
@@ -67,6 +69,7 @@ const HeaderPeople = styled.img`
 const ConnectionSteps = styled.div`
     display: flex;
     align-content: space-around;
+    flex-wrap: wrap;
     margin: 4em 0;
     padding: 0 10%;
 `
@@ -84,6 +87,12 @@ const ConnectionStep = styled.div`
 
     @media ${devices.tablet} {
         width: 100%;
+        margin-bottom: 4em;
+
+        & img {
+            align-self: center;
+            width: 50%;
+        }
     }
 `
 
@@ -91,16 +100,24 @@ const CATIntroWrapper = styled.div`
     background-color: white;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
+
+    & > div {
+        width: 50%;
+
+        @media ${devices.laptop} {
+            min-width: 100%;
+        }
+    }
 `
 
-const CATIntroSectionWrapper = styled.div`
+const CATInformation = styled.div`
     display: flex;
     flex-direction: column;
     padding: 5em 5em 0 10%;
-    width: 50%;
 
     & button {
-        margin: 1em 0;
+        margin: 1.75em 0;
     }
 
     & > ${NavigationLink} {
@@ -110,38 +127,38 @@ const CATIntroSectionWrapper = styled.div`
     & button > ${NavigationLink} {
         color: white;
     }
+
+    @media ${devices.laptop} {
+        padding: 5em;
+    }
 `
 
 const CATSearchText = styled(H4)`
-    color: grey;
+    color: dimgray;
     font-weight: bolder;
-    margin-top: 3em;
-`
-
-const CATCarouselWrapper = styled.div`
-    display: flex;
-    background-color: ${lunchboxColors.carton};
-    flex-direction: column;
-    width: 50%;
-`
-
-const CATCarousel = styled.div`
-    display: flex; 
-    overflow: scroll;
+    margin: 3em 0 0 0;
 `
 
 const CATCarouselItem = styled.div`
     display: flex;
-    width: 80%;
-    padding: 4em 0 4em 4em;
+    min-width: 80%;
+    margin: 4em 0 4em 4em;
 `
 
-const FakeItem = styled(Card)`
-    height: 600px;
-    width: 600px;
+const CATCarousel = styled.div`
+    display: flex;
+    background-color: ${lunchboxColors.carton};
+    padding-right: 4em;
+    overflow: scroll;
+    overscroll-behavior-x: none;
+
+    & ${CATCarouselItem}:last-child {
+        padding-right: 4em;
+        min-width: calc(80% + 4em);
+    }
 `
 
-const HomePage: React.FC<IHomePageProps> = props => {
+const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
     const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={searchPageRoute}>Explore Profiles</NavigationLink></Button>
 
     return (
@@ -175,30 +192,26 @@ const HomePage: React.FC<IHomePageProps> = props => {
                     </ConnectionStep>
                 </ConnectionSteps>
                 <CATIntroWrapper>
-                    <CATIntroSectionWrapper>
+                    <CATInformation>
                         <H3>The Civics Action Team is here to help.</H3>
                         <P>One of the best ways to research a topic is understanding how it impacts your own community. A local expert can connect you to resources, opportunities, and information to help you make change in your community.</P>
                         <CATSearchText>Start your search.</CATSearchText>
                         {exploreProfilesButton}
                         <NavigationLink to={helpPageRoute}>Not quite sure what to say?</NavigationLink>
-                    </CATIntroSectionWrapper>
-                    <CATCarouselWrapper>
-                        <CATCarousel>
-                            <CATCarouselItem>
-                                <FakeItem/>
-                            </CATCarouselItem>
-                            <CATCarouselItem>
-                                <FakeItem/>
-                            </CATCarouselItem>
-                            <CATCarouselItem>
-                                <FakeItem/>
-                            </CATCarouselItem>
-                        </CATCarousel>
-                    </CATCarouselWrapper>
+                    </CATInformation>
+                    <CATCarousel>
+                        {props.carouselItems.map((item, key) => {
+                            return (
+                                <CATCarouselItem key={key}>
+                                    <PersonPreview profile={item}/>
+                                </CATCarouselItem>
+                            )
+                        } )}
+                    </CATCarousel>
                 </CATIntroWrapper>
             </HomePageContent>
         </HomePageWrapper>
     )
 }
 
-export default HomePage;
+export default DisconnectedHomePage;
