@@ -1,9 +1,8 @@
 import React from 'react';
 import { IProfile } from '../../types/client/model';
-import HeaderBlob from '../atoms/HeaderBlob';
 import styled from '../../styles/theme/Theme';
 import { Row, Col } from 'react-flexbox-grid';
-import CircleImage from '../atoms/CircleImage';
+import CircleImage, { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
 import { H1, P, H4, H5, A } from '../atoms/Typography';
 import TagGroup from '../molecules/TagGroup';
@@ -14,11 +13,13 @@ import ProjectGrid from '../organisms/ProjectGrid';
 import PageSection, { StyledPageSection } from '../molecules/PageSection';
 import PageHeader from '../molecules/PageHeader';
 import devices from '../../styles/variables/breakpoints';
+import Modal from '../atoms/Modal';
+import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
+import PersonProfileImageGroup from '../molecules/PersonProfileImageGroup';
 
 
 interface IProfilePageProps {
     info: IProfile;
-    onEmailButtonPressed: () => void;
 }
 
 
@@ -85,19 +86,21 @@ const ProjectSection = styled(StyledPageSection)`
 `
 
 const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
+    const [showForm, toggleForm] = React.useState(false);
+
     const {
         profileImageUrl, relatedPeople, description,
         firstName, lastName, positionTitle, priorityStatement, 
-        knowledgeableTopics, projects, tags 
+        knowledgeableTopics, projects, tags, department
     } = props.info;
     
     return (
         <>
             <PageHeader> 
-                <Row center="xs" start="xs">
-                    <ProfileActionsWrapper xs={12} lg={4}>
-                        <CircleImage imageUrl={profileImageUrl} size='300'/>
-                        <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => props.onEmailButtonPressed()}>Email me</Button>
+                <Row center="xs" >
+                    <ProfileActionsWrapper xs={12} md={4}>
+                        <PersonProfileImageGroup profileImageUrl={profileImageUrl} departmentImageUrl={department?.departmentImage} size={CircleImageSize.LARGE} />
+                        <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => toggleForm(true)}>Email me</Button>
                     </ProfileActionsWrapper>
 
                     <Col xs={12} lg={6}>
@@ -140,6 +143,11 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                     <ProfileGrid profiles={relatedPeople}/>
                 </PageSection>
             }
+
+            <Modal onModalClosed={() => toggleForm(false)} isOpen={showForm}>
+                <EmailForm onFormCompleted={() => toggleForm(false)}/>
+            </Modal>
+
         </>
     )
 }
