@@ -4,3 +4,4 @@ export const homeRedirectRoute = '/';
 export const monumRoute = 'https://www.boston.gov/departments/new-urban-mechanics';
 export const helpPageRoute = '/faq';
 export const profileRoute = '/profile'
+export const conversationGuideRoute = '/guide'
