@@ -22,6 +22,7 @@ const FilterToggle = styled.button`
 const FilterToggles = styled.div`
     display: flex;
     justify-content: flex-start;
+    text-align: center;
 `
 
 const DisconnectedFAQPage: React.FC<IFAQPageProps> = props => {

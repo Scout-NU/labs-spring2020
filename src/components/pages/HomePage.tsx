@@ -42,7 +42,6 @@ const Divider = styled.div`
     @media ${devices.laptop} {
         display: none;
     }
-
 `
 
 const HomePageContent = styled.div`
@@ -160,13 +159,17 @@ const CATCarousel = styled.div`
         min-width: calc(80% + 4em);
     }
 `
-// & button {
-//     margin-top: 4em;
-// }
 
-// & ${NavigationLink} {
-//     color: white;
-// }
+const HomePageHeaderContent = styled.div`
+    & button {
+        margin-top: 4em;
+    }
+
+    & ${NavigationLink} {
+        color: white;
+    }
+`
+
 const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
     const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={searchPageRoute}>Explore Profiles</NavigationLink></Button>
 
@@ -178,11 +181,13 @@ const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
             <Divider/>
             <PageHeader headerVariant={HeaderVariant.HOME}>
                 <HeaderPeople src={headerPeople}/>
-                <PageTitleGroup>
-                    <H1>Connect with people in Boston City Hall</H1>
-                    <PageSubheader>Create meaningful change in your community, backed by your friends in local government.</PageSubheader>
-                </PageTitleGroup>
-                    {exploreProfilesButton}
+                <HomePageHeaderContent>
+                    <PageTitleGroup>
+                        <H1>Connect with people in Boston City Hall</H1>
+                        <PageSubheader>Create meaningful change in your community, backed by your friends in local government.</PageSubheader>
+                        {exploreProfilesButton}
+                    </PageTitleGroup>
+                </HomePageHeaderContent>
             </PageHeader>
 
             <HomePageContent>

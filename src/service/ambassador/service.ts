@@ -41,8 +41,6 @@ async function searchProfiles(queryText: string, filters: Map<string, string[]>)
         `&fields.department.sys.contentType.sys.id=department` +
         `&fields.department.fields.departmentName[in]=${departmentFilters.join(',')}`
     }
-
-    searchQuery += `&select=sys.id,fields.firstName`
     
     let result = parseProfileResponse(await getProfilesWhere(searchQuery), true);
     return topicFilters ? filterByTag(topicFilters, result) : result;
@@ -60,7 +58,8 @@ function filterByTag(desiredTags: string[], ambassadors: IAmbassador[]): IAmbass
 async function getProfilesWhere(query: string): Promise<ContentfulListBaseResponse<IAmbassador>> {
     const profileResponse = await makeContentManagementGetRequest(query);
     validateResponse(profileResponse);
-    return await profileResponse.json();
+    let response = await profileResponse.json();
+    return response;
 }
 
 // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
