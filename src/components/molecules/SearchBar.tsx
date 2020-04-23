@@ -52,6 +52,8 @@ const SearchInput = styled(Input)`
     color: white;
     font-size: ${props => props.theme.typography.h5.fontMax};
     width: 100%;
+    min-height: 0;
+    padding: 0;
 
     &::placeholder {
         color: white;
