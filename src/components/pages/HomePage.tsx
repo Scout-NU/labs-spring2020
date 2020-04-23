@@ -4,7 +4,6 @@ import { lunchboxColors } from '../../styles/theme/lunchbox';
 import { H1, H5, H4, NavigationLink, H3, P } from '../atoms/Typography';
 import devices from '../../styles/variables/breakpoints';
 import Button, { ButtonStyle } from '../atoms/Button';
-import PageHeader, { HeaderVariant } from '../molecules/PageHeader';
 import headerPeople from '../../images/home/home-header-people.svg';
 import { searchPageRoute, helpPageRoute } from '../../var/routes';
 import stepone from '../../images/home/stepone.svg';
@@ -12,7 +11,7 @@ import steptwo from '../../images/home/steptwo.svg';
 import stepthree from '../../images/home/stepthree.svg';
 import { IPerson } from '../../types/client/model';
 import PersonPreview from '../molecules/PersonPreview';
-
+import { PageHeader, PageTitleGroup, PageSubheader, HeaderVariant } from '../templates/Page';
 
 interface IDisconnectedHomePageProps {
     carouselItems: IPerson[];
@@ -31,21 +30,6 @@ const SAPBanner = styled.div`
     top: 5%;
 `
 
-const HeaderContent = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 6em;
-
-    & button {
-        margin-top: 4em;
-    }
-
-    & ${NavigationLink} {
-        color: white;
-    }
-`
-
 const Divider = styled.div`
     height: 170px;
     width: 2px;
@@ -59,11 +43,6 @@ const Divider = styled.div`
         display: none;
     }
 
-`
-
-const PageSubheader = styled(H5)`
-    font-weight: normal;
-    margin-top: 2em;
 `
 
 const HomePageContent = styled.div`
@@ -181,7 +160,13 @@ const CATCarousel = styled.div`
         min-width: calc(80% + 4em);
     }
 `
+// & button {
+//     margin-top: 4em;
+// }
 
+// & ${NavigationLink} {
+//     color: white;
+// }
 const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
     const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={searchPageRoute}>Explore Profiles</NavigationLink></Button>
 
@@ -191,13 +176,13 @@ const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
                 <H5>STUDENT ACTION PORTAL</H5>
             </SAPBanner>
             <Divider/>
-            <PageHeader headerVariant={HeaderVariant.FIRST}>
+            <PageHeader headerVariant={HeaderVariant.HOME}>
                 <HeaderPeople src={headerPeople}/>
-                <HeaderContent>
+                <PageTitleGroup>
                     <H1>Connect with people in Boston City Hall</H1>
                     <PageSubheader>Create meaningful change in your community, backed by your friends in local government.</PageSubheader>
+                </PageTitleGroup>
                     {exploreProfilesButton}
-                </HeaderContent>
             </PageHeader>
 
             <HomePageContent>

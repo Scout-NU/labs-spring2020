@@ -42,3 +42,14 @@ export interface ILink {
     linkURL: string;
 }
 
+export interface IFaq { 
+    title: string;
+    suggestions?: string[];
+    description?: string;
+    links: IFaqLink[];
+}
+
+export interface IFaqLink {
+    url: ILink;
+    description: string;
+}
