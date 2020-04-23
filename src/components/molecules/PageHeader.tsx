@@ -9,8 +9,7 @@ interface IHeaderProps {
 
 const HeaderContent = styled.div<IHeaderProps>`
     background-color: ${props => mapVariantToColor(props.headerVariant)};
-    padding-top: 10%;
-    padding-right: 5%;
+    padding: 10% 5% 0;
 
     @media ${devices.laptop} {
         margin: 0;
@@ -19,7 +18,7 @@ const HeaderContent = styled.div<IHeaderProps>`
 `
 
 export const HeaderContainer = styled.section`
-    margin-left: 10%;
+    margin-left: 5%;
     position: relative;
     
     @media ${devices.laptop} {

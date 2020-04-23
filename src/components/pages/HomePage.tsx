@@ -46,6 +46,21 @@ const HeaderContent = styled.div`
     }
 `
 
+const Divider = styled.div`
+    height: 170px;
+    width: 2px;
+    background-color: black;
+    position: absolute;
+    left: 50%;
+    top: 80%;
+    z-index: 1;
+
+    @media ${devices.laptop} {
+        display: none;
+    }
+
+`
+
 const PageSubheader = styled(H5)`
     font-weight: normal;
     margin-top: 2em;
@@ -175,6 +190,7 @@ const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
             <SAPBanner>
                 <H5>STUDENT ACTION PORTAL</H5>
             </SAPBanner>
+            <Divider/>
             <PageHeader headerVariant={HeaderVariant.FIRST}>
                 <HeaderPeople src={headerPeople}/>
                 <HeaderContent>
