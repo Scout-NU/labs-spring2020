@@ -9,18 +9,14 @@ import { ISearchPageContent } from '../../types/client/page';
 import Spinner from '../atoms/Spinner';
 import SearchGroup from '../../connectors/organisms/ConnectedSearchGroup';
 import ProfileGrid from '../organisms/ProfileGrid';
+import PageHeader, { HeaderVariant } from '../molecules/PageHeader';
+import PageSection from '../molecules/PageSection';
 
 interface ISearchPageProps {
     results: IPerson[];
     pageContent: ISearchPageContent;
     loading: boolean;
 }
-
-const SearchContainer = styled.section`
-    text-align: left;
-    margin-top: 15vh;
-    
-`
 
 const HeaderCaption = styled.div`
     position: relative;
@@ -34,12 +30,9 @@ const HeaderCaption = styled.div`
     }
 `
 
-const PersonWrapper = styled(Col)`
-    padding: 2em;
-`
-
-const HeaderContainer = styled(Col)`
-    margin-bottom: 5vh;
+const SearchPageContent = styled.div`
+    margin-top: -24%;
+    z-index: 1;
 `
 
 const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
@@ -54,24 +47,20 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
         return (<Spinner/>)
     }
     return (
-        <>
-        <SearchContainer>
-            <Row center='xs' middle='xs'>
-                <HeaderContainer xs={10}>
-                    <Row end='xs'>
-                        <HeaderCaption>
-                            <H2>{pageContent.pageHeader}</H2>
-                            <H4>{pageContent.pageDescription}</H4>
-                        </HeaderCaption>
-                    </Row>
-                    <SearchGroup />
-                </HeaderContainer>
-                <Col xs={10}>
+        <div>
+            <PageHeader headerVariant={HeaderVariant.SECOND}>
+                <HeaderCaption>
+                    <H2>{pageContent.pageHeader}</H2>
+                    <H4>{pageContent.pageDescription}</H4>
+                </HeaderCaption>
+                <SearchGroup />
+            </PageHeader>
+            <PageSection>
+                <SearchPageContent>
                     { renderSearchResults() }
-                </Col>
-            </Row>
-        </SearchContainer>
-        </>
+                </SearchPageContent>
+            </PageSection>
+        </div>
     )
 }
 
