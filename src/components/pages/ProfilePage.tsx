@@ -1,6 +1,7 @@
 import React from 'react';
-import { IProfile } from '../../types/client/model';
 import styled from '../../styles/theme/Theme';
+import devices from '../../styles/variables/breakpoints';
+import { IProfile } from '../../types/client/model';
 import { Row, Col } from 'react-flexbox-grid';
 import { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
@@ -10,12 +11,10 @@ import { Ul, Li } from '../atoms/List';
 import Card from '../atoms/Card';
 import ProfileGrid from '../organisms/ProfileGrid';
 import ProjectGrid from '../organisms/ProjectGrid';
-import PageSection, { StyledPageSection } from '../molecules/PageSection';
-import PageHeader, { HeaderVariant } from '../molecules/PageHeader';
-import devices from '../../styles/variables/breakpoints';
 import Modal from '../atoms/Modal';
 import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
 import PersonProfileImageGroup from '../molecules/PersonProfileImageGroup';
+import { PageHeader, HeaderVariant, PageSection, StyledPageSection } from '../templates/Page';
 
 
 interface IProfilePageProps {
@@ -98,7 +97,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
     
     return (
         <>
-            <PageHeader headerVariant={HeaderVariant.THIRD}> 
+            <PageHeader headerVariant={HeaderVariant.PROFILE}> 
                 <Row center="xs" >
                     <ProfileActionsWrapper xs={12} md={4}>
                         <PersonProfileImageGroup profileImageUrl={profileImageUrl} departmentImageUrl={department?.departmentImage} size={CircleImageSize.LARGE} />

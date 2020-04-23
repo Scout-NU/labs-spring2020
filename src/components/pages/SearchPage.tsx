@@ -1,6 +1,5 @@
 import React from 'react';
 import { H4, H2 } from '../atoms/Typography';
-import { Col, Row } from 'react-flexbox-grid';
 import styled from '../../styles/theme/Theme';
 import devices from '../../styles/variables/breakpoints';
 import { IPerson } from '../../types/client/model';
@@ -9,8 +8,8 @@ import { ISearchPageContent } from '../../types/client/page';
 import Spinner from '../atoms/Spinner';
 import SearchGroup from '../../connectors/organisms/ConnectedSearchGroup';
 import ProfileGrid from '../organisms/ProfileGrid';
-import PageHeader, { HeaderVariant } from '../molecules/PageHeader';
-import PageSection from '../molecules/PageSection';
+import { PageHeader, HeaderVariant, PageSection } from '../templates/Page';
+
 
 interface ISearchPageProps {
     results: IPerson[];
@@ -48,7 +47,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
     }
     return (
         <div>
-            <PageHeader headerVariant={HeaderVariant.SECOND}>
+            <PageHeader headerVariant={HeaderVariant.SEARCH}>
                 <HeaderCaption>
                     <H2>{pageContent.pageHeader}</H2>
                     <H4>{pageContent.pageDescription}</H4>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { H3, H5 } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import devices from '../../styles/variables/breakpoints';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
@@ -34,29 +35,30 @@ const HeaderBlob = styled.svg<IHeaderProps>`
 
 // These represent different colors that the header shape could be.
 export enum HeaderVariant {
-    FIRST,
-    SECOND,
-    THIRD,
-    FOURTH,
-    FIFTH
+    HOME,
+    SEARCH,
+    PROFILE,
+    COMMUNICATION,
+    FAQ
 }
 
+// Maps a Page to a Header color
 const mapVariantToColor = (variant: HeaderVariant): string => {
     switch(variant) {
-        case HeaderVariant.FIRST:
+        case HeaderVariant.HOME:
             return lunchboxColors.tangerine;
-        case HeaderVariant.SECOND:
+        case HeaderVariant.SEARCH:
             return lunchboxColors.poptart;
-        case HeaderVariant.THIRD:
+        case HeaderVariant.PROFILE:
             return lunchboxColors.icepack;
-        case HeaderVariant.FOURTH:
+        case HeaderVariant.COMMUNICATION:
             return lunchboxColors.salad;
         default:
             return lunchboxColors.egg;
     }
 }
 
-const PageHeader: React.FC<IHeaderProps> = props => {
+export const PageHeader: React.FC<IHeaderProps> = props => {
     const { headerVariant } = props;
 
     return (
@@ -71,4 +73,34 @@ const PageHeader: React.FC<IHeaderProps> = props => {
     )
 }
 
-export default PageHeader;
+interface IPageSectionProps {
+    title?: string;
+}
+
+export const StyledPageSection = styled.section`
+    margin-bottom: 6em;
+    display: flex;
+    flex-direction: column;
+    padding: 0 10%;
+`
+
+export const PageSection: React.FC<IPageSectionProps> = props => {
+    return (
+        <StyledPageSection>
+            {props.title && <H3>{props.title}</H3>}
+            {props.children}
+        </StyledPageSection>
+    )
+}
+
+export const PageTitleGroup = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 6em;
+`
+
+export const PageSubheader = styled(H5)`
+    font-weight: normal;
+    margin-top: 2em;
+`
