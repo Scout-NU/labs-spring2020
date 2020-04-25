@@ -5,7 +5,7 @@ import devices from '../../styles/variables/breakpoints';
 import burger from '../../images/global/burger.svg'
 import { lunchboxColors } from '../../styles/theme/lunchbox';
 import closebutton from '../../images/global/closebutton.svg';
-import { searchPageRoute, homePageRoute, helpPageRoute } from '../../var/routes';
+import { searchPageRoute, homePageRoute, faqPageRoute, conversationGuideRoute } from '../../var/routes';
 
 interface IHeaderProps {
 
@@ -116,8 +116,9 @@ export class Header extends React.Component<IHeaderProps> {
                     <HeaderMenu ref={this.menu}>
                     <CloseButton onClick={() => this.toggleMenu()} src={closebutton}/>
                     <HeaderLink to={homePageRoute}>Home</HeaderLink>
-                    <HeaderLink to={searchPageRoute}>Connect With City Hall</HeaderLink>
-                    <HeaderLink to={helpPageRoute}>Help</HeaderLink>
+                    <HeaderLink to={searchPageRoute}>Explore Profiles</HeaderLink>
+                    <HeaderLink to={conversationGuideRoute}>Conversation Guide</HeaderLink>
+                    <HeaderLink to={faqPageRoute}>FAQ</HeaderLink>
                 </HeaderMenu>
                 <Burger onClick={() => this.toggleMenu()} src={burger}/>
             </HeaderContainer>
