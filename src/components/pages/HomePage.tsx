@@ -5,7 +5,7 @@ import { H1, H5, H4, NavigationLink, H3, P } from '../atoms/Typography';
 import devices from '../../styles/variables/breakpoints';
 import Button, { ButtonStyle } from '../atoms/Button';
 import headerPeople from '../../images/home/home-header-people.svg';
-import { searchPageRoute, helpPageRoute } from '../../var/routes';
+import { searchPageRoute, faqPageRoute } from '../../var/routes';
 import stepone from '../../images/home/stepone.svg';
 import steptwo from '../../images/home/steptwo.svg';
 import stepthree from '../../images/home/stepthree.svg';
@@ -215,7 +215,7 @@ const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
                         <P>One of the best ways to research a topic is understanding how it impacts your own community. A local expert can connect you to resources, opportunities, and information to help you make change in your community.</P>
                         <CATSearchText>Start your search.</CATSearchText>
                         {exploreProfilesButton}
-                        <NavigationLink to={helpPageRoute}>Not quite sure what to say?</NavigationLink>
+                        <NavigationLink to={faqPageRoute}>Not quite sure what to say?</NavigationLink>
                     </CATInformation>
                     <CATCarousel>
                         {props.carouselItems.map((item, key) => {

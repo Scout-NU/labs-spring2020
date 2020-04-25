@@ -9,7 +9,7 @@ import styled from './styles/theme/Theme';
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
 import SearchPage from './connectors/pages/ConnectedSearchPage';
 import NotFoundPage from './components/pages/404';
-import { homePageRoute, homeRedirectRoute, searchPageRoute, profileRoute, helpPageRoute, conversationGuideRoute } from './var/routes';
+import { homePageRoute, homeRedirectRoute, searchPageRoute, profileRoute, faqPageRoute, conversationGuideRoute } from './var/routes';
 import FAQPage from './connectors/pages/ConnectedFAQPage';
 import ConversationGuide from './connectors/pages/ConnectedConversationGuide';
 
@@ -46,7 +46,7 @@ const App: React.FC = () => {
               <Route exact path={homeRedirectRoute}>
                 <Redirect to={homePageRoute}/>
               </Route>
-              <Route exact path={helpPageRoute} component={FAQPage}/>
+              <Route exact path={faqPageRoute} component={FAQPage}/>
               <Route exact path={conversationGuideRoute} component={ConversationGuide}/>
               <Route path="*" component={NotFoundPage}/>
             </Switch>
