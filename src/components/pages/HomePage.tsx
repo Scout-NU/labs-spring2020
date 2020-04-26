@@ -1,19 +1,16 @@
 import React from 'react';
 import styled from '../../styles/theme/Theme';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
-import { H1, H5, H4, NavigationLink, H3, P } from '../atoms/Typography';
+import { H1, H5, NavigationLink, H3, P } from '../atoms/Typography';
 import devices from '../../styles/variables/breakpoints';
 import Button, { ButtonStyle } from '../atoms/Button';
-import headerPeople from '../../images/home/home-header-people.svg';
-import { searchPageRoute, faqPageRoute } from '../../var/routes';
-import stepone from '../../images/home/stepone.svg';
-import steptwo from '../../images/home/steptwo.svg';
-import stepthree from '../../images/home/stepthree.svg';
 import { IPerson } from '../../types/client/model';
 import PersonPreview from '../molecules/PersonPreview';
 import { PageHeader, PageTitleGroup, PageSubheader, HeaderVariant } from '../templates/Page';
+import { IHomePageContent } from '../../types/client/page/home';
 
 interface IDisconnectedHomePageProps {
+    content: IHomePageContent;
     carouselItems: IPerson[];
 }
 
@@ -135,12 +132,6 @@ const CATInformation = styled.div`
     }
 `
 
-const CATSearchText = styled(H4)`
-    color: dimgray;
-    font-weight: bolder;
-    margin: 3em 0 0 0;
-`
-
 const CATCarouselItem = styled.div`
     display: flex;
     min-width: 80%;
@@ -171,54 +162,48 @@ const HomePageHeaderContent = styled.div`
 `
 
 const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
-    const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={searchPageRoute}>Explore Profiles</NavigationLink></Button>
+    const {content, carouselItems} = props;
+const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={content.exploreLink.linkURL}>{content.exploreLink.linkTitle}</NavigationLink></Button>
 
     return (
         <HomePageWrapper>
             <SAPBanner>
-                <H5>STUDENT ACTION PORTAL</H5>
+                <H5>{content.siteBannerText}</H5>
             </SAPBanner>
             <Divider/>
             <PageHeader headerVariant={HeaderVariant.HOME}>
-                <HeaderPeople src={headerPeople}/>
+                <HeaderPeople src={content.headerDecorationUrl}/>
                 <HomePageHeaderContent>
                     <PageTitleGroup>
-                        <H1>Connect with people in Boston City Hall</H1>
-                        <PageSubheader>Create meaningful change in your community, backed by your friends in local government.</PageSubheader>
+                        <H1>{content.pageHeader}</H1>
+                        <PageSubheader>{content.pageSubheader}</PageSubheader>
                         {exploreProfilesButton}
                     </PageTitleGroup>
                 </HomePageHeaderContent>
             </PageHeader>
 
             <HomePageContent>
-                <H3>How it works</H3>
+                <H3>{content.communicationStepsHeader}</H3>
                 <ConnectionSteps>
-                    <ConnectionStep>
-                        <img src={stepone}/>
-                        <H5>Forming your focus</H5>
-                        <P>Think about what civics-related topics you want to know more about and use those to help guide your search.</P>
-                    </ConnectionStep>
-                    <ConnectionStep>
-                        <img src={steptwo}/>
-                        <H5>Finding an expert</H5>
-                        <P>Browse through City Hall profiles to find somebody you’d like to learn from.</P>
-                    </ConnectionStep>
-                    <ConnectionStep>
-                        <img src={stepthree}/>
-                        <H5>Connecting with City Hall</H5>
-                        <P>Send an email to your chosen City Hall contact and they will provide you with information and guidance.</P>
-                    </ConnectionStep>
+                    {content.communicationSteps.map((step, key) => {
+                        return (
+                            <ConnectionStep key={}>
+                                <img src={step.stepPictureUrl}/>
+                                <H5>{step.stepTitle}</H5>
+                                <P>{step.stepDescription}</P>
+                            </ConnectionStep>
+                        )
+                    })}
                 </ConnectionSteps>
                 <CATIntroWrapper>
                     <CATInformation>
-                        <H3>The Civics Action Team is here to help.</H3>
-                        <P>One of the best ways to research a topic is understanding how it impacts your own community. A local expert can connect you to resources, opportunities, and information to help you make change in your community.</P>
-                        <CATSearchText>Start your search.</CATSearchText>
+                        <H3>{content.civicsActionTeamInfoHeader}</H3>
+                        <P>{content.civicsActionTeamInfoSubheader}</P>
                         {exploreProfilesButton}
-                        <NavigationLink to={faqPageRoute}>Not quite sure what to say?</NavigationLink>
+                        <NavigationLink to={content.furtherHelpLink.linkURL}>{content.furtherHelpLink.linkTitle}</NavigationLink>
                     </CATInformation>
                     <CATCarousel>
-                        {props.carouselItems.map((item, key) => {
+                        {carouselItems.map((item, key) => {
                             return (
                                 <CATCarouselItem key={key}>
                                     <PersonPreview profile={item}/>
