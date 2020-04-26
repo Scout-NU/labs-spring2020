@@ -2,8 +2,8 @@ import React from 'react';
 import noResults from '../../images/search/noresults.svg';
 import Card from '../atoms/Card';
 import styled from '../../styles/theme/Theme';
-import { H5, P } from '../atoms/Typography';
-import { Ul } from '../atoms/List';
+import { H5 } from '../atoms/Typography';
+import TextList from '../atoms/List';
 import devices from '../../styles/variables/breakpoints';
 
 interface INoSearchResultsProps {
@@ -57,9 +57,7 @@ const NoSearchResults: React.FC<INoSearchResultsProps> = props => {
                 </ImageWrapper>
                 <TextWrapper>
                     <H5> {props.header} </H5>
-                    <Ul>
-                        {props.alternateOptions.map((option, key) => <li key={key}><P>{option}</P></li>)}
-                    </Ul>
+                    <TextList items={props.alternateOptions}/>
                 </TextWrapper>
             </NoResultsWrapper>
         </Card>
