@@ -5,7 +5,7 @@ import getProfileService from '../../service/ambassador/service';
 import NotFoundPage from '../../components/pages/404';
 import Spinner from '../../components/atoms/Spinner';
 import { mapAmbassadorToProfile } from '../type-adapter/ambassador/adapter';
-import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
+
 
 const ProfilePage: React.FC = () => {
     const [loading, setLoading] = React.useState(true);
