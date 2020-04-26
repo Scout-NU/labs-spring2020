@@ -18,7 +18,7 @@ export function isAmbassadorProjectAssociation(entry: IEntry<any>): entry is IAm
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'ambassadorProjectAssociation'
+    entry.sys.contentType.sys.id === 'ambassadorProjectAssociation'
 }
 
 export class AmbassadorProjectAssociation extends Entry<IAmbassadorProjectAssociationFields> implements IAmbassadorProjectAssociation {

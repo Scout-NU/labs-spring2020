@@ -8,6 +8,7 @@ import PersonPreview from '../molecules/PersonPreview';
 import { PageHeader, PageTitleGroup, PageSubheader, HeaderVariant } from '../templates/Page';
 import { IHomeContent } from '../../types/client/page/home';
 import { IPerson } from '../../types/client/model/person';
+import { Li, Ul } from '../atoms/List';
 
 interface IDisconnectedHomePageProps {
     content: IHomeContent;
@@ -188,7 +189,7 @@ const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><Navigat
                     {content.communicationSteps.map((step, key) => {
                         return (
                             <ConnectionStep key={key}>
-                                <img src={step.stepPictureUrl}/>
+                                <img src={step.stepPictureUrl} alt={`Infographic of step ${key + 1} of the Communication Process.`}/>
                                 <H5>{step.stepTitle}</H5>
                                 <P>{step.stepDescription}</P>
                             </ConnectionStep>
@@ -199,6 +200,9 @@ const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><Navigat
                     <CATInformation>
                         <H3>{content.civicsActionTeamInfoHeader}</H3>
                         <P>{content.civicsActionTeamInfoSubheader}</P>
+                        <Ul>
+                            {content.civicsActionTeamCapabilities.map((c, i) => <Li key={i}><P>{c}</P></Li>)} 
+                        </Ul>
                         {exploreProfilesButton}
                         <NavigationLink to={content.furtherHelpLink.linkURL}>{content.furtherHelpLink.linkTitle}</NavigationLink>
                     </CATInformation>

@@ -21,7 +21,7 @@ export function isFaqPageContent(entry: IEntry<any>): entry is IFaqPageContent {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'faqPageContent'
+    entry.sys.contentType.sys.id === 'faqPageContent'
 }
 
 export class FaqPageContent extends Entry<IFaqPageContentFields> implements IFaqPageContent {

@@ -18,7 +18,7 @@ export function isFaqLink(entry: IEntry<any>): entry is IFaqLink {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'faqLink'
+    entry.sys.contentType.sys.id === 'faqLink'
 }
 
 export class FaqLink extends Entry<IFaqLinkFields> implements IFaqLink {

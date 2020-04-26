@@ -1,5 +1,6 @@
 import { IDepartment } from '../../types/backend/model';
 import { ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
+import { makeContentManagementGetRequest } from '../util/http';
 
 
 export interface IDepartmentService {
@@ -18,22 +19,9 @@ async function getAllDepartments(): Promise<IDepartment[]> {
     return getDepartmentsWhere(allDepartmentsQuery)
 }
 
-// TODO: Can make a lot of this generic
-async function getDepartmentsWhere(query: string): Promise<IDepartment[]> {
-    const departmentResponse = await fetch(
-        query,
-        {
-            method: "GET",
-            headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-            })
-        })
 
-    if (!departmentResponse.ok) {
-        // TODO: Make failed network request better
-        throw Error(`${departmentResponse.status}\n${departmentResponse.statusText}`)
-    };
-    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
+async function getDepartmentsWhere(query: string): Promise<IDepartment[]> {
+    const departmentResponse = await makeContentManagementGetRequest(query);
     let reducedDepartments: ContentfulListBaseResponse<IDepartment> = await departmentResponse.json();
     return reducedDepartments.items.map((department) => resolveDepartmentLinks(department, reducedDepartments.includes!!))
 }

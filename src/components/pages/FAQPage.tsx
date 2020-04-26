@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderVariant, PageHeader, PageTitleGroup, PageSubheader, PageSection } from '../templates/Page';
+import { HeaderVariant, PageHeader, PageTitleGroup, PageSection } from '../templates/Page';
 import { H1, P } from '../atoms/Typography';
 import FAQ from '../organisms/FAQ';
 import styled from '../../styles/theme/Theme';

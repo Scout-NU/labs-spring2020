@@ -22,7 +22,7 @@ export function isNotFoundPageContent(entry: IEntry<any>): entry is INotFoundPag
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'notFoundPageContent'
+    entry.sys.contentType.sys.id === 'notFoundPageContent'
 }
 
 export class NotFoundPageContent extends Entry<INotFoundPageContentFields> implements INotFoundPageContent {

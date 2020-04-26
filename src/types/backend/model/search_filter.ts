@@ -23,7 +23,7 @@ export function isSearchFilter(entry: IEntry<any>): entry is ISearchFilter {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'searchFilter'
+    entry.sys.contentType.sys.id === 'searchFilter'
 }
 
 export class SearchFilter extends Entry<ISearchFilterFields> implements ISearchFilter {

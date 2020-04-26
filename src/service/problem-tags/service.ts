@@ -1,5 +1,6 @@
 import { IProblemTag } from '../../types/backend/model';
 import { ContentfulListBaseResponse } from '../../types/backend/base';
+import { makeContentManagementGetRequest } from '../util/http';
 
 
 export interface IProblemTagService {
@@ -20,19 +21,7 @@ async function getAllProblemTags(): Promise<IProblemTag[]> {
 
 // TODO: Can make a lot of this generic
 async function getProblemTagsWhere(query: string): Promise<IProblemTag[]> {
-    const problemTagResponse = await fetch(
-        query,
-        {
-            method: "GET",
-            headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-            })
-        })
-
-    if (!problemTagResponse.ok) {
-        // TODO: Make failed network request better
-        throw Error(`${problemTagResponse.status}\n${problemTagResponse.statusText}`)
-    };
+    const problemTagResponse = await makeContentManagementGetRequest(query);
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
     let reducedTags: ContentfulListBaseResponse<IProblemTag> = await problemTagResponse.json();
     return reducedTags.items;

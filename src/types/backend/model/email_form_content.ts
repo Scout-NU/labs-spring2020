@@ -31,7 +31,7 @@ export function isEmailFormContent(entry: IEntry<any>): entry is IEmailFormConte
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'emailFormContent'
+    entry.sys.contentType.sys.id === 'emailFormContent'
 }
 
 export class EmailFormContent extends Entry<IEmailFormContentFields> implements IEmailFormContent {

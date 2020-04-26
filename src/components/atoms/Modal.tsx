@@ -18,7 +18,6 @@ export const ModalBackgroundFade = styled.div`
     height: 100%;
     opacity: 0.7;
     background-color: ${lunchboxColors.gusher};
-    transition: all .1s ease-in-out;
     z-index: 998;
 `
 
@@ -48,7 +47,7 @@ export const ModalWrapper = styled.div`
 const Modal: React.FC<IModalProps> = props => {
     const root = document.getElementById("modalroot");
     const self = document.createElement("div");
-
+    
     React.useEffect(() => {
         root?.appendChild(self);
 

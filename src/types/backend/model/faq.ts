@@ -20,7 +20,7 @@ export function isFaq(entry: IEntry<any>): entry is IFaq {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'faq'
+    entry.sys.contentType.sys.id === 'faq'
 }
 
 export class Faq extends Entry<IFaqFields> implements IFaq {

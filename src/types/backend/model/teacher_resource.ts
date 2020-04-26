@@ -20,7 +20,7 @@ export function isTeacherResource(entry: IEntry<any>): entry is ITeacherResource
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'teacherResource'
+    entry.sys.contentType.sys.id === 'teacherResource'
 }
 
 export class TeacherResource extends Entry<ITeacherResourceFields> implements ITeacherResource {

@@ -20,7 +20,7 @@ export function isProfilePageContent(entry: IEntry<any>): entry is IProfilePageC
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'profilePageContent'
+    entry.sys.contentType.sys.id === 'profilePageContent'
 }
 
 export class ProfilePageContent extends Entry<IProfilePageContentFields> implements IProfilePageContent {

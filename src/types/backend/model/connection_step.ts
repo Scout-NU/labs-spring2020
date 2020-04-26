@@ -17,7 +17,7 @@ export function isConnectionStep(entry: IEntry<any>): entry is IConnectionStep {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'connectionStep'
+    entry.sys.contentType.sys.id === 'connectionStep'
 }
 
 export class ConnectionStep extends Entry<IConnectionStepFields> implements IConnectionStep {

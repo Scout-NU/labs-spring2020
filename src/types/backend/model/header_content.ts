@@ -17,7 +17,7 @@ export function isHeaderContent(entry: IEntry<any>): entry is IHeaderContent {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'headerContent'
+    entry.sys.contentType.sys.id === 'headerContent'
 }
 
 export class HeaderContent extends Entry<IHeaderContentFields> implements IHeaderContent {

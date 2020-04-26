@@ -18,7 +18,7 @@ export function isCommunicationStep(entry: IEntry<any>): entry is ICommunication
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'communicationStep'
+    entry.sys.contentType.sys.id === 'communicationStep'
 }
 
 export class CommunicationStep extends Entry<ICommunicationStepFields> implements ICommunicationStep {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Row, Col } from 'react-flexbox-grid';
-import CircleImage, { CircleImageSize } from '../atoms/CircleImage';
+import { CircleImageSize } from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import Card from '../atoms/Card';
@@ -49,7 +49,6 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     const [showProfile, setShowProfile] = React.useState(false);
 
     let info = props.profile;
-    const cardHeight = 635;
 
     const shorten = (text: string, maxChars: number): string => {
         // src: stackoverflow.com/questions/5454235/shorten-string-without-cutting-words-in-javascript

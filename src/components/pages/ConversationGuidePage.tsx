@@ -1,6 +1,6 @@
 import React from 'react';
 import { HeaderVariant, PageHeader, PageTitleGroup, PageSubheader, PageSection } from '../templates/Page';
-import { H1, P, H5, H4, H3, H2 } from '../atoms/Typography';
+import { H1, P, H4, H2 } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import headerPerson from '../../images/conversation-guide/headerperson.svg';
 import clickicon from '../../images/conversation-guide/clickicon.svg';
@@ -98,12 +98,12 @@ const DisconnectedConversationGuidePage: React.FC<IConversationGuidePageProps> =
                         People in City Hall are excited to help you with your civics project. You have the power to connect by emailing them today.
                     </PageSubheader>
                 </PageTitleGroup>
-                <HeaderPeople src={headerPerson}/>
+                <HeaderPeople src={headerPerson} alt={'Two students sitting and chatting with one another.'}/>
             </PageHeader>
             <PageSection>
                 <RemindersWrapper>
                     <ClickIcon>
-                        <img src={clickicon}/>
+                        <img src={clickicon} alt={'An icon of a mouse pointer clicking something.'}/>
                     </ClickIcon>
                     <div>
                         <H4>Friendly Reminders</H4>

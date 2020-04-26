@@ -1,7 +1,6 @@
 import { wrap } from ".";
 import { Asset, Entry, IAsset, IEntry, ILink, isAsset, isEntry, ISys } from "../base";
 import { ISearchFilter, SearchFilter } from "./search_filter";
-import { PageDiscriminator } from "./page";
 
 export interface ISearchPageContentFields {
   pageHeader?: string;
@@ -24,7 +23,7 @@ export function isSearchPageContent(entry: IEntry<any>): entry is ISearchPageCon
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'searchPageContent'
+    entry.sys.contentType.sys.id === 'searchPageContent'
 }
 
 export class SearchPageContent extends Entry<ISearchPageContentFields> implements ISearchPageContent {

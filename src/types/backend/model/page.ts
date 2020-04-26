@@ -48,7 +48,7 @@ export function isPage(entry: IEntry<any>): entry is IPage {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'page'
+    entry.sys.contentType.sys.id === 'page'
 }
 
 export class Page extends Entry<IPageFields> implements IPage {

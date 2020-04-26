@@ -1,5 +1,4 @@
 import { IEntry, isEntry, isLink, JsonObject, Resolved, ILink, ContentfulIncludedLinks, IAsset } from './base';
-import { isArray } from 'util';
 
 /**
  * Returns a boolean indicating whether the given entry is resolved to a certain

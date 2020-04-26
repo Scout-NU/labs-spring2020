@@ -29,7 +29,7 @@ export function isHomePageContent(entry: IEntry<any>): entry is IHomePageContent
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'homePageContent'
+    entry.sys.contentType.sys.id === 'homePageContent'
 }
 
 export class HomePageContent extends Entry<IHomePageContentFields> implements IHomePageContent {

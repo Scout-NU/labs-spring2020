@@ -16,7 +16,7 @@ export function isDepartmentProject(entry: IEntry<any>): entry is IDepartmentPro
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'departmentProject'
+    entry.sys.contentType.sys.id === 'departmentProject'
 }
 
 export class DepartmentProject extends Entry<IDepartmentProjectFields> implements IDepartmentProject {

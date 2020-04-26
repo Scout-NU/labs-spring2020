@@ -1,7 +1,7 @@
 import React from 'react';
 import getProfileService from '../../service/ambassador/service';
 import DisconnectedHomePage from '../../components/pages/HomePage';
-import getPageService, { PageName } from '../../service/page/service';
+import getPageService from '../../service/page/service';
 import { IHomeContent } from '../../types/client/page/home';
 import PageLoader from '../../components/molecules/PageLoader';
 import { mapHomeContent } from '../../types/util/adpater/page/home';

@@ -2,7 +2,6 @@ import { wrap } from ".";
 import { Asset, Entry, IAsset, IEntry, ILink, isAsset, isEntry, ISys } from "../base";
 import { ITeacherResource, TeacherResource } from "./teacher_resource";
 import { IUrl, Url } from "./url";
-import { PageDiscriminator } from "./page";
 
 export interface ITeacherPageContentFields {
   pageHeader?: string;
@@ -23,7 +22,7 @@ export function isTeacherPageContent(entry: IEntry<any>): entry is ITeacherPageC
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'teacherPageContent'
+    entry.sys.contentType.sys.id === 'teacherPageContent'
 }
 
 export class TeacherPageContent extends Entry<ITeacherPageContentFields> implements ITeacherPageContent {

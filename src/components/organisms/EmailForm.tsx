@@ -1,5 +1,4 @@
 import React from 'react';
-import Card from '../atoms/Card';
 import { H3, H5, NavigationLink, P } from '../atoms/Typography';
 import { FormHandles, SubmitHandler } from '@unform/core';
 import { Form } from '@unform/web';
@@ -9,7 +8,6 @@ import { Ul, Li } from '../atoms/List';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
 import styled from '../../styles/theme/Theme';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
-import devices from '../../styles/variables/breakpoints';
 
 
 interface IEmailFormProps {

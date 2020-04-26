@@ -24,7 +24,7 @@ export function isConnectionGuideContent(entry: IEntry<any>): entry is IConnecti
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'connectionGuideContent'
+    entry.sys.contentType.sys.id === 'connectionGuideContent'
 }
 
 export class ConnectionGuideContent extends Entry<IConnectionGuideContentFields> implements IConnectionGuideContent {

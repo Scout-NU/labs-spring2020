@@ -1,6 +1,7 @@
 import { IPage, PagePageContent, INotFoundPageContent, IConnectionGuideContent, IFaqPageContent, IHomePageContent, IProfilePageContent, ISearchPageContent, PageDiscriminator, isHomePageContent, isConnectionGuideContent, isFaqPageContent, isProfilePageContent, isSearchPageContent, isNotFoundPageContent } from '../../types/backend/model';
-import { ContentfulListBaseResponse, isEntry, Resolved } from '../../types/backend/base';
+import { ContentfulListBaseResponse, Resolved } from '../../types/backend/base';
 import { resolveEntry } from '../../types/backend/utils';
+import { makeContentManagementGetRequest } from '../util/http';
 
 
 export interface IPageService {
@@ -32,7 +33,6 @@ export default function getPageService(): IPageService {
     }
 }
 
-getContentForPage(PageDiscriminator.HOME)
 
 const allPagesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=page&include=10`;
 
@@ -74,21 +74,7 @@ async function getNotFoundPageContent(): Promise<INotFoundPageContent> {
 
 async function getContentForPage(pageName: PageDiscriminator): Promise<PagePageContent> {
     const pageQuery = `${allPagesQuery}&fields.pageName=${pageName}`;
-
-    const pageResponse = await fetch(
-        pageQuery,
-        {
-            method: "GET",
-            headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
-            })
-        })
-
-    if (!pageResponse.ok) {
-        // TODO: Make failed network request better
-        throw Error(`${pageResponse.status}\n${pageResponse.statusText}`)
-    };
-    // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
+    const pageResponse = await makeContentManagementGetRequest(pageQuery);
     let reducedPages: ContentfulListBaseResponse<IPage> = await pageResponse.json();
     return parsePageResponse(reducedPages)[0].fields.pageContent!!;
 }

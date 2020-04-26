@@ -19,7 +19,7 @@ export function isPageLink(entry: IEntry<any>): entry is IPageLink {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'pageLink'
+    entry.sys.contentType.sys.id === 'pageLink'
 }
 
 export class PageLink extends Entry<IPageLinkFields> implements IPageLink {

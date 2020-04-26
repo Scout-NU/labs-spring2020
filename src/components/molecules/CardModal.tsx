@@ -38,7 +38,7 @@ const CardModal: React.FC<IModalProps> = props => {
     return (
         <Modal {...props}>
             <CardModalWrapper>
-                <CloseButton onClick={props.onModalClosed}><img src={closeSymbol}/></CloseButton>
+                <CloseButton onClick={props.onModalClosed}><img src={closeSymbol} alt={'Close button for this window.'}/></CloseButton>
                 {props.children}
             </CardModalWrapper>
         </Modal>

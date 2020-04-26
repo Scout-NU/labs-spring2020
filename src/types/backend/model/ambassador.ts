@@ -31,7 +31,7 @@ export function isAmbassador(entry: IEntry<any>): entry is IAmbassador {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'ambassador'
+    entry.sys.contentType.sys.id === 'ambassador'
 }
 
 export class Ambassador extends Entry<IAmbassadorFields> implements IAmbassador {

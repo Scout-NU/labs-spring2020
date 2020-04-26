@@ -24,7 +24,7 @@ export function isFooterContent(entry: IEntry<any>): entry is IFooterContent {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'footerContent'
+    entry.sys.contentType.sys.id === 'footerContent'
 }
 
 export class FooterContent extends Entry<IFooterContentFields> implements IFooterContent {

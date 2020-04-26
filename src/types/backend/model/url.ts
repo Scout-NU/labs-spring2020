@@ -16,7 +16,7 @@ export function isUrl(entry: IEntry<any>): entry is IUrl {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'url'
+    entry.sys.contentType.sys.id === 'url'
 }
 
 export class Url extends Entry<IUrlFields> implements IUrl {
