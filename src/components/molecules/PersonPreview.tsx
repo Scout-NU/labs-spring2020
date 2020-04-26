@@ -1,14 +1,13 @@
 import React from 'react';
-import { IPerson } from '../../types/client/model';
 import { Row, Col } from 'react-flexbox-grid';
-import CircleImage, { CircleImageSize } from '../atoms/CircleImage';
+import { CircleImageSize } from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import Card from '../atoms/Card';
 import TagGroup from '../molecules/TagGroup';
-import { Redirect } from 'react-router';
 import { profileRoute } from '../../var/routes';
 import PersonProfileImageGroup from './PersonProfileImageGroup';
+import { IPerson } from '../../types/client/model/person';
 
 
 interface IPersonPreviewProps {
@@ -50,7 +49,6 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     const [showProfile, setShowProfile] = React.useState(false);
 
     let info = props.profile;
-    const cardHeight = 635;
 
     const shorten = (text: string, maxChars: number): string => {
         // src: stackoverflow.com/questions/5454235/shorten-string-without-cutting-words-in-javascript
@@ -65,7 +63,6 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
 
     if (showProfile) {
         window.location.assign(`${profileRoute}/${props.profile.id}`)
-        // return (<Redirect to={`${profileRoute}/${props.profile.id}`}/>)
     }
     
     return (

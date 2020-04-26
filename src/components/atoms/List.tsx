@@ -1,19 +1,17 @@
 import styled from "../../styles/theme/Theme";
 import { lunchboxColors } from "../../styles/theme/lunchbox";
+import { P } from "./Typography";
 
 
-export const Ul = styled.ul`
-    list-style: none;
-
-    & li::before {
-        content: "\2022";
-        color: ${lunchboxColors.salad};
-        display: inline-block;
-        margin-left: -1em;
-    }
-`
+export const Ul = styled.ul``
 
 export const Li = styled.li`
+    color: ${lunchboxColors.salad};
+    
+    & > ${P} {
+        color: black;
+    }
+
     & * {
         margin: .5em 0;
     }

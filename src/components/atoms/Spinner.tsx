@@ -2,7 +2,7 @@ import styled from "../../styles/theme/Theme";
 import React from 'react';
 import { lunchboxColors } from "../../styles/theme/lunchbox";
 
-const StyledSpinner = styled.div`
+export const StyledSpinner = styled.div`
     display: inline-block;
     position: relative;
     width: 80px;

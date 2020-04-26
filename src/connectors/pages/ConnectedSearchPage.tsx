@@ -3,9 +3,9 @@ import DisconnectedSearchPage from "../../components/pages/SearchPage";
 import getProfileService from '../../service/ambassador/service';
 import { IAmbassador } from '../../types/backend/model';
 import { URLQueryParser } from '../../service/util/url';
-import { ISearchPageContent } from '../../types/client/page';
-import { IPerson } from '../../types/client/model';
-import { resolveAmbassadorType } from '../type-adapter/ambassador/adapter';
+import { ISearchPageContent } from '../../types/client/page/search';
+import { IPerson } from '../../types/client/model/person';
+import { resolveAmbassadorType } from '../../types/util/adpater/model/person';
 
 
 const SearchPage: React.FC = () => {
@@ -40,14 +40,15 @@ const SearchPage: React.FC = () => {
 
 const TempSearchPageContent: ISearchPageContent = {
     pageHeader: 'Connect with City Hall',
-    pageDescription: 'Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!',
-    searchBarHintText: 'Search by topic or name',
-    noSearchResultsHeader: 'We can’t find anyone related to your search. Don’t give up!',
-    noSearchResultsAlternateOptions: [
+    pageSubheader: 'Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!',
+    searchBarHint: 'Search by topic or name',
+    noResultsHeader: 'We can’t find anyone related to your search. Don’t give up!',
+    noResultsSuggestions: [
         'Try using a different filter or key word.',
         'Still nothing? Check out our Help page.'
     ],
-    noSearchResultsImageUrl: ''
+    noResultsImageUrl: '',
+    filters: [],
 }
 
 export default SearchPage;

@@ -1,6 +1,6 @@
 import React from 'react';
 import DisconnectedFAQPage from '../../components/pages/FAQPage';
-import { IFaq } from '../../types/client/model';
+import { IFaq } from '../../types/client/page/faq';
 
 const FAQPage: React.FC = props => {
     const faqs: IFaq[] = [

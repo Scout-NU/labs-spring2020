@@ -2,13 +2,13 @@ import React from 'react';
 import { H4, H2 } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import devices from '../../styles/variables/breakpoints';
-import { IPerson } from '../../types/client/model';
 import NoSearchResults from '../molecules/NoSearchResults';
-import { ISearchPageContent } from '../../types/client/page';
 import Spinner from '../atoms/Spinner';
 import SearchGroup from '../../connectors/organisms/ConnectedSearchGroup';
 import ProfileGrid from '../organisms/ProfileGrid';
 import { PageHeader, HeaderVariant, PageSection } from '../templates/Page';
+import { ISearchPageContent } from '../../types/client/page/search';
+import { IPerson } from '../../types/client/model/person';
 
 
 interface ISearchPageProps {
@@ -39,7 +39,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
     const renderSearchResults = () => {
         if (!loading) {
             if (results.length === 0) {
-                return (<NoSearchResults header={pageContent.noSearchResultsHeader} alternateOptions={pageContent.noSearchResultsAlternateOptions} />)
+                return (<NoSearchResults header={pageContent.noResultsHeader} alternateOptions={pageContent.noResultsSuggestions} />)
             }
             return <ProfileGrid profiles={results}/>
         }
@@ -50,7 +50,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
             <PageHeader headerVariant={HeaderVariant.SEARCH}>
                 <HeaderCaption>
                     <H2>{pageContent.pageHeader}</H2>
-                    <H4>{pageContent.pageDescription}</H4>
+                    <H4>{pageContent.pageSubheader}</H4>
                 </HeaderCaption>
                 <SearchGroup />
             </PageHeader>

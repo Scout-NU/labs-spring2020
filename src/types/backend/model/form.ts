@@ -15,7 +15,7 @@ export function isForm(entry: IEntry<any>): entry is IForm {
     entry.sys &&
     entry.sys.contentType &&
     entry.sys.contentType.sys &&
-    entry.sys.contentType.sys.id == 'form'
+    entry.sys.contentType.sys.id === 'form'
 }
 
 export class Form extends Entry<IFormFields> implements IForm {

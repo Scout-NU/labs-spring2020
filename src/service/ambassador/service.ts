@@ -1,5 +1,5 @@
 import { IAmbassador } from '../../types/backend/model';
-import { isEntry, ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
+import { isEntry, ContentfulListBaseResponse } from '../../types/backend/base';
 import { resolveEntry } from '../../types/backend/utils';
 import { makeContentManagementGetRequest, validateResponse } from '../util/http';
 

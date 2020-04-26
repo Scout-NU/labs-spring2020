@@ -1,8 +1,7 @@
-import { IAmbassador, IProblemTag, IDepartment, IAmbassadorProjectAssociation } from "../../../types/backend/model";
-import { IPerson, IProfile } from "../../../types/client/model";
-import { resolveDepartmentType } from "../department/adapter";
-import { isAsset, ILink, resolveEntryLinks } from "../../../types/backend/base";
-import { resolveAmbassadorProjectTypes } from "../ambassador_project/adapter";
+import { IAmbassador, IDepartment, IAmbassadorProjectAssociation, IProblemTag } from "../../../backend/model";
+import { IPerson, IProfile, IPersonProject } from "../../../client/model/person";
+import { resolveDepartmentType } from "./department";
+import { ILink, resolveEntryLinks, isAsset, resolveEntryLink, resolveAssetLink } from "../../../backend/base";
 
 
 export function resolveAmbassadorType(ambassadors: IAmbassador[]): IPerson[] {
@@ -58,4 +57,20 @@ function resolveTags(tags: (ILink<"Entry"> | IProblemTag)[]): string[] {
     let resolvedTags: string[] = [];
     resolveEntryLinks<IProblemTag>(tags).forEach(t => {if (t.fields.tagName) resolvedTags.push(t.fields.tagName)});
     return resolvedTags;
+}
+
+export function resolveAmbassadorProjectTypes(projects: IAmbassadorProjectAssociation[]): IPersonProject[] {
+    return projects.map(p => resolveAmbassadorProjectType(p));
+}
+
+export function resolveAmbassadorProjectType(project: IAmbassadorProjectAssociation): IPersonProject {
+    let { ambassadorNotes, departmentProject } = project.fields;
+    let resolvedProject = resolveEntryLink(departmentProject);
+    let resolvedProjectImage = resolvedProject?.fields.projectImage ? resolveAssetLink(resolvedProject?.fields.projectImage) : null;
+
+    return {
+        projectImageUrl: resolvedProjectImage?.fields.file.url ? resolvedProjectImage.fields.file.url : '',
+        personNotes: ambassadorNotes ? ambassadorNotes : '',
+        projectTitle: resolvedProject?.fields.title ? resolvedProject?.fields.title : ''
+    }
 }

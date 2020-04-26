@@ -14,7 +14,7 @@ interface IHeaderProps {
 const HeaderContainer = styled.nav`
     position: fixed;
     top: 0;
-    z-index: 999;
+    z-index: 3;
     width: 100%;
 `
 
@@ -66,7 +66,7 @@ const HeaderMenu = styled.div`
         padding: 1em 2em;
         background-color: ${lunchboxColors.gusher};
         color: white;
-        z-index: 999;
+        z-index: 3;
         box-shadow: 0 0 10px ${lunchboxColors.gusher};
     }
 `

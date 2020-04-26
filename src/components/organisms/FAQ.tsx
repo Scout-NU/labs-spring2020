@@ -1,10 +1,10 @@
 import React from 'react';
-import { IFaq } from '../../types/client/model';
 import styled from '../../styles/theme/Theme';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
 import { H5, P, A } from '../atoms/Typography';
 import { Ul, Li } from '../atoms/List';
 import devices from '../../styles/variables/breakpoints';
+import { IFaq } from '../../types/client/page/faq';
 
 
 interface IFAQProps {

@@ -4,7 +4,8 @@ export function makeContentManagementGetRequest(query: string): Promise<Response
         {
             method: "GET",
             headers: new Headers({
-                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`
+                Authorization: `Bearer ${process.env.REACT_APP_CONTENTFUL_API_KEY}`,
+                'Cache-Control': 'public,max-age=86400'
             })
         })
         

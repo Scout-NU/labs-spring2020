@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '../../styles/theme/Theme';
 import devices from '../../styles/variables/breakpoints';
-import { IProfile } from '../../types/client/model';
 import { Row, Col } from 'react-flexbox-grid';
 import { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
@@ -11,10 +10,11 @@ import { Ul, Li } from '../atoms/List';
 import Card from '../atoms/Card';
 import ProfileGrid from '../organisms/ProfileGrid';
 import ProjectGrid from '../organisms/ProjectGrid';
-import Modal from '../atoms/Modal';
 import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
 import PersonProfileImageGroup from '../molecules/PersonProfileImageGroup';
 import { PageHeader, HeaderVariant, PageSection, StyledPageSection } from '../templates/Page';
+import CardModal from '../molecules/CardModal';
+import { IProfile } from '../../types/client/model/person';
 
 
 interface IProfilePageProps {
@@ -145,9 +145,9 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                 </PageSection>
             }
 
-            <Modal onModalClosed={() => toggleForm(false)} isOpen={showForm}>
+            <CardModal onModalClosed={() => toggleForm(false)} isOpen={showForm}>
                 <EmailForm onFormCompleted={() => toggleForm(false)}/>
-            </Modal>
+            </CardModal>
 
         </>
     )
