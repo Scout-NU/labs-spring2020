@@ -3,9 +3,9 @@ export interface ICommunicationGuideContent {
     pageSubheader: string;
     headerDecorationPageUrl: string;
     remindersIconUrl: string;
-    remindersHeaderPage: string;
-    remindersPage: string[];
-    connectionStepsPage: IDetailedConnectionStep[];
+    remindersHeader: string;
+    reminders: string[];
+    connectionSteps: IDetailedConnectionStep[];
 }
 
 export interface IDetailedConnectionStep {

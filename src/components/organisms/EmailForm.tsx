@@ -4,10 +4,10 @@ import { FormHandles, SubmitHandler } from '@unform/core';
 import { Form } from '@unform/web';
 import Input, {StyledTextInput} from '../atoms/Input';
 import { Label } from '../atoms/Label';
-import { Ul, Li } from '../atoms/List';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
 import styled from '../../styles/theme/Theme';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
+import TextList from '../atoms/List';
 
 
 interface IEmailFormProps {
@@ -73,9 +73,7 @@ const DisconnectedEmailForm: React.FC<IEmailFormProps> = props => {
                 <Input name={subjectField} type='text'/>
 
                 <Label htmlFor={nameField}>Your Message</Label>
-                <Ul>
-                    {messageTips.map((t, key) => <Li key={key}><P>{t}</P></Li> )}
-                </Ul>
+                <TextList items={messageTips}/>
                 <TipLink to="/" target="_blank"><P>Tips for connecting with someone at City Hall</P></TipLink>
                 <Input name={bodyField} type='text'/>
                 <Button type='submit' buttonStyle={ButtonStyle.PRIMARY}>Send Message</Button>

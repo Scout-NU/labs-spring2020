@@ -6,7 +6,6 @@ import { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
 import { H1, P, H4, H5, A } from '../atoms/Typography';
 import TagGroup from '../molecules/TagGroup';
-import { Ul, Li } from '../atoms/List';
 import Card from '../atoms/Card';
 import ProfileGrid from '../organisms/ProfileGrid';
 import ProjectGrid from '../organisms/ProjectGrid';
@@ -15,6 +14,7 @@ import PersonProfileImageGroup from '../molecules/PersonProfileImageGroup';
 import { PageHeader, HeaderVariant, PageSection, StyledPageSection } from '../templates/Page';
 import CardModal from '../molecules/CardModal';
 import { IProfile } from '../../types/client/model/person';
+import TextList from '../atoms/List';
 
 
 interface IProfilePageProps {
@@ -56,10 +56,6 @@ const ProfileSubheader = styled(P)`
     font-weight: bolder;
     text-transform: uppercase;
     margin: 0;
-`
-
-const KnowledgeableTopics = styled(Ul)`
-    margin-top: 0;
 `
 
 const PositionTitleText= styled(H5)`
@@ -111,9 +107,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
                             <PositionTitleText>{positionTitle}, {props.info.department?.departmentName}</PositionTitleText>
                             <PriorityStatement>"{priorityStatement}"</PriorityStatement>
                             <ProfileSubheader>Ask me about:</ProfileSubheader>
-                            <KnowledgeableTopics>
-                                {knowledgeableTopics.map((value, i) => <Li key={i}><P>{value}</P></Li>)}
-                            </KnowledgeableTopics>
+                                <TextList items={knowledgeableTopics}/>
                         </ProfileInformationWrapper>
                         <TagGroup tags={tags}/>
                     </Col>

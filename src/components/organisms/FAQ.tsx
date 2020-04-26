@@ -2,9 +2,9 @@ import React from 'react';
 import styled from '../../styles/theme/Theme';
 import { lunchboxColors } from '../../styles/theme/lunchbox';
 import { H5, P, A } from '../atoms/Typography';
-import { Ul, Li } from '../atoms/List';
 import devices from '../../styles/variables/breakpoints';
 import { IFaq } from '../../types/client/page/faq';
+import TextList from '../atoms/List';
 
 
 interface IFAQProps {
@@ -74,16 +74,6 @@ const FAQContent = styled.div`
 const FAQ: React.FC<IFAQProps> = props => {
     const {title, suggestions, description, links } = props.faq;
 
-    const renderSuggestions = () => {
-        return (
-            <Ul>
-                {suggestions?.map((s, i) => <Li key={i}><P>{s}</P></Li>)}
-            </Ul>
-        )
-    }
-
-    const renderDescription = () => <P>{description}</P>
-
     const renderLinks = () => {
         return (
             <LinkWrapper>
@@ -102,8 +92,8 @@ const FAQ: React.FC<IFAQProps> = props => {
     const renderContent = () => {
         return (
             <FAQContent>
-                { suggestions && renderSuggestions() }
-                { description && renderDescription() }
+                { suggestions && <TextList items={suggestions}/> }
+                { description && <P>{description}</P> }
                 { renderLinks() }
             </FAQContent>
         )
