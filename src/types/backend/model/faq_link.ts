@@ -1,6 +1,6 @@
 import { Entry, IEntry, ISys } from "../base";
 
-export interface IFaqLinkFields {
+export interface ICmsFaqLinkFields {
   linkDisplayText?: string;
   linkUrl?: string;
   linkDescriptino?: string;
@@ -10,10 +10,10 @@ export interface IFaqLinkFields {
  * FAQLink
  * One of a group of links that may be associated with an FAQ.
  */
-export interface IFaqLink extends IEntry<IFaqLinkFields> {
+export interface ICmsFaqLink extends IEntry<ICmsFaqLinkFields> {
 }
 
-export function isFaqLink(entry: IEntry<any>): entry is IFaqLink {
+export function isFaqLink(entry: IEntry<any>): entry is ICmsFaqLink {
   return entry &&
     entry.sys &&
     entry.sys.contentType &&
@@ -21,9 +21,9 @@ export function isFaqLink(entry: IEntry<any>): entry is IFaqLink {
     entry.sys.contentType.sys.id === 'faqLink'
 }
 
-export class FaqLink extends Entry<IFaqLinkFields> implements IFaqLink {
+export class CmsFaqLink extends Entry<ICmsFaqLinkFields> implements ICmsFaqLink {
   public readonly sys!: ISys<'Entry'>;
-  public readonly fields!: IFaqLinkFields;
+  public readonly fields!: ICmsFaqLinkFields;
 
   get linkDisplayText(): string | undefined {
     return this.fields.linkDisplayText
@@ -49,9 +49,9 @@ export class FaqLink extends Entry<IFaqLinkFields> implements IFaqLink {
     return this.fields.linkDescriptino
   }
 
-  constructor(entry: IFaqLink);
-  constructor(id: string, fields: IFaqLinkFields);
-  constructor(entryOrId: IFaqLink | string, fields?: IFaqLinkFields) {
-    super(entryOrId, 'faqLink', fields)
+  constructor(entry: ICmsFaqLink);
+  constructor(id: string, fields: ICmsFaqLinkFields);
+  constructor(entryOrId: ICmsFaqLink | string, fields?: ICmsFaqLinkFields) {
+    super(entryOrId, 'cmsFaqLink', fields)
   }
 }

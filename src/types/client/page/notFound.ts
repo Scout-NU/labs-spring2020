@@ -1,6 +1,6 @@
 import { ILink } from "../model/link";
 
-export interface INotFoundPageContent {
+export interface INotFoundContent {
     pageHeader: string;
     pageSubheader: string;
     helpfulMessage: string;

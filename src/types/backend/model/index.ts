@@ -30,9 +30,9 @@ export interface TypeDirectory {
   'ambassador': C.IAmbassador;
   'department': C.IDepartment;
   'url': C.IUrl;
-  'faqLink': C.IFaqLink;
+  'cmsFaqLink': C.ICmsFaqLink;
   'communicationStep': C.ICommunicationStep;
-  'faq': C.IFaq;
+  'cmsFaq': C.ICmsFaq;
   'searchFilter': C.ISearchFilter;
   'homePageContent': C.IHomePageContent;
   'profilePageContent': C.IProfilePageContent;
@@ -57,9 +57,9 @@ export interface ClassDirectory {
   'ambassador': C.Ambassador;
   'department': C.Department;
   'url': C.Url;
-  'faqLink': C.FaqLink;
+  'cmsFaqLink': C.CmsFaqLink;
   'communicationStep': C.CommunicationStep;
-  'faq': C.Faq;
+  'cmsFaq': C.CmsFaq;
   'searchFilter': C.SearchFilter;
   'homePageContent': C.HomePageContent;
   'profilePageContent': C.ProfilePageContent;
@@ -83,9 +83,9 @@ export interface ClassDirectory {
 export function wrap(entry: C.IAmbassador): C.Ambassador;
 export function wrap(entry: C.IDepartment): C.Department;
 export function wrap(entry: C.IUrl): C.Url;
-export function wrap(entry: C.IFaqLink): C.FaqLink;
+export function wrap(entry: C.ICmsFaqLink): C.CmsFaqLink;
 export function wrap(entry: C.ICommunicationStep): C.CommunicationStep;
-export function wrap(entry: C.IFaq): C.Faq;
+export function wrap(entry: C.ICmsFaq): C.CmsFaq;
 export function wrap(entry: C.ISearchFilter): C.SearchFilter;
 export function wrap(entry: C.IHomePageContent): C.HomePageContent;
 export function wrap(entry: C.IProfilePageContent): C.ProfilePageContent;
@@ -114,12 +114,12 @@ export function wrap(entry: IEntry<any>): IEntry<any> {
       return new C.Department(entry)
     case 'url':
       return new C.Url(entry)
-    case 'faqLink':
-      return new C.FaqLink(entry)
+    case 'cmsFaqLink':
+      return new C.CmsFaqLink(entry)
     case 'communicationStep':
       return new C.CommunicationStep(entry)
-    case 'faq':
-      return new C.Faq(entry)
+    case 'cmsFaq':
+      return new C.CmsFaq(entry)
     case 'searchFilter':
       return new C.SearchFilter(entry)
     case 'homePageContent':

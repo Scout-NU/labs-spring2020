@@ -1,13 +1,13 @@
 import { wrap } from ".";
 import { Entry, IEntry, ILink, isEntry, ISys } from "../base";
-import { Faq, IFaq } from "./faq";
+import { CmsFaq, ICmsFaq } from "./faq";
 
 export interface IFaqPageContentFields {
   pageHeader?: string;
   furtherQuestionHeader?: string;
   furtherHelpHeader?: string;
   furtherHelpEmail?: string;
-  faQs?: Array<ILink<'Entry'> | IFaq>;
+  faQs?: Array<ILink<'Entry'> | ICmsFaq>;
 }
 
 /**
@@ -60,17 +60,17 @@ export class FaqPageContent extends Entry<IFaqPageContentFields> implements IFaq
     return this.fields.furtherHelpEmail
   }
 
-  get faQs(): Array<Faq | null> | undefined {
+  get faQs(): Array<CmsFaq | null> | undefined {
     return !this.fields.faQs ? undefined :
       this.fields.faQs.map((item) =>
-        isEntry(item) ? wrap<'faq'>(item) : null
+        isEntry(item) ? wrap<'cmsFaq'>(item) : null
       )
   }
 
-  get fa_qs(): Array<Faq | null> | undefined {
+  get fa_qs(): Array<CmsFaq | null> | undefined {
     return !this.fields.faQs ? undefined :
       this.fields.faQs.map((item) =>
-        isEntry(item) ? wrap<'faq'>(item) : null
+        isEntry(item) ? wrap<'cmsFaq'>(item) : null
       )
   }
 

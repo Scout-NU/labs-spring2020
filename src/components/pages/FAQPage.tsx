@@ -1,12 +1,12 @@
 import React from 'react';
 import { HeaderVariant, PageHeader, PageTitleGroup, PageSection } from '../templates/Page';
-import { H1, P } from '../atoms/Typography';
+import { H1, P, H4, A } from '../atoms/Typography';
 import FAQ from '../organisms/FAQ';
 import styled from '../../styles/theme/Theme';
-import { IFaq } from '../../types/client/page/faq';
+import { IFaqContent } from '../../types/client/page/faq';
 
 interface IFAQPageProps {
-    faqs: IFaq[];
+    content: IFaqContent;
 }
 
 const FilterToggle = styled.button`
@@ -23,10 +23,16 @@ const FilterToggles = styled.div`
     display: flex;
     justify-content: flex-start;
     text-align: center;
+    margin-bottom: 2em;    
+`
+
+const FaqWrapper = styled.div`
+    margin-bottom: 2em;    
 `
 
 const DisconnectedFAQPage: React.FC<IFAQPageProps> = props => {
-    const {faqs} = props;
+    const { content } = props;
+    const { faqs } = content;
     const [toggledFaqs, setToggled] = React.useState<number[]>([]);
     
     const onFaqToggled = (id: number) => {
@@ -41,7 +47,7 @@ const DisconnectedFAQPage: React.FC<IFAQPageProps> = props => {
         <>
             <PageHeader headerVariant={HeaderVariant.FAQ}>
                 <PageTitleGroup>
-                    <H1>Frequently Asked Questions</H1>
+                    <H1>{content.pageHeader}</H1>
                 </PageTitleGroup>
             </PageHeader>
             <PageSection>
@@ -54,7 +60,15 @@ const DisconnectedFAQPage: React.FC<IFAQPageProps> = props => {
                         <P>Expand all</P>
                     </FilterToggle>
                 </FilterToggles>
-                {faqs.map((faq, i) => <FAQ faq={faq} key={i} open={toggledFaqs.includes(i)} onToggled={() => onFaqToggled(i)}/>)}
+                {faqs.map((faq, i) => {
+                    return (
+                        <FaqWrapper key={i}>
+                            <FAQ faq={faq} open={toggledFaqs.includes(i)} onToggled={() => onFaqToggled(i)}/>
+                        </FaqWrapper>
+                    )
+                })}
+                <H4>{content.furtherQuestionHeader}</H4>
+                <A href={`mailto:${content.furtherHelpEmail}`}>{content.furtherHelpHeader}</A>
             </PageSection>
         </>
     )

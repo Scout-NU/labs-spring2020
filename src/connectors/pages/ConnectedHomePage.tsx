@@ -26,7 +26,7 @@ const HomePage: React.FC = props => {
             pageService.getHomePageContent()
             .then(res => {
                 setContent(mapHomeContent(res));
-            })
+            }).catch(error => console.log(error));
         }
 
         getPageContent();

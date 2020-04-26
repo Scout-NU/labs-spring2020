@@ -1,21 +1,21 @@
 import { wrap } from ".";
 import { Entry, IEntry, ILink, isEntry, ISys } from "../base";
-import { FaqLink, IFaqLink } from "./faq_link";
+import { CmsFaqLink, ICmsFaqLink } from "./faq_link";
 
-export interface IFaqFields {
+export interface ICmsFaqFields {
   title?: string;
   suggestions?: string[];
   description?: string;
-  links?: Array<ILink<'Entry'> | IFaqLink>;
+  links?: Array<ILink<'Entry'> | ICmsFaqLink>;
 }
 
 /**
  * FAQ
  */
-export interface IFaq extends IEntry<IFaqFields> {
+export interface ICmsFaq extends IEntry<ICmsFaqFields> {
 }
 
-export function isFaq(entry: IEntry<any>): entry is IFaq {
+export function isFaq(entry: IEntry<any>): entry is ICmsFaq {
   return entry &&
     entry.sys &&
     entry.sys.contentType &&
@@ -23,9 +23,9 @@ export function isFaq(entry: IEntry<any>): entry is IFaq {
     entry.sys.contentType.sys.id === 'faq'
 }
 
-export class Faq extends Entry<IFaqFields> implements IFaq {
+export class CmsFaq extends Entry<ICmsFaqFields> implements ICmsFaq {
   public readonly sys!: ISys<'Entry'>;
-  public readonly fields!: IFaqFields;
+  public readonly fields!: ICmsFaqFields;
 
   get title(): string | undefined {
     return this.fields.title
@@ -39,16 +39,16 @@ export class Faq extends Entry<IFaqFields> implements IFaq {
     return this.fields.description
   }
 
-  get links(): Array<FaqLink | null> | undefined {
+  get links(): Array<CmsFaqLink | null> | undefined {
     return !this.fields.links ? undefined :
       this.fields.links.map((item) =>
-        isEntry(item) ? wrap<'faqLink'>(item) : null
+        isEntry(item) ? wrap<'cmsFaqLink'>(item) : null
       )
   }
 
-  constructor(entry: IFaq);
-  constructor(id: string, fields: IFaqFields);
-  constructor(entryOrId: IFaq | string, fields?: IFaqFields) {
+  constructor(entry: ICmsFaq);
+  constructor(id: string, fields: ICmsFaqFields);
+  constructor(entryOrId: ICmsFaq | string, fields?: ICmsFaqFields) {
     super(entryOrId, 'faq', fields)
   }
 }

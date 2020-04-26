@@ -3,9 +3,9 @@ import DisconnectedSearchPage from "../../components/pages/SearchPage";
 import getProfileService from '../../service/ambassador/service';
 import { IAmbassador } from '../../types/backend/model';
 import { URLQueryParser } from '../../service/util/url';
-import { ISearchPageContent } from '../../types/client/page/search';
 import { IPerson } from '../../types/client/model/person';
 import { resolveAmbassadorType } from '../../types/util/adpater/model/person';
+import { ISearchContent } from '../../types/client/page/search';
 
 
 const SearchPage: React.FC = () => {
@@ -38,7 +38,7 @@ const SearchPage: React.FC = () => {
 }
 
 
-const TempSearchPageContent: ISearchPageContent = {
+const TempSearchPageContent: ISearchContent = {
     pageHeader: 'Connect with City Hall',
     pageSubheader: 'Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!',
     searchBarHint: 'Search by topic or name',

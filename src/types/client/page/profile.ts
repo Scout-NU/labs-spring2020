@@ -1,4 +1,4 @@
-export interface IProfilePageContent {
+export interface IProfileContent {
     emailMeLabel: string;
     ambassadorDescriptionHeader: string;
     projectSectionHeader: string;
