@@ -7,13 +7,13 @@ import Spinner from '../atoms/Spinner';
 import SearchGroup from '../../connectors/organisms/ConnectedSearchGroup';
 import ProfileGrid from '../organisms/ProfileGrid';
 import { PageHeader, HeaderVariant, PageSection } from '../templates/Page';
-import { ISearchPageContent } from '../../types/client/page/search';
 import { IPerson } from '../../types/client/model/person';
+import { ISearchContent } from '../../types/client/page/search';
 
 
 interface ISearchPageProps {
     results: IPerson[];
-    pageContent: ISearchPageContent;
+    pageContent: ISearchContent;
     loading: boolean;
 }
 

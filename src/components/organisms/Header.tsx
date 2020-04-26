@@ -12,7 +12,7 @@ interface IHeaderProps {
 }
 
 const HeaderContainer = styled.nav`
-    position: fixed;
+    position: absolute;
     top: 0;
     z-index: 3;
     width: 100%;

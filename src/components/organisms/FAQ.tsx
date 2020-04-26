@@ -36,7 +36,6 @@ const FAQWrapper = styled.div`
     align-items: center;
     background-color: ${lunchboxColors.carton};
     padding: 2em 3em;
-    margin-top: 2em;
     transition: all .1s ease-in-out;
 
     &:hover {

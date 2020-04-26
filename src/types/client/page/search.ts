@@ -1,4 +1,4 @@
-export interface ISearchPageContent {
+export interface ISearchContent {
     pageHeader: string;
     pageSubheader: string;
     searchBarHint: string;

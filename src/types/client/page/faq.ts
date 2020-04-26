@@ -1,6 +1,6 @@
 import { ILink } from "../model/link";
 
-export interface IFaqPageContent {
+export interface IFaqContent {
     pageHeader: string;
     furtherQuestionHeader: string;
     furtherHelpHeader: string;
