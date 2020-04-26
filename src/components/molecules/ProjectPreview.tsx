@@ -1,8 +1,8 @@
 import React from 'react';
-import { IPersonProject } from '../../types/client/model';
 import Card from '../atoms/Card';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
+import { IPersonProject } from '../../types/client/model/person';
 
 
 interface IProjectPreviewProps {

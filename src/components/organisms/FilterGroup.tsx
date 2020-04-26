@@ -2,15 +2,15 @@ import React from 'react';
 import styled from '../../styles/theme/Theme';
 import { StyledButton, ButtonStyle } from '../atoms/Button';
 import { Row, Col } from 'react-flexbox-grid';
-import { IFilter } from '../../types/client/model';
 import SearchFilter from '../molecules/SearchFilter';
 import { P } from '../atoms/Typography';
 import { StyledFilterPopup } from '../molecules/FilterPopup';
 import { StyledCheckbox } from '../atoms/Input';
+import { ISearchFilter } from '../../types/client/page/search';
 
 interface IFilterGroupProps {
-    filters: IFilter[];
-    onSelectedFiltersChanged: (filters: IFilter[]) => void;
+    filters: ISearchFilter[];
+    onSelectedFiltersChanged: (filters: ISearchFilter[]) => void;
 }
 
 
@@ -38,7 +38,7 @@ const ClearButton = styled(StyledButton)`
 `
 
 interface IFilterGroupState {
-    filters: IFilter[];
+    filters: ISearchFilter[];
 }
 
 class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> {

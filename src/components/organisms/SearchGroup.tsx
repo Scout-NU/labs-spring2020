@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from '../molecules/SearchBar';
 import { Col, Row } from 'react-flexbox-grid';
 import FilterGroup from './FilterGroup';
-import { IFilter } from '../../types/client/model';
+import { ISearchFilter } from '../../types/client/page/search';
 
 
 // TODO: add individual callbacks for filters and querying
@@ -10,10 +10,10 @@ interface ISearchGroupProps {
     loadingFilters: boolean;
     searchSuggestions: string[];
     searchBarHintText: string;
-    filters: IFilter[];
+    filters: ISearchFilter[];
     currentQuery: string;
     onSearch: (query: string) => void;
-    onSelectedFiltersChanged: (filters: IFilter[]) => void;
+    onSelectedFiltersChanged: (filters: ISearchFilter[]) => void;
 }
 
 const DisconnectedSearchGroup: React.FC<ISearchGroupProps> = props => {

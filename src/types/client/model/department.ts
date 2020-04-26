@@ -1,4 +1,4 @@
-export interface IAmbassadorDepartment {
+export interface IPersonDepartment {
     id: string;
     departmentName: string;
     departmentUrl: string;

@@ -1,10 +1,10 @@
 import React from 'react';
-import { IProfile } from '../../types/client/model';
 import DisconnectedProfilePage from '../../components/pages/ProfilePage';
 import getProfileService from '../../service/ambassador/service';
 import NotFoundPage from '../../components/pages/404';
 import Spinner from '../../components/atoms/Spinner';
-import { mapAmbassadorToProfile } from '../../types/util/ambassador/adapter';
+import { IProfile } from '../../types/client/model/person';
+import { mapAmbassadorToProfile } from '../../types/util/adpater/model/person';
 
 
 const ProfilePage: React.FC = () => {

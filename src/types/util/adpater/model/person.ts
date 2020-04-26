@@ -1,5 +1,5 @@
 import { IAmbassador, IDepartment, IAmbassadorProjectAssociation, IProblemTag } from "../../../backend/model";
-import { IPerson, IProfile } from "../../../client/model/person";
+import { IPerson, IProfile, IPersonProject } from "../../../client/model/person";
 import { resolveDepartmentType } from "./department";
 import { ILink, resolveEntryLinks, isAsset, resolveEntryLink, resolveAssetLink } from "../../../backend/base";
 

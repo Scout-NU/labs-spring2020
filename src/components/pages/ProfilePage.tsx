@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from '../../styles/theme/Theme';
 import devices from '../../styles/variables/breakpoints';
-import { IProfile } from '../../types/client/model';
 import { Row, Col } from 'react-flexbox-grid';
 import { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
@@ -15,6 +14,7 @@ import EmailForm from '../../connectors/organisms/ConnectedEmailForm';
 import PersonProfileImageGroup from '../molecules/PersonProfileImageGroup';
 import { PageHeader, HeaderVariant, PageSection, StyledPageSection } from '../templates/Page';
 import CardModal from '../molecules/CardModal';
+import { IProfile } from '../../types/client/model/person';
 
 
 interface IProfilePageProps {

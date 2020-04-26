@@ -1,9 +1,11 @@
+import { IPersonDepartment } from "./department";
+
 export interface IPerson {
     id: string;
     profileImageUrl: string;
     firstName: string;
     lastName: string;
-    department: IAmbassadorDepartment | null;
+    department: IPersonDepartment | null;
     positionTitle: string;
     description: string;
     genderPronouns: string;

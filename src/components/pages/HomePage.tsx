@@ -4,13 +4,13 @@ import { lunchboxColors } from '../../styles/theme/lunchbox';
 import { H1, H5, NavigationLink, H3, P } from '../atoms/Typography';
 import devices from '../../styles/variables/breakpoints';
 import Button, { ButtonStyle } from '../atoms/Button';
-import { IPerson } from '../../types/client/model';
 import PersonPreview from '../molecules/PersonPreview';
 import { PageHeader, PageTitleGroup, PageSubheader, HeaderVariant } from '../templates/Page';
-import { IHomePageContent } from '../../types/client/page/home';
+import { IHomeContent } from '../../types/client/page/home';
+import { IPerson } from '../../types/client/model/person';
 
 interface IDisconnectedHomePageProps {
-    content: IHomePageContent;
+    content: IHomeContent;
     carouselItems: IPerson[];
 }
 
@@ -187,7 +187,7 @@ const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><Navigat
                 <ConnectionSteps>
                     {content.communicationSteps.map((step, key) => {
                         return (
-                            <ConnectionStep key={}>
+                            <ConnectionStep key={key}>
                                 <img src={step.stepPictureUrl}/>
                                 <H5>{step.stepTitle}</H5>
                                 <P>{step.stepDescription}</P>

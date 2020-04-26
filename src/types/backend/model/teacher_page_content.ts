@@ -16,7 +16,6 @@ export interface ITeacherPageContentFields {
  * Teacher Page Content
  */
 export interface ITeacherPageContent extends IEntry<ITeacherPageContentFields> {
-  kind: PageDiscriminator.TEACHER;
 }
 
 export function isTeacherPageContent(entry: IEntry<any>): entry is ITeacherPageContent {
@@ -27,56 +26,56 @@ export function isTeacherPageContent(entry: IEntry<any>): entry is ITeacherPageC
     entry.sys.contentType.sys.id == 'teacherPageContent'
 }
 
-// export class TeacherPageContent extends Entry<ITeacherPageContentFields> implements ITeacherPageContent {
-//   public readonly sys!: ISys<'Entry'>;
-//   public readonly fields!: ITeacherPageContentFields;
+export class TeacherPageContent extends Entry<ITeacherPageContentFields> implements ITeacherPageContent {
+  public readonly sys!: ISys<'Entry'>;
+  public readonly fields!: ITeacherPageContentFields;
 
-//   get pageHeader(): string | undefined {
-//     return this.fields.pageHeader
-//   }
+  get pageHeader(): string | undefined {
+    return this.fields.pageHeader
+  }
 
-//   get page_header(): string | undefined {
-//     return this.fields.pageHeader
-//   }
+  get page_header(): string | undefined {
+    return this.fields.pageHeader
+  }
 
-//   get pageSubheader(): string | undefined {
-//     return this.fields.pageSubheader
-//   }
+  get pageSubheader(): string | undefined {
+    return this.fields.pageSubheader
+  }
 
-//   get page_subheader(): string | undefined {
-//     return this.fields.pageSubheader
-//   }
+  get page_subheader(): string | undefined {
+    return this.fields.pageSubheader
+  }
 
-//   get contentUrl(): Url | null | undefined {
-//     return !this.fields.contentUrl ? undefined :
-//       (isEntry(this.fields.contentUrl) ? wrap<'url'>(this.fields.contentUrl) : null)
-//   }
+  get contentUrl(): Url | null | undefined {
+    return !this.fields.contentUrl ? undefined :
+      (isEntry(this.fields.contentUrl) ? wrap<'url'>(this.fields.contentUrl) : null)
+  }
 
-//   get content_url(): Url | null | undefined {
-//     return !this.fields.contentUrl ? undefined :
-//       (isEntry(this.fields.contentUrl) ? wrap<'url'>(this.fields.contentUrl) : null)
-//   }
+  get content_url(): Url | null | undefined {
+    return !this.fields.contentUrl ? undefined :
+      (isEntry(this.fields.contentUrl) ? wrap<'url'>(this.fields.contentUrl) : null)
+  }
 
-//   get headerDecoration(): Asset | null | undefined {
-//     return !this.fields.headerDecoration ? undefined :
-//       (isAsset(this.fields.headerDecoration) ? new Asset(this.fields.headerDecoration) : null)
-//   }
+  get headerDecoration(): Asset | null | undefined {
+    return !this.fields.headerDecoration ? undefined :
+      (isAsset(this.fields.headerDecoration) ? new Asset(this.fields.headerDecoration) : null)
+  }
 
-//   get header_decoration(): Asset | null | undefined {
-//     return !this.fields.headerDecoration ? undefined :
-//       (isAsset(this.fields.headerDecoration) ? new Asset(this.fields.headerDecoration) : null)
-//   }
+  get header_decoration(): Asset | null | undefined {
+    return !this.fields.headerDecoration ? undefined :
+      (isAsset(this.fields.headerDecoration) ? new Asset(this.fields.headerDecoration) : null)
+  }
 
-//   get resources(): Array<TeacherResource | null> | undefined {
-//     return !this.fields.resources ? undefined :
-//       this.fields.resources.map((item) =>
-//         isEntry(item) ? wrap<'teacherResource'>(item) : null
-//       )
-//   }
+  get resources(): Array<TeacherResource | null> | undefined {
+    return !this.fields.resources ? undefined :
+      this.fields.resources.map((item) =>
+        isEntry(item) ? wrap<'teacherResource'>(item) : null
+      )
+  }
 
-//   constructor(entry: ITeacherPageContent);
-//   constructor(id: string, fields: ITeacherPageContentFields);
-//   constructor(entryOrId: ITeacherPageContent | string, fields?: ITeacherPageContentFields) {
-//     super(entryOrId, 'teacherPageContent', fields)
-//   }
-// }
+  constructor(entry: ITeacherPageContent);
+  constructor(id: string, fields: ITeacherPageContentFields);
+  constructor(entryOrId: ITeacherPageContent | string, fields?: ITeacherPageContentFields) {
+    super(entryOrId, 'teacherPageContent', fields)
+  }
+}

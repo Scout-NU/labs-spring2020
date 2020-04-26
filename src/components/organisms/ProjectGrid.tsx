@@ -1,8 +1,8 @@
 import React from 'react';
-import { IPersonProject } from '../../types/client/model';
 import ProjectPreview from '../molecules/ProjectPreview';
 import styled from '../../styles/theme/Theme';
 import { Col, Row } from 'react-flexbox-grid';
+import { IPersonProject } from '../../types/client/model/person';
 
 
 interface IProjectGridProps {

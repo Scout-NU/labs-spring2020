@@ -1,12 +1,12 @@
 import { wrap } from ".";
 import { Entry, IEntry, ILink, isEntry, ISys } from "../base";
-import { IConnectionGuideContent } from "./connection_guide_content";
-import { IFaqPageContent } from "./faq_page_content";
-import { IHomePageContent } from "./home_page_content";
-import { INotFoundPageContent, } from "./not_found_page_content";
-import { IProfilePageContent, } from "./profile_page_content";
-import { ISearchPageContent,} from "./search_page_content";
-import { ITeacherPageContent,} from "./teacher_page_content";
+import { IConnectionGuideContent, ConnectionGuideContent } from "./connection_guide_content";
+import { IFaqPageContent, FaqPageContent } from "./faq_page_content";
+import { IHomePageContent, HomePageContent } from "./home_page_content";
+import { INotFoundPageContent, NotFoundPageContent, } from "./not_found_page_content";
+import { IProfilePageContent, ProfilePageContent, } from "./profile_page_content";
+import { ISearchPageContent, SearchPageContent,} from "./search_page_content";
+import { ITeacherPageContent, TeacherPageContent,} from "./teacher_page_content";
 
 export interface IPageFields {
   pageName?: string;
@@ -34,7 +34,7 @@ export enum PageDiscriminator {
 }
 
 export type PagePageContent = INotFoundPageContent | IConnectionGuideContent | IFaqPageContent | IHomePageContent | IProfilePageContent | ISearchPageContent | ITeacherPageContent;
-// export type PagePageContentClass = NotFoundPageContent | ConnectionGuideContent | FaqPageContent | HomePageContent | ProfilePageContent | SearchPageContent | TeacherPageContent;
+export type PagePageContentClass = NotFoundPageContent | ConnectionGuideContent | FaqPageContent | HomePageContent | ProfilePageContent | SearchPageContent | TeacherPageContent;
 
 /**
  * Page
@@ -51,39 +51,39 @@ export function isPage(entry: IEntry<any>): entry is IPage {
     entry.sys.contentType.sys.id == 'page'
 }
 
-// export class Page extends Entry<IPageFields> implements IPage {
-//   public readonly sys!: ISys<'Entry'>;
-//   public readonly fields!: IPageFields;
+export class Page extends Entry<IPageFields> implements IPage {
+  public readonly sys!: ISys<'Entry'>;
+  public readonly fields!: IPageFields;
 
-//   get pageName(): string | undefined {
-//     return this.fields.pageName
-//   }
+  get pageName(): string | undefined {
+    return this.fields.pageName
+  }
 
-//   get page_name(): string | undefined {
-//     return this.fields.pageName
-//   }
+  get page_name(): string | undefined {
+    return this.fields.pageName
+  }
 
-//   get pageEndpoint(): string | undefined {
-//     return this.fields.pageEndpoint
-//   }
+  get pageEndpoint(): string | undefined {
+    return this.fields.pageEndpoint
+  }
 
-//   get page_endpoint(): string | undefined {
-//     return this.fields.pageEndpoint
-//   }
+  get page_endpoint(): string | undefined {
+    return this.fields.pageEndpoint
+  }
 
-//   get pageContent(): PagePageContentClass | null | undefined {
-//     return !this.fields.pageContent ? undefined :
-//       (isEntry(this.fields.pageContent) ? wrap<'notFoundPageContent' | 'connectionGuideContent' | 'faqPageContent' | 'homePageContent' | 'profilePageContent' | 'searchPageContent' | 'teacherPageContent'>(this.fields.pageContent) : null)
-//   }
+  get pageContent(): PagePageContentClass | null | undefined {
+    return !this.fields.pageContent ? undefined :
+      (isEntry(this.fields.pageContent) ? wrap<'notFoundPageContent' | 'connectionGuideContent' | 'faqPageContent' | 'homePageContent' | 'profilePageContent' | 'searchPageContent' | 'teacherPageContent'>(this.fields.pageContent) : null)
+  }
 
-//   get page_content(): PagePageContentClass | null | undefined {
-//     return !this.fields.pageContent ? undefined :
-//       (isEntry(this.fields.pageContent) ? wrap<'notFoundPageContent' | 'connectionGuideContent' | 'faqPageContent' | 'homePageContent' | 'profilePageContent' | 'searchPageContent' | 'teacherPageContent'>(this.fields.pageContent) : null)
-//   }
+  get page_content(): PagePageContentClass | null | undefined {
+    return !this.fields.pageContent ? undefined :
+      (isEntry(this.fields.pageContent) ? wrap<'notFoundPageContent' | 'connectionGuideContent' | 'faqPageContent' | 'homePageContent' | 'profilePageContent' | 'searchPageContent' | 'teacherPageContent'>(this.fields.pageContent) : null)
+  }
 
-//   constructor(entry: IPage);
-//   constructor(id: string, fields: IPageFields);
-//   constructor(entryOrId: IPage | string, fields?: IPageFields) {
-//     super(entryOrId, 'page', fields)
-//   }
-// }
+  constructor(entry: IPage);
+  constructor(id: string, fields: IPageFields);
+  constructor(entryOrId: IPage | string, fields?: IPageFields) {
+    super(entryOrId, 'page', fields)
+  }
+}

@@ -1,4 +1,4 @@
-import { ILink } from "../model";
+import { ILink } from "../model/link";
 
 export interface INotFoundPageContent {
     pageHeader: string;
