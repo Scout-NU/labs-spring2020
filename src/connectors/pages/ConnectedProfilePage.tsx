@@ -4,7 +4,7 @@ import DisconnectedProfilePage from '../../components/pages/ProfilePage';
 import getProfileService from '../../service/ambassador/service';
 import NotFoundPage from '../../components/pages/404';
 import Spinner from '../../components/atoms/Spinner';
-import { mapAmbassadorToProfile } from '../type-adapter/ambassador/adapter';
+import { mapAmbassadorToProfile } from '../../types/util/ambassador/adapter';
 
 
 const ProfilePage: React.FC = () => {

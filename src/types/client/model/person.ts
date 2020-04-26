@@ -22,34 +22,3 @@ export interface IPersonProject {
     projectTitle: string;
     personNotes: string;
 }
-
-export interface IAmbassadorDepartment {
-    id: string;
-    departmentName: string;
-    departmentUrl: string;
-    departmentImage: string;
-}
-
-export interface IFilter {
-    filterName: string;
-    filterLabels: string[];
-    selectedFilters: string[];
-    id: string; // ID of the fitler. Should be unique.
-}
-
-export interface ILink {
-    linkTitle: string;
-    linkURL: string;
-}
-
-export interface IFaq { 
-    title: string;
-    suggestions?: string[];
-    description?: string;
-    links: IFaqLink[];
-}
-
-export interface IFaqLink {
-    url: ILink;
-    description: string;
-}

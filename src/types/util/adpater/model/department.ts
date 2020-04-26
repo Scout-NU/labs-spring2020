@@ -1,6 +1,6 @@
-import { IDepartment } from "../../../types/backend/model";
-import { IAmbassadorDepartment } from "../../../types/client/model";
-import { isAsset } from "../../../types/backend/base";
+import { IDepartment } from "../../backend/model";
+import { IAmbassadorDepartment } from "../../client/model";
+import { isAsset } from "../../backend/base";
 
 export function resolveDepartmentType(department: IDepartment): IAmbassadorDepartment {
     let { sys } = department;

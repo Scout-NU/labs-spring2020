@@ -1,10 +1,10 @@
-import { IPage } from '../../types/backend/model';
-import { ContentfulListBaseResponse } from '../../types/backend/base';
+import { IPage, PagePageContent, INotFoundPageContent, IConnectionGuideContent, IFaqPageContent, IHomePageContent, IProfilePageContent, ISearchPageContent } from '../../types/backend/model';
+import { ContentfulListBaseResponse, isEntry } from '../../types/backend/base';
 import { resolveEntry } from '../../types/backend/utils';
 
 
 export interface IPageService {
-    getContentForPage(pageName: PageName): Promise<IPage[]>;
+    getContentForPage(pageName: PageName): Promise<PagePageContent>;
 }
 
 export enum PageName {
@@ -24,7 +24,7 @@ export default function getPageService(): IPageService {
 
 const allPagesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=page&include=10`;
 
-async function getContentForPage(pageName: PageName): Promise<IPage[]> {
+async function getContentForPage(pageName: PageName): Promise<PagePageContent> {
     const pageQuery = `${allPagesQuery}&fields.pageName=${pageName}`;
 
     const pageResponse = await fetch(
@@ -42,7 +42,9 @@ async function getContentForPage(pageName: PageName): Promise<IPage[]> {
     };
     // TODO: Fallback fields for missing stuff - empty strings and unpublished content is underfined
     let reducedPages: ContentfulListBaseResponse<IPage> = await pageResponse.json();
-    return parseDepartmentResponse(reducedPages);
+    let resolvedResponse = parseDepartmentResponse(reducedPages)[0].fields.pageContent!!;
+    if (!isEntry(resolvedResponse)) throw Error("Something went wrong with resolving page content.");
+    return resolvedResponse;
 }
 
 function parseDepartmentResponse(response: ContentfulListBaseResponse<IPage>): IPage[] {

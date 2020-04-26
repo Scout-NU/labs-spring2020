@@ -152,7 +152,7 @@ export function isAsset(obj: any): obj is IAsset {
  * Resolves an asset if it is not a link.
  * @param asset 
  */
-export function resolveAssetLink(asset: (ILink<"Asset"> | IAsset)): IAsset | undefined {
+export function resolveAssetLink(asset?: (ILink<"Asset"> | IAsset)): IAsset | undefined {
   if (isAsset(asset)) return asset;
 }
 

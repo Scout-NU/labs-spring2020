@@ -1,9 +1,9 @@
 import React from 'react';
 import { HeaderVariant, PageHeader, PageTitleGroup, PageSubheader, PageSection } from '../templates/Page';
 import { H1, P } from '../atoms/Typography';
-import { IFaq } from '../../types/client/model';
 import FAQ from '../organisms/FAQ';
 import styled from '../../styles/theme/Theme';
+import { IFaq } from '../../types/client/page/faq';
 
 interface IFAQPageProps {
     faqs: IFaq[];
