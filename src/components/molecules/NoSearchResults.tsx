@@ -1,5 +1,4 @@
 import React from 'react';
-import noResults from '../../images/search/noresults.svg';
 import Card from '../atoms/Card';
 import styled from '../../styles/theme/Theme';
 import { H5 } from '../atoms/Typography';
@@ -8,6 +7,7 @@ import devices from '../../styles/variables/breakpoints';
 
 interface INoSearchResultsProps {
     header: string;
+    missingContentImageUrl: string;
     alternateOptions: string[];
 }
 
@@ -53,7 +53,7 @@ const NoSearchResults: React.FC<INoSearchResultsProps> = props => {
         <Card>
             <NoResultsWrapper>
                 <ImageWrapper>
-                    <img src={noResults} alt='Sad person that is looking for something but cannot find it'/>
+                    <img src={props.missingContentImageUrl} alt='Sad person that is looking for something but cannot find it'/>
                 </ImageWrapper>
                 <TextWrapper>
                     <H5> {props.header} </H5>

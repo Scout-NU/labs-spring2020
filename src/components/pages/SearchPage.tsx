@@ -39,7 +39,7 @@ const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
     const renderSearchResults = () => {
         if (!loading) {
             if (results.length === 0) {
-                return (<NoSearchResults header={pageContent.noResultsHeader} alternateOptions={pageContent.noResultsSuggestions} />)
+                return (<NoSearchResults missingContentImageUrl={pageContent.noResultsImageUrl} header={pageContent.noResultsHeader} alternateOptions={pageContent.noResultsSuggestions} />)
             }
             return <ProfileGrid profiles={results}/>
         }
