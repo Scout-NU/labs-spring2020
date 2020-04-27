@@ -1,6 +1,4 @@
-import { wrap } from ".";
-import { Asset, Entry, IAsset, IEntry, ILink, isAsset, isEntry, ISys } from "../base";
-import { SearchFilter } from "./search_filter";
+import { Asset, Entry, IAsset, IEntry, ILink, isAsset, ISys } from "../base";
 
 export interface ISearchPageContentFields {
   pageHeader?: string;

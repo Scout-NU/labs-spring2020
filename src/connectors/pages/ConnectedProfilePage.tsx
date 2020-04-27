@@ -1,13 +1,13 @@
 import React from 'react';
 import DisconnectedProfilePage from '../../components/pages/ProfilePage';
 import getProfileService from '../../service/ambassador/service';
-import NotFoundPage from '../../components/pages/404';
 import { IProfile } from '../../types/client/model/person';
 import { mapAmbassadorToProfile } from '../../types/util/adpater/model/person';
 import { IProfileContent } from '../../types/client/page/profile';
 import getPageService from '../../service/page/service';
 import { mapProfilePageContent } from '../../types/util/adpater/page/profile';
 import PageLoader from '../../components/molecules/PageLoader';
+import NotFoundPage from './ConnectedNotFoundPage';
 
 
 const ProfilePage: React.FC = () => {
