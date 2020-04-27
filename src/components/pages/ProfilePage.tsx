@@ -15,10 +15,12 @@ import { PageHeader, HeaderVariant, PageSection, StyledPageSection } from '../te
 import CardModal from '../molecules/CardModal';
 import { IProfile } from '../../types/client/model/person';
 import TextList from '../atoms/List';
+import { IProfileContent } from '../../types/client/page/profile';
 
 
 interface IProfilePageProps {
     info: IProfile;
+    content: IProfileContent;
 }
 
 
@@ -84,6 +86,7 @@ const ProjectSection = styled(StyledPageSection)`
 
 const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
     const [showForm, toggleForm] = React.useState(false);
+    const { content } = props;
 
     const {
         profileImageUrl, relatedPeople, description,
@@ -116,7 +119,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
 
             <PageSection>
                 <AboutMeCard>
-                    <ProfileSubheader>About Me</ProfileSubheader>
+                    <ProfileSubheader>{content.ambassadorDescriptionHeader}</ProfileSubheader>
                     <P>{description}</P>
                     <DepartmentLink href={props.info.department?.departmentUrl} target="_blank">
                         <P>Learn more at the {props.info.department?.departmentName}</P>
@@ -125,16 +128,16 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
             </PageSection>
 
             {projects.length !== 0 &&
-                <ProjectSection title="Here's what I've worked on">
+                <ProjectSection title={content.projectSectionHeader}>
                     <ProjectGrid projects={projects}/>
                     <Button buttonStyle={ButtonStyle.PRIMARY}>
-                        <A href={props.info.department?.departmentUrl} target='_blank'>See more of our work</A>
+                        <A href={props.info.department?.departmentUrl} target='_blank'>{content.seeMoreDepartmentWorkLabel}</A>
                     </Button>
                 </ProjectSection>
             }
 
             { relatedPeople.length !== 0 && 
-                <PageSection title="Related people">
+                <PageSection title={content.relatedAmbassadorsSectionHeader}>
                     <ProfileGrid profiles={relatedPeople}/>
                 </PageSection>
             }
