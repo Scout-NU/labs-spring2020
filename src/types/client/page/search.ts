@@ -2,13 +2,12 @@ export interface ISearchContent {
     pageHeader: string;
     pageSubheader: string;
     searchBarHint: string;
-    filters: ISearchFilter[];
     noResultsImageUrl: string;
     noResultsHeader: string;
     noResultsSuggestions: string[];
 }
 
-export interface ISearchFilter {
+export interface IFilter {
     filterName: string;
     filterLabels: string[];
     selectedFilters: string[];
