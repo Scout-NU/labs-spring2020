@@ -52,7 +52,7 @@ const ProfilePage: React.FC = () => {
 
     if (profile && pageContent) {
         return (
-          <DisconnectedProfilePage info={profile}/>
+          <DisconnectedProfilePage content={pageContent} info={profile}/>
         )
     }
 
