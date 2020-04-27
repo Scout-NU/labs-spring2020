@@ -2,49 +2,62 @@ import React from 'react';
 import DisconnectedProfilePage from '../../components/pages/ProfilePage';
 import getProfileService from '../../service/ambassador/service';
 import NotFoundPage from '../../components/pages/404';
-import Spinner from '../../components/atoms/Spinner';
 import { IProfile } from '../../types/client/model/person';
 import { mapAmbassadorToProfile } from '../../types/util/adpater/model/person';
+import { IProfileContent } from '../../types/client/page/profile';
+import getPageService from '../../service/page/service';
+import { mapProfilePageContent } from '../../types/util/adpater/page/profile';
+import PageLoader from '../../components/molecules/PageLoader';
 
 
 const ProfilePage: React.FC = () => {
-    const [loading, setLoading] = React.useState(true);
     const [profile, setProfile] = React.useState<IProfile | null>(null);
+    const [pageContent, setContent] = React.useState<IProfileContent | null>(null);
+    const [profileFetchFailed, setFailed] = React.useState(false);
 
     React.useEffect(() => {
         async function getProfile() {
             const profileRepository = getProfileService();
             let id = window.location.pathname.split('/').pop();
             
-            if (!id) { 
-                setLoading(false);
+            if (!id) {
+                setFailed(true)
             }
             
             else {
                 profileRepository.getProfileById(id)
                 .then(res => {
                     setProfile(mapAmbassadorToProfile(res));
-                    setLoading(false);
-                }).catch(error => { console.log(error); setLoading(false); });
+                }).catch(error => { console.log(error); setFailed(true); });
             }
         }
+
+        async function getPageContent() {
+            const pageService = getPageService();
+            pageService.getProfilePageContent()
+            .then(res => {
+                setContent(mapProfilePageContent(res));
+            }).catch(error => console.log(error));
+        }
+
+        getPageContent();
 
         getProfile();
     }, [])
 
 
-    if (!profile && !loading) {
+    if (profileFetchFailed) {
         return (<NotFoundPage/>)
     }
 
-    if (profile && !loading) {
+    if (profile && pageContent) {
         return (
           <DisconnectedProfilePage info={profile}/>
         )
     }
 
     else {
-        return (<Spinner/>)
+        return (<PageLoader isOpen={!profile && !pageContent}/>)
     }
 }
 
