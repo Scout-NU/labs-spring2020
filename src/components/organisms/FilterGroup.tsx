@@ -6,11 +6,11 @@ import SearchFilter from '../molecules/SearchFilter';
 import { P } from '../atoms/Typography';
 import { StyledFilterPopup } from '../molecules/FilterPopup';
 import { StyledCheckbox } from '../atoms/Input';
-import { ISearchFilter } from '../../types/client/page/search';
+import { IFilter } from '../../types/client/page/search';
 
 interface IFilterGroupProps {
-    filters: ISearchFilter[];
-    onSelectedFiltersChanged: (filters: ISearchFilter[]) => void;
+    filters: IFilter[];
+    onSelectedFiltersChanged: (filters: IFilter[]) => void;
 }
 
 
@@ -38,7 +38,7 @@ const ClearButton = styled(StyledButton)`
 `
 
 interface IFilterGroupState {
-    filters: ISearchFilter[];
+    filters: IFilter[];
 }
 
 class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> {

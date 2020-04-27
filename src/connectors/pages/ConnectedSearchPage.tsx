@@ -6,19 +6,22 @@ import { URLQueryParser } from '../../service/util/url';
 import { IPerson } from '../../types/client/model/person';
 import { resolveAmbassadorType } from '../../types/util/adpater/model/person';
 import { ISearchContent } from '../../types/client/page/search';
+import getPageService from '../../service/page/service';
+import PageLoader from '../../components/molecules/PageLoader';
+import { mapSearchPageContent } from '../../types/util/adpater/page/search';
 
 
 const SearchPage: React.FC = () => {
     const [ambassadors, setAmbassadors] = React.useState<IPerson[]>([]);
     const [loading, setLoading] = React.useState(true);
-    
-    React.useEffect(() => {
-        const isQueryPresent = () => window.location.search === "";
+    const [pageContent, setContent] = React.useState<ISearchContent | null>(null);
 
+    React.useEffect(() => {
         async function search() {
+            let isQueryPresent = window.location.search === "";
             const profileRepository = getProfileService();
             var ambassadors: Promise<IAmbassador[]>;
-            if (isQueryPresent()) {
+            if (isQueryPresent) {
                 ambassadors = profileRepository.getAllProfiles();
             } else {
                 let params = new URLQueryParser(new URLSearchParams(window.location.search));
@@ -29,26 +32,24 @@ const SearchPage: React.FC = () => {
                 setLoading(false);
             }).catch(error => console.log(error));
         }
+
+        async function getPageContent() {
+            const pageService = getPageService();
+            pageService.getSearchPageContent()
+            .then(res => {
+                setContent(mapSearchPageContent(res));
+            }).catch(error => console.log(error));
+        }
+
+        getPageContent();
         search();
     }, []);
 
+    if (!pageContent) return <PageLoader isOpen={!pageContent}/>
+
     return(
-        <DisconnectedSearchPage loading={loading} results={ambassadors} pageContent={TempSearchPageContent} />
+        <DisconnectedSearchPage loading={loading} results={ambassadors} pageContent={pageContent} />
     )
-}
-
-
-const TempSearchPageContent: ISearchContent = {
-    pageHeader: 'Connect with City Hall',
-    pageSubheader: 'Different Boston City Hall departments help the City of Boston in different ways. Find the person in a department that can best answer your questions!',
-    searchBarHint: 'Search by topic or name',
-    noResultsHeader: 'We can’t find anyone related to your search. Don’t give up!',
-    noResultsSuggestions: [
-        'Try using a different filter or key word.',
-        'Still nothing? Check out our Help page.'
-    ],
-    noResultsImageUrl: '',
-    filters: [],
 }
 
 export default SearchPage;

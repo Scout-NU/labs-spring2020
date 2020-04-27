@@ -3,11 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { URLQueryParser } from '../../service/util/url';
 import getFilterService from '../../service/filter/service';
 import DisconnectedSearchGroup from '../../components/organisms/SearchGroup';
-import { ISearchFilter } from '../../types/client/page/search';
+import { IFilter } from '../../types/client/page/search';
 
 const SearchGroup: React.FC = props => {
     const suggestions = ['Climate Change', 'Gun Control', 'Mental Health', 'Affordable Housing'];
-    const [filters, setFilters] = React.useState<ISearchFilter[]>([]);
+    const [filters, setFilters] = React.useState<IFilter[]>([]);
     const [query, setQuery] = React.useState("");
     const [loadingFilters, setLoading] = React.useState(true);
     
@@ -39,7 +39,7 @@ const SearchGroup: React.FC = props => {
         };
     }
     
-    const onSelectedFiltersChanged = (filters: ISearchFilter[]) => {
+    const onSelectedFiltersChanged = (filters: IFilter[]) => {
         let params = new URLSearchParams(window.location.search);
         filters.forEach(f => {
             if (f.selectedFilters.length === 0) {

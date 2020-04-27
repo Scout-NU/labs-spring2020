@@ -1,12 +1,11 @@
 import { wrap } from ".";
 import { Asset, Entry, IAsset, IEntry, ILink, isAsset, isEntry, ISys } from "../base";
-import { ISearchFilter, SearchFilter } from "./search_filter";
+import { SearchFilter } from "./search_filter";
 
 export interface ISearchPageContentFields {
   pageHeader?: string;
   pageSubheader?: string;
   searchBarHint?: string;
-  filters?: Array<ILink<'Entry'> | ISearchFilter>;
   noResultsImage?: ILink<'Asset'> | IAsset;
   noResultsHeader?: string;
   noResultsSuggestions?: string[];
@@ -52,13 +51,6 @@ export class SearchPageContent extends Entry<ISearchPageContentFields> implement
 
   get search_bar_hint(): string | undefined {
     return this.fields.searchBarHint
-  }
-
-  get filters(): Array<SearchFilter | null> | undefined {
-    return !this.fields.filters ? undefined :
-      this.fields.filters.map((item) =>
-        isEntry(item) ? wrap<'searchFilter'>(item) : null
-      )
   }
 
   get noResultsImage(): Asset | null | undefined {
