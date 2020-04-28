@@ -44,6 +44,12 @@ const ToggleWrapper = styled.div`
     top: -3%;
 `
 
+const CardContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`
+
 const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     const [showProfile, setShowProfile] = React.useState(false);
     const { profile } = props;
@@ -68,7 +74,7 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
             <ToggleWrapper>
                 <ContactListToggle person={profile}/>
             </ToggleWrapper>
-            <div onClick={onClick}>
+            <CardContent onClick={onClick}>
                 <PersonProfileImageGroup profileImageUrl={profile.profileImageUrl} departmentImageUrl={profile.department?.departmentImage}/>
                 <H5>{`${profile.firstName} ${profile.lastName}`}</H5>
                 <JobTitle>{profile.positionTitle}</JobTitle>
@@ -77,7 +83,7 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
                 <TagWrapper>
                     <TagGroup tags={profile.tags.sort((a, b) => a.length - b.length)}/>
                 </TagWrapper>
-            </div>
+            </CardContent>
         </PreviewCard>
     )
 }

@@ -10,21 +10,30 @@ interface IPersonProfileGroupProps {
 
 // TODO: Can probably improve the way these are sized.
 const ProfileImageContainer = styled.div`
-    margin-bottom: 1em;
+    margin-bottom: 2em;
     position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
 `
 
 const ProfileImage = styled(CircleImage)`
-    width: 50%;
+    width: min(50%, 200px);
 `
 
 const DepartmentImage = styled(CircleImage)`
-    position: absolute;
+    border-radius: 50%;
+    position: relative;
     width: 18%;
+    height: 18%;
     background-color: white;
     border: 1px solid black;
-    right: 20%;
-    bottom: 0;
+    right: 11%;
+    bottom: 0px;
+    align-self: flex-end;
 `
 
 const PersonProfileImageGroup: React.FC<IPersonProfileGroupProps> = props => {
