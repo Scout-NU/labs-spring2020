@@ -1,23 +1,26 @@
 import React from 'react';
 import styled from '../../styles/theme/Theme';
-import CircleImage, { CircleImageSize } from '../atoms/CircleImage';
+import CircleImage from '../atoms/CircleImage';
 
 
 interface IPersonProfileGroupProps {
     profileImageUrl: string;
     departmentImageUrl?: string;
-    size: CircleImageSize;
 }
 
 // TODO: Can probably improve the way these are sized.
 const ProfileImageContainer = styled.div`
     margin-bottom: 1em;
     position: relative;
-    /* width: 250px;  */
+`
+
+const ProfileImage = styled(CircleImage)`
+    width: 50%;
 `
 
 const DepartmentImage = styled(CircleImage)`
     position: absolute;
+    width: 18%;
     background-color: white;
     border: 1px solid black;
     right: 20%;
@@ -25,11 +28,12 @@ const DepartmentImage = styled(CircleImage)`
 `
 
 const PersonProfileImageGroup: React.FC<IPersonProfileGroupProps> = props => {
-    // size={`${Math.round(.25 * props.height)}`}
+    const {profileImageUrl, departmentImageUrl} = props;
+
     return (
         <ProfileImageContainer>
-            <CircleImage imageUrl={props.profileImageUrl} size={props.size} />
-            {props.departmentImageUrl && <DepartmentImage imageUrl={props.departmentImageUrl} size={CircleImageSize.SMALL}/>}
+            <ProfileImage src={profileImageUrl} />
+            {departmentImageUrl && <DepartmentImage src={departmentImageUrl}/>}
         </ProfileImageContainer>
     )
 }

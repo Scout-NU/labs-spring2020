@@ -1,6 +1,4 @@
 import React from 'react';
-import { Row, Col } from 'react-flexbox-grid';
-import { CircleImageSize } from '../atoms/CircleImage';
 import { H5, P } from '../atoms/Typography';
 import styled from '../../styles/theme/Theme';
 import Card from '../atoms/Card';
@@ -8,6 +6,7 @@ import TagGroup from '../molecules/TagGroup';
 import { profileRoute } from '../../var/routes';
 import PersonProfileImageGroup from './PersonProfileImageGroup';
 import { IPerson } from '../../types/client/model/person';
+import ContactListToggle from '../atoms/ContactListToggle';
 
 
 interface IPersonPreviewProps {
@@ -19,8 +18,10 @@ const JobTitle = styled(P)`
 `
 
 const PreviewCard = styled(Card)`
-    height: 70vh;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
+    height: 70vh;
     padding: 2.5em 2em 1em 2em;
     transition: all .2s ease-in-out;
 
@@ -37,18 +38,15 @@ const TagWrapper = styled.div`
     margin: 1.5em 0;
 `
 
-const Fade = styled.div`
+const ToggleWrapper = styled.div`
     position: relative;
-    bottom: 0;
-    height: 10%;
-    width: 100%;
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%);
+    left: 43%;
+    top: -3%;
 `
 
 const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     const [showProfile, setShowProfile] = React.useState(false);
-
-    let info = props.profile;
+    const { profile } = props;
 
     const shorten = (text: string, maxChars: number): string => {
         // src: stackoverflow.com/questions/5454235/shorten-string-without-cutting-words-in-javascript
@@ -66,22 +64,20 @@ const PersonPreview: React.FC<IPersonPreviewProps> = props => {
     }
     
     return (
-        <PreviewCard onClick={onClick}>
-            <Row center='xs'>
-                <Col xs>
-                    <PersonProfileImageGroup profileImageUrl={info.profileImageUrl} departmentImageUrl={info.department?.departmentImage} size={CircleImageSize.MEDIUM}/>
-                    <H5>{`${info.firstName} ${info.lastName}`}</H5>
-                    <JobTitle>{info.positionTitle}</JobTitle>
-                    <P>{shorten(info.description, 100)}</P>
-                    <CardRule/>
-                    <TagWrapper>
-                        <TagGroup tags={info.tags.sort((a, b) => a.length - b.length)}/>
-                    </TagWrapper>
-
-                </Col>
-            </Row>
-            <Fade/>
-
+        <PreviewCard>
+            <ToggleWrapper>
+                <ContactListToggle person={profile}/>
+            </ToggleWrapper>
+            <div onClick={onClick}>
+                <PersonProfileImageGroup profileImageUrl={profile.profileImageUrl} departmentImageUrl={profile.department?.departmentImage}/>
+                <H5>{`${profile.firstName} ${profile.lastName}`}</H5>
+                <JobTitle>{profile.positionTitle}</JobTitle>
+                <P>{shorten(profile.description, 100)}</P>
+                <CardRule/>
+                <TagWrapper>
+                    <TagGroup tags={profile.tags.sort((a, b) => a.length - b.length)}/>
+                </TagWrapper>
+            </div>
         </PreviewCard>
     )
 }
