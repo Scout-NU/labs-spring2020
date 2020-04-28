@@ -8,6 +8,7 @@ import getPageService from '../../service/page/service';
 import { mapProfilePageContent } from '../../types/util/adpater/page/profile';
 import PageLoader from '../../components/molecules/PageLoader';
 import NotFoundPage from './ConnectedNotFoundPage';
+import ContactList from '../../components/organisms/ContactList';
 
 
 const ProfilePage: React.FC = () => {
@@ -52,7 +53,10 @@ const ProfilePage: React.FC = () => {
 
     if (profile && pageContent) {
         return (
-          <DisconnectedProfilePage content={pageContent} info={profile}/>
+            <>
+                <DisconnectedProfilePage content={pageContent} info={profile}/>
+                <ContactList/>
+            </>
         )
     }
 

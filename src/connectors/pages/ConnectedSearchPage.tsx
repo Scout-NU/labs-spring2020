@@ -9,6 +9,7 @@ import { ISearchContent } from '../../types/client/page/search';
 import getPageService from '../../service/page/service';
 import PageLoader from '../../components/molecules/PageLoader';
 import { mapSearchPageContent } from '../../types/util/adpater/page/search';
+import ContactList from '../../components/organisms/ContactList';
 
 
 const SearchPage: React.FC = () => {
@@ -48,7 +49,10 @@ const SearchPage: React.FC = () => {
     if (!pageContent) return <PageLoader isOpen={!pageContent}/>
 
     return(
-        <DisconnectedSearchPage loading={loading} results={ambassadors} pageContent={pageContent} />
+        <>
+            <DisconnectedSearchPage loading={loading} results={ambassadors} pageContent={pageContent} />
+            <ContactList/>
+        </>
     )
 }
 

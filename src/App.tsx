@@ -12,6 +12,7 @@ import { homePageRoute, homeRedirectRoute, searchPageRoute, profileRoute, faqPag
 import FAQPage from './connectors/pages/ConnectedFAQPage';
 import ConversationGuide from './connectors/pages/ConnectedConversationGuide';
 import NotFoundPage from './connectors/pages/ConnectedNotFoundPage';
+import { ContactListProvider } from './context/contactListContext';
 
 
 const Site = styled.div`
@@ -39,17 +40,19 @@ const App: React.FC = () => {
         <Site>
           <Content>
             <Header/>
-            <Switch>
-              <Route path={`${profileRoute}/:id`} component={ProfilePage}/>
-              <Route path={searchPageRoute} component={SearchPage}/>
-              <Route exact path={homePageRoute} component={HomePage}/>
-              <Route exact path={homeRedirectRoute}>
-                <Redirect to={homePageRoute}/>
-              </Route>
-              <Route exact path={faqPageRoute} component={FAQPage}/>
-              <Route exact path={conversationGuideRoute} component={ConversationGuide}/>
-              <Route path="*" component={NotFoundPage}/>
-            </Switch>
+            <ContactListProvider>
+              <Switch>
+                <Route path={`${profileRoute}/:id`} component={ProfilePage}/>
+                <Route path={searchPageRoute} component={SearchPage}/>
+                <Route exact path={homePageRoute} component={HomePage}/>
+                <Route exact path={homeRedirectRoute}>
+                  <Redirect to={homePageRoute}/>
+                </Route>
+                <Route exact path={faqPageRoute} component={FAQPage}/>
+                <Route exact path={conversationGuideRoute} component={ConversationGuide}/>
+                <Route path="*" component={NotFoundPage}/>
+              </Switch>
+            </ContactListProvider>
           </Content>
           <Footer/>
         </Site>

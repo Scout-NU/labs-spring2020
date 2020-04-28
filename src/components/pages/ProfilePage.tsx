@@ -2,7 +2,6 @@ import React from 'react';
 import styled from '../../styles/theme/Theme';
 import devices from '../../styles/variables/breakpoints';
 import { Row, Col } from 'react-flexbox-grid';
-import { CircleImageSize } from '../atoms/CircleImage';
 import Button, { ButtonStyle, StyledButton } from '../atoms/Button';
 import { H1, P, H4, H5, A } from '../atoms/Typography';
 import TagGroup from '../molecules/TagGroup';
@@ -16,6 +15,7 @@ import CardModal from '../molecules/CardModal';
 import { IProfile } from '../../types/client/model/person';
 import TextList from '../atoms/List';
 import { IProfileContent } from '../../types/client/page/profile';
+import ContactListToggle from '../atoms/ContactListToggle';
 
 
 interface IProfilePageProps {
@@ -47,6 +47,10 @@ const ProfileInformationWrapper = styled.div`
 const ProfileActionsWrapper = styled(Col)`
     & * {
         margin-bottom: 2em;
+    }
+
+    & button {
+        margin-left: 1em;
     }
 `
 
@@ -99,8 +103,11 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
             <PageHeader headerVariant={HeaderVariant.PROFILE}> 
                 <Row center="xs" >
                     <ProfileActionsWrapper xs={12} md={4}>
-                        <PersonProfileImageGroup profileImageUrl={profileImageUrl} departmentImageUrl={department?.departmentImage} size={CircleImageSize.LARGE} />
-                        <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => toggleForm(true)}>Email me</Button>
+                        <PersonProfileImageGroup profileImageUrl={profileImageUrl} departmentImageUrl={department?.departmentImage} />
+                        <Row center="xs">
+                            <ContactListToggle person={props.info}/>
+                            <Button buttonStyle={ButtonStyle.PRIMARY} onClick={() => toggleForm(true)}>Email me</Button>
+                        </Row>
                     </ProfileActionsWrapper>
 
                     <Col xs={12} lg={6}>
