@@ -9,6 +9,7 @@ import { PageHeader, PageTitleGroup, PageSubheader, HeaderVariant } from '../tem
 import { IHomeContent } from '../../types/client/page/home';
 import { IPerson } from '../../types/client/model/person';
 import TextList from '../atoms/List';
+import { StarIcon } from '../atoms/Icon';
 
 interface IDisconnectedHomePageProps {
     content: IHomeContent;
@@ -137,6 +138,10 @@ const CATCarouselItem = styled.div`
     display: flex;
     min-width: 80%;
     margin: 4em 0 4em 4em;
+
+    & ${StarIcon} {
+        display: none;
+    }
 `
 
 const CATCarousel = styled.div`
