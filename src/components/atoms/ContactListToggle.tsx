@@ -20,15 +20,9 @@ const ContactListToggle: React.FC<IContactListToggleProps> = props => {
     const { person } = props;
     const { list } = useContactListState();
     const dispatch = useContactListDispatch();
-    const [highlighted] = React.useState(false);
-
-    // React.useEffect(() => {
-    //     localStorage.setItem('CONTACT_LIST', JSON.stringify(list));
-    // }, [list])
 
     const includesPerson = () => {
-        // console.log(list)
-        return list.includes(person);   
+        return list.filter(p => p.id === person.id).length === 1;   
     }
 
     const togglePerson = () => {

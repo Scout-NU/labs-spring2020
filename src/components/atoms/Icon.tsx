@@ -24,3 +24,11 @@ export const Caret = styled.i<ICaretIconProps>`
     padding: 3px;
     transform: ${props => props.flipped ? 'rotate(45deg)' : 'rotate(-135deg)'};
 `
+
+export const CrossMark = styled.div`
+    &:before {
+        content: "\\D7";
+        font-size: 2em;
+        position: relative;
+    }
+`
