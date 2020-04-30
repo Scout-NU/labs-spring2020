@@ -15,6 +15,10 @@ interface IFilterGroupState {
     filters: IFilter[];
 }
 
+/**
+ * This component shows a series of filters in a row. It tracks which options are selected within each of those filters, and performs a callback every
+ * time there is a change. 
+ */
 class FilterGroup extends React.Component<IFilterGroupProps, IFilterGroupState> {
     private inputRefs: (HTMLInputElement | null)[];
 

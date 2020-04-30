@@ -10,6 +10,9 @@ interface INoSearchResultsProps {
     alternateOptions: string[];
 }
 
+/**
+ * Component that gets displayed by the Search Page when there are no results to be found.
+ */
 const NoSearchResults: React.FC<INoSearchResultsProps> = props => {
     return (
         <Card>

@@ -10,11 +10,16 @@ interface IFAQPageProps {
     content: IFaqContent;
 }
 
+/**
+ * Presentational FAQ Page, expects cms content.
+ */
 const DisconnectedFAQPage: React.FC<IFAQPageProps> = props => {
     const { content } = props;
     const { faqs } = content;
+    // Track all FAQs rendered by an ID
     const [toggledFaqs, setToggled] = React.useState<number[]>([]);
     
+    // Toggle an FAQ by either adding it or removing it from the list in state
     const onFaqToggled = (id: number) => {
         if (toggledFaqs.includes(id)) setToggled(toggledFaqs.filter(toggleId => toggleId !== id))
         else setToggled([...toggledFaqs, id])

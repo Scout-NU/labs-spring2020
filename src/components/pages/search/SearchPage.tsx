@@ -16,10 +16,13 @@ interface ISearchPageProps {
     loading: boolean;
 }
 
-
+/**
+ * Presentational search page.
+ */
 const DisconnectedSearchPage: React.FC<ISearchPageProps> = props => {
     const {pageContent, results, loading} = props;
     const renderSearchResults = () => {
+        // No results and not loading means we didn't find anything
         if (!loading) {
             if (results.length === 0) {
                 return (<NoSearchResults missingContentImageUrl={pageContent.noResultsImageUrl} header={pageContent.noResultsHeader} alternateOptions={pageContent.noResultsSuggestions} />)

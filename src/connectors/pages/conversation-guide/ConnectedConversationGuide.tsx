@@ -9,6 +9,7 @@ import DisconnectedCommunicationGuidePage from '../../../components/pages/commun
 const ConversationGuide: React.FC = props => {
     const [pageContent, setContent] = React.useState<ICommunicationGuideContent | null>(null);
 
+    // REFACTOR: This logic is duplicated in a lot of places, it could be pulled into a custom Hook.
     React.useEffect(() => {
         async function getPageContent() {
             const pageService = getPageService();

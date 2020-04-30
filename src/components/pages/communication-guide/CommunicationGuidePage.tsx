@@ -10,6 +10,9 @@ interface ICommunicationGuidePageProps {
    content: ICommunicationGuideContent;
 }
 
+/**
+ * Presentational Communication Guide. Expects CMS content.
+ */
 const DisconnectedCommunicationGuidePage: React.FC<ICommunicationGuidePageProps> = props => {
     const { content } = props;
     return (

@@ -18,15 +18,20 @@ const HomePage: React.FC = props => {
             profileRepository.getAllProfiles(3)
             .then(res => {
                 setAmbassadors(resolveAmbassadorType(res))
-            }).catch(error => console.log(error));
+            })
+            // REFACTOR: Hide carousel or use default content
+            .catch(error => console.log(error));
         }
 
+        // REFACTOR: This logic is duplicated in a lot of places, it could be pulled into a custom Hook.
         async function getPageContent() {
             const pageService = getPageService();
             pageService.getHomePageContent()
             .then(res => {
                 setContent(mapHomeContent(res));
-            }).catch(error => console.log(error));
+            })
+            // REFACTOR: show default content
+            .catch(error => console.log(error));
         }
 
         getPageContent();
