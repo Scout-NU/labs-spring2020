@@ -1,17 +1,17 @@
 import React from 'react';
-import HomePage from './connectors/pages/ConnectedHomePage';
+import HomePage from './connectors/pages/home/ConnectedHomePage';
 import lunchbox from './styles/theme/lunchbox';
 import { ThemeProvider } from 'styled-components';
-import { Header } from './components/organisms/Header';
-import ProfilePage from './connectors/pages/ConnectedProfilePage';
-import Footer from './components/organisms/Footer';
+import { Header } from './components/organisms/header/Header';
+import ProfilePage from './connectors/pages/ambassador-profile/ConnectedProfilePage';
+import Footer from './components/organisms/footer/Footer';
 import styled from './styles/theme/Theme';
 import {BrowserRouter as Router, Switch, Route, Redirect} from "react-router-dom";
-import SearchPage from './connectors/pages/ConnectedSearchPage';
+import SearchPage from './connectors/pages/search/ConnectedSearchPage';
 import { homePageRoute, homeRedirectRoute, searchPageRoute, profileRoute, faqPageRoute, conversationGuideRoute } from './var/routes';
-import FAQPage from './connectors/pages/ConnectedFAQPage';
-import ConversationGuide from './connectors/pages/ConnectedConversationGuide';
-import NotFoundPage from './connectors/pages/ConnectedNotFoundPage';
+import FAQPage from './connectors/pages/faq/ConnectedFAQPage';
+import ConversationGuide from './connectors/pages/conversation-guide/ConnectedConversationGuide';
+import NotFoundPage from './connectors/pages/not-found/ConnectedNotFoundPage';
 import { ContactListProvider } from './context/contactListContext';
 
 
