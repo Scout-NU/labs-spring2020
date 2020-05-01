@@ -15,8 +15,8 @@ const ImageCard: React.FC<IImageCardProps> = props => {
         <CardWrapper>
             <CardImage src={imageUrl}/>
             <CardBody>
-                <H5>{cardBody}</H5>
-                <P>{cardTitle}</P>
+                <H5>{cardTitle}</H5>
+                <P>{cardBody}</P>
             </CardBody>
         </CardWrapper>
     )

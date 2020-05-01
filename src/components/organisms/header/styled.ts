@@ -61,7 +61,7 @@ export const HeaderMenu = styled.div`
         z-index: 3;
         box-shadow: 0 0 10px ${lunchboxColors.gusher};
     }
-    `
+`
 
 export const CloseButton = styled.img`
     display: none;

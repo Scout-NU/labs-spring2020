@@ -1,6 +1,5 @@
 import React from 'react';
 import DisconnectedEmailForm, { IEmailFormData } from '../../../components/organisms/email-form/EmailForm';
-import getEmailService from '../../../service/email/service';
 import { H5, P } from '../../../components/atoms/typography/Typography';
 import Spinner from '../../../components/atoms/spinner/Spinner';
 import { mapResolvedEmailFormContent } from '../../../types/util/adpater/component/emailForm';

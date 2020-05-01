@@ -1,5 +1,6 @@
 import styled from '../../../styles/theme/Theme';
 import { lunchboxColors } from '../../../styles/theme/lunchbox';
+import devices from '../../../styles/variables/breakpoints';
 
 export const StyledFilterPopup = styled.div`
     background-color: ${lunchboxColors.gusher};
@@ -10,6 +11,7 @@ export const StyledFilterPopup = styled.div`
     padding: 1.25em;
     user-select: none;
     transition: all .2s ease-in-out;
+    overflow: scroll;
 
     &:hover {
         color: black;
@@ -24,4 +26,10 @@ export const StyledFilterPopup = styled.div`
 export const PopupWrapper = styled.div`
     position: absolute;
     z-index: 999;
+
+    @media ${devices.tablet} {
+        width: 100%;
+        left: 0;
+        width: 100%;
+    }
 `

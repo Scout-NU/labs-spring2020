@@ -12,7 +12,7 @@ const FilterPopup: React.FC<IFilterPopupProps> = props => {
     const [showPopup, togglePopup] = React.useState(false);
 
     return (
-        <div>
+        <>
             <StyledFilterPopup onClick={() => togglePopup(!showPopup)}>
                 <H5>{props.filterTitle}</H5>
                 <H5>{showPopup ? '-' : '+'}</H5>
@@ -20,7 +20,7 @@ const FilterPopup: React.FC<IFilterPopupProps> = props => {
             <PopupWrapper>
                 <Popup show={showPopup}>{props.children}</Popup>
             </PopupWrapper>
-        </div>
+        </>
     )
 }
 

@@ -15,6 +15,10 @@ export const SAPBanner = styled.div`
     border-radius: 0 2px 2px 0;
     z-index: 1;
     top: 5%;
+
+    @media ${devices.tablet} {
+        padding: 1em 1em 1em 4%;
+    }
 `
 
 export const Divider = styled.div`
@@ -103,7 +107,7 @@ export const CATIntroWrapper = styled.div`
 export const CATInformation = styled.div`
     display: flex;
     flex-direction: column;
-    padding: 5em 5em 0 10%;
+    padding: 5em 5em 9em 10%;
 
     & button {
         margin: 1.75em 0;
@@ -130,6 +134,11 @@ export const CATCarouselItem = styled.div`
     & ${StarIcon} {
         display: none;
     }
+
+    @media ${devices.tablet} {
+        min-width: 100%;
+        margin: 4em 0 10em 4em;
+    }
 `
 
 export const CATCarousel = styled.div`
@@ -142,6 +151,12 @@ export const CATCarousel = styled.div`
     & ${CATCarouselItem}:last-child {
         padding-right: 4em;
         min-width: calc(80% + 4em);
+    }
+
+    @media ${devices.tablet} {
+        & ${CATCarouselItem}:last-child {
+            min-width: 100%;
+        }
     }
 `
 
