@@ -1,4 +1,5 @@
 import styled from '../../../styles/theme/Theme';
+import { A } from '../../atoms/typography/Typography';
 
 export const FilterToggle = styled.button`
     border: none;
@@ -19,4 +20,7 @@ export const FilterToggles = styled.div`
 
 export const FaqWrapper = styled.div`
     margin-bottom: 2em;    
+`
+export const ContactLink = styled(A)`
+    margin-bottom: 4em;
 `

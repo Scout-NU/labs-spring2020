@@ -1,5 +1,6 @@
 import styled from '../../../styles/theme/Theme';
 import { lunchboxColors } from '../../../styles/theme/lunchbox';
+import devices from '../../../styles/variables/breakpoints';
 
 export const FilterColumn = styled.div`
     display: flex;
@@ -23,6 +24,14 @@ export const FilterOptions = styled.div`
 
     & ${FilterColumn}:last-child {
         margin-right: 0;
+    }
+    
+    @media ${devices.tablet} {
+        flex-direction: column;
+
+        & ${FilterColumn} {
+            margin: 0;
+        }
     }
 `
 

@@ -3,6 +3,7 @@ import { Row, Col } from 'react-flexbox-grid';
 import AmbassadorPreview from '../../organisms/ambassador-preview/AmbassadorPreview';
 import styled from '../../../styles/theme/Theme';
 import { IPerson } from '../../../types/client/model/person';
+import devices from '../../../styles/variables/breakpoints';
 
 
 interface IAmbassadorPreviewGridProps {
@@ -10,7 +11,11 @@ interface IAmbassadorPreviewGridProps {
 }
 
 const PersonWrapper = styled(Col)`
-    padding: 2em;
+    padding: 1em;
+
+    @media ${devices.tablet} {
+        padding: 1em 0; 
+    }
 `
 
 const AmbassadorPreviewGrid: React.FC<IAmbassadorPreviewGridProps> = props => {

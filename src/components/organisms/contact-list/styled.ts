@@ -10,8 +10,6 @@ export const ContactListWrapper = styled.div`
     bottom: 0;
     right: 5%;
     box-shadow: 0 0 26px lightgray;
-
-
     width: 25%;
 
 

@@ -4,7 +4,7 @@ import FAQ from '../../organisms/faq/FAQ';
 import { IFaqContent } from '../../../types/client/page/faq';
 import { PageHeader, HeaderVariant, PageSection } from '../../templates/page/Page';
 import { PageTitleGroup } from '../../templates/page/styled';
-import { FilterToggles, FilterToggle, FaqWrapper } from './styles';
+import { FilterToggles, FilterToggle, FaqWrapper, ContactLink } from './styles';
 
 interface IFAQPageProps {
     content: IFaqContent;
@@ -53,7 +53,7 @@ const DisconnectedFAQPage: React.FC<IFAQPageProps> = props => {
                     )
                 })}
                 <H4>{content.furtherQuestionHeader}</H4>
-                <A href={`mailto:${content.furtherHelpEmail}`}>{content.furtherHelpHeader}</A>
+                <ContactLink href={`mailto:${content.furtherHelpEmail}`}>{content.furtherHelpHeader}</ContactLink>
             </PageSection>
         </>
     )

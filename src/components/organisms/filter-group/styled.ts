@@ -18,7 +18,8 @@ export const CheckLabel = styled(P)`
 
 export const FilterWrapper = styled(Row)`
     margin-top: 1em;
-
+    flex-wrap: wrap;
+    
     & > ${StyledFilterPopup} {
         margin-right: 1em;
     }
