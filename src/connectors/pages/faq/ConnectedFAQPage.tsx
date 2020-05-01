@@ -1,9 +1,9 @@
 import React from 'react';
 import DisconnectedFAQPage from '../../../components/pages/faq/FAQPage';
-import getPageService from '../../../service/page/service';
 import { mapFaqContent } from '../../../types/util/adpater/page/faq';
 import { IFaqContent } from '../../../types/client/page/faq';
 import PageLoader from '../../../components/molecules/loading-spinner/LoadingSpinner';
+import PageService from '../../../service/page/service';
 
 const FAQPage: React.FC = () => {
     const [pageContent, setContent] = React.useState<IFaqContent | null>(null);
@@ -11,7 +11,7 @@ const FAQPage: React.FC = () => {
     // REFACTOR: This logic is duplicated in a lot of places, it could be pulled into a custom Hook.
     React.useEffect(() => {
         async function getPageContent() {
-            const pageService = getPageService();
+            const pageService = new PageService();
             pageService.getFaqPageContent()
             .then(res => {
                 setContent(mapFaqContent(res));

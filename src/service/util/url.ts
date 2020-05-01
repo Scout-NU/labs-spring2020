@@ -6,7 +6,7 @@ export interface IQueryParser {
     getQuery: () => string;
 }
 
-// TODO Test
+
 export class URLQueryParser implements IQueryParser {
     private parsedFilters: CaseInsensitiveMap<string, string[]> = new CaseInsensitiveMap();
 

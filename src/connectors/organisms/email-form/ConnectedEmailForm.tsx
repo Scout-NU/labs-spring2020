@@ -3,10 +3,11 @@ import DisconnectedEmailForm, { IEmailFormData } from '../../../components/organ
 import getEmailService from '../../../service/email/service';
 import { H5, P } from '../../../components/atoms/typography/Typography';
 import Spinner from '../../../components/atoms/spinner/Spinner';
-import getComponentService from '../../../service/component/service';
 import { mapResolvedEmailFormContent } from '../../../types/util/adpater/component/emailForm';
 import { IMailFormContent } from '../../../types/client/component/emailForm';
 import { SpinnerWrapper } from '../../../components/molecules/loading-spinner/styled';
+import ComponentService from '../../../service/component/service';
+import EmailService from '../../../service/email/service';
 
 export interface IEmailFormProps {
     onFormCompleted: () => void;
@@ -35,7 +36,7 @@ const EmailForm: React.FC<IEmailFormProps> = props => {
     // On the first time we render, fetch the component content from the component service.
     React.useEffect(() => {
         async function getComponentContent() {
-            const componentService = getComponentService();
+            const componentService = new ComponentService();
             componentService.getEmailFormContent()
             .then(res => {
                 setContent(mapResolvedEmailFormContent(res));
@@ -47,7 +48,7 @@ const EmailForm: React.FC<IEmailFormProps> = props => {
 
     // When the form gets submitted...
     const onEmailSelected = (data: IEmailFormData) => {
-        const emailService = getEmailService();
+        const emailService = new EmailService();
         toggleLoading(true); // Turn on loading display, try to send an email
         emailService.sendAmbassadorEmail(props.ambassadorId, data.emailAddress, data.emailSubject, data.emailBody)
         .then(res => {
