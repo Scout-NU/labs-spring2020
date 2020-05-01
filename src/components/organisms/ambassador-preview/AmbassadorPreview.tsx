@@ -5,7 +5,7 @@ import { profileRoute } from '../../../var/routes';
 import PersonProfileImageGroup from '../../molecules/profile-image-group/PersonProfileImageGroup';
 import { IPerson } from '../../../types/client/model/person';
 import ContactListToggle from '../../molecules/contact-toggle/ContactListToggle';
-import { PreviewCard, ToggleWrapper, CardContent, JobTitle, CardRule, TagWrapper } from './styled';
+import { PreviewCard, ToggleWrapper, CardContent, JobTitle, TagWrapper, Fade } from './styled';
 
 
 interface IAmbassadorPreviewProps {
@@ -41,11 +41,11 @@ const AmbassadorPreview: React.FC<IAmbassadorPreviewProps> = props => {
                 <H5>{`${profile.firstName} ${profile.lastName}`}</H5>
                 <JobTitle>{profile.positionTitle}</JobTitle>
                 <P>{shorten(profile.description, 100)}</P>
-                <CardRule/>
                 <TagWrapper>
-                    <TagGroup tags={profile.tags.sort((a, b) => a.length - b.length)}/>
+                    <TagGroup tags={profile.tags.sort((a, b) => b.length - a.length)}/>
                 </TagWrapper>
             </CardContent>
+            <Fade/>
         </PreviewCard>
     )
 }

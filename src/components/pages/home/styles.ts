@@ -30,6 +30,10 @@ export const Divider = styled.div`
     top: 80%;
     z-index: 1;
 
+    @media ${devices.tablet} {
+        top: 70%;
+    }
+
     @media ${devices.laptop} {
         display: none;
     }
