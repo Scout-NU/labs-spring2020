@@ -16,6 +16,9 @@ interface IDisconnectedHomePageProps {
     carouselItems: IPerson[];
 }
 
+/**
+ * Presentational Home Page, expects CMS content.
+ */
 const DisconnectedHomePage: React.FC<IDisconnectedHomePageProps> = props => {
     const {content, carouselItems} = props;
 const exploreProfilesButton = <Button buttonStyle={ButtonStyle.PRIMARY}><NavigationLink to={content.exploreLink.linkURL}>{content.exploreLink.linkTitle}</NavigationLink></Button>

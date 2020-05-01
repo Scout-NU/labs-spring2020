@@ -12,7 +12,11 @@ interface IFooterProps {
 }
 
 
-
+/**
+ * Footer at the bottom of the page.
+ * TODO/REFACTOR: Should expect links from the CMS. That data is all set up in there, just needs to be hoooked up.
+ * REFACTOR: The way this is styled, it doesn't let things touch it directly. The home page needs to do this. See ./styled for info.
+ */
 const DisconnectedFooter: React.FC<IFooterProps> = props => {
     return (
         <StyledFooter>

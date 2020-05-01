@@ -2,6 +2,11 @@ import React from 'react';
 import { H3 } from '../../atoms/typography/Typography';
 import { StyledHeaderContainer, StyledPageSection, HeaderBlob, HeaderContent } from './styled';
 
+/**
+ * This file contains components for assembling pages. They recycle some of the commonalities you see between pages,
+ * like headers, header images, etc. 
+ */
+
 export interface IHeaderProps {
     headerVariant: HeaderVariant;
 }

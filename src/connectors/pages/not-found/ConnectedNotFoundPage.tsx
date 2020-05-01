@@ -9,13 +9,17 @@ import DisconnectedNotFoundPage from '../../../components/pages/not-found/404';
 const NotFoundPage: React.FC = props => {
     const [pageContent, setContent] = React.useState<INotFoundContent | null>(null);
 
+    // On first load, fetch page content.
+    // REFACTOR: This logic is duplicated in a lot of places, it could be pulled into a custom Hook.
     React.useEffect(() => {
         async function getPageContent() {
             const pageService = getPageService();
             pageService.getNotFoundPageContent()
             .then(res => {
                 setContent(mapNotFoundPageContent(res));
-            }).catch(error => console.log(error));
+            })
+            // REFACTOR: Add default content
+            .catch(error => console.log(error));
         }
 
         getPageContent();

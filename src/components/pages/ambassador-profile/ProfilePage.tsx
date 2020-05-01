@@ -22,12 +22,15 @@ interface IProfilePageProps {
     content: IProfileContent;
 }
 
+/**
+ * Presentational Profile, expects content from the CMS and a fetched Ambassador profile. 
+ */
 const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
     const [showForm, toggleForm] = React.useState(false);
     const { content } = props;
 
     const {
-        profileImageUrl, relatedPeople, description,
+        profileImageUrl, relatedPeople, description, id,
         firstName, lastName, positionTitle, priorityStatement, 
         knowledgeableTopics, projects, tags, department
     } = props.info;
@@ -84,7 +87,7 @@ const DisconnectedProfilePage: React.FC<IProfilePageProps> = props => {
             }
 
             <CardModal onModalClosed={() => toggleForm(false)} isOpen={showForm}>
-                <EmailForm onFormCompleted={() => toggleForm(false)}/>
+                <EmailForm ambassadorId={id} onFormCompleted={() => toggleForm(false)}/>
             </CardModal>
 
         </>

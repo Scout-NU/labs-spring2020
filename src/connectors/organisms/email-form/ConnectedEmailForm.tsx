@@ -10,15 +10,20 @@ import { SpinnerWrapper } from '../../../components/molecules/loading-spinner/st
 
 export interface IEmailFormProps {
     onFormCompleted: () => void;
+    ambassadorId: string;
 }
 
+/**
+ * This what renders the email form. Its primary responsibilities are to fetch the copy for the email form,
+ * and send off the email when the message comes back from the presentational form.
+ */
 const EmailForm: React.FC<IEmailFormProps> = props => {
     const [showError, toggleError] = React.useState(false);
     const [showLoading, toggleLoading] = React.useState(false);
     const [showSuccess, toggleSuccess] = React.useState(false);
     const [formContent, setContent] = React.useState<IMailFormContent | null>(null);
 
-    const resultModal = (header: string, text: string) => {
+    const formResult = (header: string, text: string) => {
         return (
             <div>
                 <H5>{header}</H5>
@@ -27,6 +32,7 @@ const EmailForm: React.FC<IEmailFormProps> = props => {
         )
     }
 
+    // On the first time we render, fetch the component content from the component service.
     React.useEffect(() => {
         async function getComponentContent() {
             const componentService = getComponentService();
@@ -39,26 +45,22 @@ const EmailForm: React.FC<IEmailFormProps> = props => {
         getComponentContent();
     }, [])
 
+    // When the form gets submitted...
     const onEmailSelected = (data: IEmailFormData) => {
         const emailService = getEmailService();
-        console.log(data);
-        let id = window.location.pathname.split('/').pop();
-        if (!id) { 
-            props.onFormCompleted();
-        } else {
-            toggleLoading(true);
-            emailService.sendAmbassadorEmail(id, data.emailAddress, data.emailSubject, data.emailBody)
-            .then(res => {
-                if (res.successful) toggleSuccess(true);
-                else toggleError(true);
-            }).catch(err => {
-                toggleError(true);
-            }).finally(() => {
-                toggleLoading(false);
-            })
-        }
+        toggleLoading(true); // Turn on loading display, try to send an email
+        emailService.sendAmbassadorEmail(props.ambassadorId, data.emailAddress, data.emailSubject, data.emailBody)
+        .then(res => {
+            if (res.successful) toggleSuccess(true);
+            else toggleError(true);
+        }).catch(err => {
+            toggleError(true);
+        }).finally(() => {
+            toggleLoading(false);
+        })
     }
-    
+
+    // If the form content hasn't loaded or we're sending an email, show loading
     if (!formContent || showLoading) {
         return ( 
             <SpinnerWrapper>
@@ -67,8 +69,8 @@ const EmailForm: React.FC<IEmailFormProps> = props => {
          )
     }
     
-    if (showError)  return resultModal(formContent.failedSendMessageHeader, formContent.failedSendMessageBody)
-    if (showSuccess) return resultModal(formContent.successfulSendMessageHeader, formContent.successfulSendMessageBody)
+    if (showError) return formResult(formContent.failedSendMessageHeader, formContent.failedSendMessageBody)
+    if (showSuccess) return formResult(formContent.successfulSendMessageHeader, formContent.successfulSendMessageBody)
     
     return <DisconnectedEmailForm content={formContent} onFormSubmitted={(data) => onEmailSelected(data)}/>
 }

@@ -10,6 +10,9 @@ interface IDisconnectedNotFoundPageProps {
     content: INotFoundContent;
 }
 
+/**
+ * 404 Page. Expects content loaded from CMS.
+ */
 const DisconnectedNotFoundPage: React.FC<IDisconnectedNotFoundPageProps> = props => {
     const { content } = props;
 

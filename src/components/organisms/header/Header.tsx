@@ -8,6 +8,10 @@ interface IHeaderProps {
 
 }
 
+/**
+ * Header at the top of every page. 
+ * TODO: Should expect links from the CMS. That data is all set up in there, just needs to be hoooked up.
+ */
 export class Header extends React.Component<IHeaderProps> {
     private menu = React.createRef<HTMLDivElement>();
 

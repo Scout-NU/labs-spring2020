@@ -11,14 +11,20 @@ import NotFoundPage from '../not-found/ConnectedNotFoundPage';
 import ContactList from '../../../components/organisms/contact-list/ContactList';
 
 
+/**
+ * Responsible for fetching the content of the ambassador ID in the URL, and fetching the copy for the profile template.
+ */
 const ProfilePage: React.FC = () => {
     const [profile, setProfile] = React.useState<IProfile | null>(null);
     const [pageContent, setContent] = React.useState<IProfileContent | null>(null);
     const [profileFetchFailed, setFailed] = React.useState(false);
 
     React.useEffect(() => {
+        // Fetch the ambassador's content
         async function getProfile() {
             const profileRepository = getProfileService();
+            // This component is dependent on the route. One thing that you could do is delegate this URL parsing to React Router. 
+            // I chose not to do this because I was going fast. This could be a good REFACTOR if this profile ever needs to be used anywhere else.
             let id = window.location.pathname.split('/').pop();
             
             if (!id) {
@@ -33,6 +39,7 @@ const ProfilePage: React.FC = () => {
             }
         }
 
+        // REFACTOR: This logic is duplicated in a lot of places, it could be pulled into a custom Hook.
         async function getPageContent() {
             const pageService = getPageService();
             pageService.getProfilePageContent()

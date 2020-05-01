@@ -3,6 +3,7 @@ import { NavigationLink } from '../../atoms/typography/Typography';
 import { lunchboxColors } from '../../../styles/theme/lunchbox';
 import device from '../../../styles/variables/breakpoints';
 
+// REFACTOR: This needs to be absolute, not relative so that it does not interrupt document flow and lets things touch the footer. 
 export const FooterImage = styled.img`
     position: relative;
     width: 10em;
@@ -19,6 +20,7 @@ export const MonumLogo = styled.img`
     max-height: 5em;
 `
 
+// REFACTOR: get rid of the margin here.
 export const StyledFooter = styled.footer`
     width: 100%;
     margin-top: 4em;
