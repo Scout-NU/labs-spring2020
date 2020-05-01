@@ -1,11 +1,11 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { URLQueryParser } from '../../../service/util/url';
-import getFilterService from '../../../service/filter/service';
 import { IFilter } from '../../../types/client/page/search';
 import { Col, Row } from 'react-flexbox-grid';
 import SearchBar from '../../../components/molecules/search-bar/SearchBar';
 import FilterGroup from '../../../components/organisms/filter-group/FilterGroup';
+import FilterService from '../../../service/filter/service';
 
 /**
  * This is a component that groups together the search bar and the filters. 
@@ -28,7 +28,7 @@ const SearchGroup: React.FC = props => {
     // On first render, get all of the filters to use
     React.useEffect(() => {
         async function getSearchData() {
-            let filterService = getFilterService();
+            let filterService = new FilterService();
             let parsedQuery = new URLQueryParser(new URLSearchParams(window.location.search));
             filterService.getAllFilters()
             .then(res => {

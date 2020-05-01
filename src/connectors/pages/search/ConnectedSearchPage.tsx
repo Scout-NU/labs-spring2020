@@ -1,15 +1,15 @@
 import React from 'react';
 import DisconnectedSearchPage from "../../../components/pages/search/SearchPage";
-import getProfileService from '../../../service/ambassador/service';
 import { IAmbassador } from '../../../types/backend/model';
 import { URLQueryParser } from '../../../service/util/url';
 import { IPerson } from '../../../types/client/model/person';
 import { resolveAmbassadorType } from '../../../types/util/adpater/model/person';
 import { ISearchContent } from '../../../types/client/page/search';
-import getPageService from '../../../service/page/service';
 import PageLoader from '../../../components/molecules/loading-spinner/LoadingSpinner';
 import { mapSearchPageContent } from '../../../types/util/adpater/page/search';
 import ContactList from '../../../components/organisms/contact-list/ContactList';
+import ProfileService from '../../../service/ambassador/service';
+import PageService from '../../../service/page/service';
 
 /**
  * This is the connected component responsible for doing a search. It parses the query parameter stored in the URL and talks to the Ambassador 
@@ -30,7 +30,7 @@ const SearchPage: React.FC = () => {
         async function search() {
             // If there's a query string, we need to search
             let isQueryPresent = window.location.search !== "";
-            const profileRepository = getProfileService();
+            const profileRepository = new ProfileService();
             var ambassadors: Promise<IAmbassador[]>;
             if (!isQueryPresent) { // No query, grab everyone
                 ambassadors = profileRepository.getAllProfiles();
@@ -48,7 +48,7 @@ const SearchPage: React.FC = () => {
         
         // REFACTOR: This logic is duplicated in a lot of places, it could be pulled into a custom Hook.
         async function getPageContent() {
-            const pageService = getPageService();
+            const pageService = new PageService();
             pageService.getSearchPageContent()
             .then(res => {
                 setContent(mapSearchPageContent(res));

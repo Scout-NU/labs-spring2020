@@ -6,7 +6,21 @@ import { IAmbassadorFields } from '../types/backend/model';
 import fetch, { Headers } from 'node-fetch';
 import { ContentfulSingleBaseResponse } from '../types/backend/base';
 
-// Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
+ 
+/**
+ * Docs on event and context https://www.netlify.com/docs/functions/#the-handler-method
+ * 
+ * This is the function that the email service uses to send an email. Basically, a network request is made to a
+ * special URL that ends up calling this function. That URL is of the form /.netlify/functions/???, the real 
+ * URL is an environment variable. 
+ * 
+ * This method expects an ambassador ID and some email content. It finds the ambassador's email by fetching it by ID,
+ * and then sends a message to that Email, erroring out if any stage of that process fails. 
+ * 
+ * 
+ * @param event 
+ * @param context 
+ */
 export async function handler(event: APIGatewayEvent, context: Context) {
     try {
         let parameters: IEmailParameters = JSON.parse(event.headers.data);
@@ -41,9 +55,19 @@ interface IAmbassadorEmailResponse {
     errors: string | null;
     email: string | null;
 }
- // TODO: This is a horrible antipattern. But it's a *free* horrible antipattern :) This function should not be doing anything async except sending th email.
-// One should set up real amazon lambda functions so that we can use Amazon step functions to orchestrate the fetch ambassador -> send email flow.
-// TODO: AAH NO, make it another lambda function
+/*
+REFACTOR: This is an antipattern. 
+But it's a *free* antipattern :) This function should not be doing anything async except sending the email.
+
+For the Netlify free functions, there is a timeout limit of 10 seconds. It should never take more than 10 seconds to 
+fetch the ambassador and send the email, but under poor conditions it theoretically could. Also, if this were the real
+world and we had to pay for this, this function would run longer (because it's doing two things instead of one), which is
+slightly more expensive. 
+
+At some point, real Lambda functions will probably need to be set up for this project. When it comes to that, AWS has 
+a thing called Amazon Step Functions, which allow you to sequentially call individual functions that pipe data to one another.
+It would be best to have this just kick off a flow of function one that Fetches Email -> function two that Sends Email.
+*/
 async function getAmbassadorEmail(ambassadorId: string): Promise<IAmbassadorEmailResponse> {
     try {
         const profileResponse = await fetch(
@@ -68,7 +92,7 @@ async function getAmbassadorEmail(ambassadorId: string): Promise<IAmbassadorEmai
         if (!email) {
             return {
                 statusCode: 500,
-                errors: 'Failed to parse profile response.',
+                errors: 'Failed to find email for given ambassador ID.',
                 email: null
             }
         }

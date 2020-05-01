@@ -1,5 +1,9 @@
 // src: stackoverflow.com/questions/50019920/javascript-map-key-value-pairs-case-insensitive-search
 
+/**
+ * This is a Map that does not care about what case the keys and values are. This is
+ * useful for storing URL parameters.
+ */
 class CaseInsensitiveMap<T, U> extends Map<T, U> {    
     set (key: T, value: U): this {
         return super.set(this.getStringKey(key), value);

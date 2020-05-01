@@ -1,40 +1,33 @@
 import { IDepartment } from '../../types/backend/model';
-import { ContentfulListBaseResponse, ContentfulIncludedLinks } from '../../types/backend/base';
-import { makeContentManagementGetRequest } from '../util/http';
+import { ContentfulListBaseResponse, Resolved } from '../../types/backend/base';
+import { IContentManagementClient, ContentManagementClient } from '../util/client';
+import { resolveEntry } from '../../types/backend/utils';
 
 
 export interface IDepartmentService {
     getAllDepartments(): Promise<IDepartment[]>;
 }
 
-export default function getDepartmentService(): IDepartmentService {
-    return {
-        getAllDepartments: getAllDepartments,
+/*
+ * This service is responsible for fetching departments.
+ */
+export default class DepartmentService implements IDepartmentService {
+    private allDepartmentsQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=department`;
+
+    // This is sort of fake dependency injection. I have a section on it in the wiki in the improvements section. It is important for testing.
+    private client: IContentManagementClient = new ContentManagementClient()
+
+    async getAllDepartments(): Promise<IDepartment[]> {
+        return this.getDepartmentsWhere(this.allDepartmentsQuery)
+    }
+
+    private async getDepartmentsWhere(query: string): Promise<IDepartment[]> {
+        const departmentResponse = await this.client.makeRequest(query);
+        let reducedDepartments: ContentfulListBaseResponse<IDepartment> = await departmentResponse.json();
+        return this.parseDepartmentResponse(reducedDepartments);
+    }
+
+    private parseDepartmentResponse(response: ContentfulListBaseResponse<IDepartment>): Resolved<IDepartment>[] {
+        return response.items.map(d => resolveEntry(d, response.includes!!));
     }
 }
-
-const allDepartmentsQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=department`;
-
-async function getAllDepartments(): Promise<IDepartment[]> {
-    return getDepartmentsWhere(allDepartmentsQuery)
-}
-
-
-async function getDepartmentsWhere(query: string): Promise<IDepartment[]> {
-    const departmentResponse = await makeContentManagementGetRequest(query);
-    let reducedDepartments: ContentfulListBaseResponse<IDepartment> = await departmentResponse.json();
-    return reducedDepartments.items.map((department) => resolveDepartmentLinks(department, reducedDepartments.includes!!))
-}
-
-
-export function resolveDepartmentLinks(department: IDepartment, assets: ContentfulIncludedLinks): IDepartment {
-    let assetId = department?.fields?.departmentImage?.sys.id;
-
-    return {
-        ...department,
-        fields: {
-            ...department.fields,
-            departmentImage: assets.Asset.find((asset) => asset.sys.id === assetId)!!,
-        }
-    }
-}    

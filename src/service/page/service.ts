@@ -1,7 +1,7 @@
 import { IPage, PagePageContent, INotFoundPageContent, IConnectionGuideContent, IFaqPageContent, IHomePageContent, IProfilePageContent, ISearchPageContent, PageDiscriminator, isHomePageContent, isConnectionGuideContent, isFaqPageContent, isProfilePageContent, isSearchPageContent, isNotFoundPageContent } from '../../types/backend/model';
 import { ContentfulListBaseResponse, Resolved } from '../../types/backend/base';
 import { resolveEntry } from '../../types/backend/utils';
-import { makeContentManagementGetRequest } from '../util/http';
+import { ContentManagementClient } from '../util/client';
 
 
 export interface IPageService {
@@ -13,73 +13,62 @@ export interface IPageService {
     getNotFoundPageContent(): Promise<INotFoundPageContent>;
 }
 
-export enum PageName {
-    HOME ="Home Page",
-    CONVERSATION_GUIDE="Conversation Guide",
-    FAQ="FAQ Page",
-    PROFILE="Profile Page",
-    SEARCH="Search Page",
-    NOT_FOUND="Not Found Page"
-}
+/**
+ * This class is responsible for fetching page content.
+ * 
+ * REFACTOR: So I went a specific route with managing page content in this, and I wish I didn't. 
+ * Please see the recommended improvements section in the github wiki for more informtion.
+ */
+export default class PageService implements IPageService {
+    private allPagesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=page&include=10`;
+    // This is sort of fake dependency injection. I have a section on it in the wiki in the improvements section. It is important for testing.
+    private client = new ContentManagementClient();
 
-export default function getPageService(): IPageService {
-    return {
-        getHomePageContent: getHomePageContent,
-        getConversationPageContent: getConversationPageContent,
-        getFaqPageContent: getFaqPageContent,
-        getProfilePageContent: getProfilePageContent,
-        getSearchPageContent: getSearchPageContent,
-        getNotFoundPageContent: getNotFoundPageContent
+    async getHomePageContent(): Promise<IHomePageContent> {
+        let content = await this.getContentForPage(PageDiscriminator.HOME);
+        if (!isHomePageContent(content)) throw Error(`Page content for ${PageDiscriminator.HOME} could not be found`);
+        return content;
     }
-}
+
+    async getConversationPageContent(): Promise<IConnectionGuideContent> {
+        let content = await this.getContentForPage(PageDiscriminator.CONVERSATION_GUIDE);
+        if (!isConnectionGuideContent(content)) throw Error(`Page content for ${PageDiscriminator.CONVERSATION_GUIDE} could not be found`);
+        return content;
+    }
+
+    async getFaqPageContent(): Promise<IFaqPageContent> {
+        let content = await this.getContentForPage(PageDiscriminator.FAQ);
+        if (!isFaqPageContent(content)) throw Error(`Page content for ${PageDiscriminator.FAQ} could not be found`);
+        return content;
+    }
+
+    async getProfilePageContent(): Promise<IProfilePageContent> {
+        let content = await this.getContentForPage(PageDiscriminator.PROFILE);
+        if (!isProfilePageContent(content)) throw Error(`Page content for ${PageDiscriminator.PROFILE} could not be found`);
+        return content;
+    }
+
+    async getSearchPageContent(): Promise<ISearchPageContent> {
+        let content = await this.getContentForPage(PageDiscriminator.SEARCH);
+        if (!isSearchPageContent(content)) throw Error(`Page content for ${PageDiscriminator.SEARCH} could not be found`);
+        return content;
+    }
+
+    async getNotFoundPageContent(): Promise<INotFoundPageContent> {
+        let content = await this.getContentForPage(PageDiscriminator.NOT_FOUND);
+        if (!isNotFoundPageContent(content)) throw Error(`Page content for ${PageDiscriminator.NOT_FOUND} could not be found`);
+        return content;
+    }
+
+    async getContentForPage(pageName: PageDiscriminator): Promise<PagePageContent> {
+        const pageQuery = `${this.allPagesQuery}&fields.pageName=${pageName}`;
+        const pageResponse = await this.client.makeRequest(pageQuery);
+        let reducedPages: ContentfulListBaseResponse<IPage> = await pageResponse.json();
+        return this.parsePageResponse(reducedPages)[0].fields.pageContent!!;
+    }
 
 
-const allPagesQuery = `${process.env.REACT_APP_CMS_BASE_URL}/entries?&content_type=page&include=10`;
-
-async function getHomePageContent(): Promise<IHomePageContent> {
-    let content = await getContentForPage(PageDiscriminator.HOME);
-    if (!isHomePageContent(content)) throw Error(`Page content for ${PageDiscriminator.HOME} could not be found`);
-    return content;
-}
-
-async function getConversationPageContent(): Promise<IConnectionGuideContent> {
-    let content = await getContentForPage(PageDiscriminator.CONVERSATION_GUIDE);
-    if (!isConnectionGuideContent(content)) throw Error(`Page content for ${PageDiscriminator.CONVERSATION_GUIDE} could not be found`);
-    return content;
-}
-
-async function getFaqPageContent(): Promise<IFaqPageContent> {
-    let content = await getContentForPage(PageDiscriminator.FAQ);
-    if (!isFaqPageContent(content)) throw Error(`Page content for ${PageDiscriminator.FAQ} could not be found`);
-    return content;
-}
-
-async function getProfilePageContent(): Promise<IProfilePageContent> {
-    let content = await getContentForPage(PageDiscriminator.PROFILE);
-    if (!isProfilePageContent(content)) throw Error(`Page content for ${PageDiscriminator.PROFILE} could not be found`);
-    return content;
-}
-
-async function getSearchPageContent(): Promise<ISearchPageContent> {
-    let content = await getContentForPage(PageDiscriminator.SEARCH);
-    if (!isSearchPageContent(content)) throw Error(`Page content for ${PageDiscriminator.SEARCH} could not be found`);
-    return content;
-}
-
-async function getNotFoundPageContent(): Promise<INotFoundPageContent> {
-    let content = await getContentForPage(PageDiscriminator.NOT_FOUND);
-    if (!isNotFoundPageContent(content)) throw Error(`Page content for ${PageDiscriminator.NOT_FOUND} could not be found`);
-    return content;
-}
-
-async function getContentForPage(pageName: PageDiscriminator): Promise<PagePageContent> {
-    const pageQuery = `${allPagesQuery}&fields.pageName=${pageName}`;
-    const pageResponse = await makeContentManagementGetRequest(pageQuery);
-    let reducedPages: ContentfulListBaseResponse<IPage> = await pageResponse.json();
-    return parsePageResponse(reducedPages)[0].fields.pageContent!!;
-}
-
-
-function parsePageResponse(response: ContentfulListBaseResponse<IPage>): Resolved<IPage>[] {
-    return response.items.map(d => resolveEntry(d, response.includes!!));
+    private parsePageResponse(response: ContentfulListBaseResponse<IPage>): Resolved<IPage>[] {
+        return response.items.map(d => resolveEntry(d, response.includes!!));
+    }
 }

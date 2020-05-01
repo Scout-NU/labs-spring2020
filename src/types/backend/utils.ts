@@ -55,6 +55,8 @@ export function expectResolved<TProps extends JsonObject>(
 
 /**
  * Recursively resolves an Entry, based on the provided links. 
+ * 
+ * REFACTOR: There's no reason for me to write this myself. Contentful.js should be integrated into this project and used to achieve this instead.
  * @param entry The entry to resolve.
  * @param links The links containing the Assets and Entries in the includes response of a Contentful API call. If something is not present,
  * an error will be thrown. If this is the case, it's likely that the includes argument did not include the correct depth. See the Contenful API
@@ -77,7 +79,7 @@ function resolveValue(item: any, links: ContentfulIncludedLinks, ignoreMissingLi
         } 
         catch(e) {
           /* 
-            TODO: This is super annoying. 
+            REFACTOR: This is super annoying. 
             For some reason, if you query for a given content type, and that content type has related content of the same type,
             and that linked content is present in the returned values for the search, that content is NOT put in the includes array (resolved links).
             This means that this function will not be able to find it. This breaks search. Putting this workaround for functions that need to do that.

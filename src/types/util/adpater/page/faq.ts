@@ -41,7 +41,6 @@ function mapResolvedFaqLinks(content: ICmsFaqLink[] | undefined): IFaqLink[] {
 function mapResolvedFaqLink(content: ICmsFaqLink): IFaqLink {
     if (!isResolved(content)) throw Error("Content must be resolved");
     const { fields } = content;
-
     return {
         url: {
             linkTitle: getStringOrDefault(fields.linkDisplayText),

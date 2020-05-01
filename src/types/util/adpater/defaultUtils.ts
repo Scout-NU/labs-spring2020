@@ -3,6 +3,11 @@ import { ILink } from "../../client/model/link";
 import { isResolved } from "../../backend/utils";
 import { IAsset } from "../../backend/base";
 
+/**
+ * These functions are what provide default values.
+ * 
+ * REFACTOR: so if we use the method for copy the way I specify in the recommendations part of the wiki, this would change.
+ */
 export function getStringsOrDefault(field: string[] | undefined) {
     return field ? field : []
 }
