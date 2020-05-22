@@ -22,7 +22,7 @@ export const ModalWrapper = styled.div`
     transform: translate(-50%, -50%);
     max-height: 80%;
     max-width: 60%;
-    overflow: scroll;
+    overflow: auto;
     box-shadow: none;
     text-align: left;
     z-index: 999;

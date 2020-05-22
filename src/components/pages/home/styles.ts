@@ -149,7 +149,7 @@ export const CATCarousel = styled.div`
     display: flex;
     background-color: ${lunchboxColors.carton};
     padding-right: 4em;
-    overflow: scroll;
+    overflow: auto;
     overscroll-behavior-x: none;
 
     & ${CATCarouselItem}:last-child {
