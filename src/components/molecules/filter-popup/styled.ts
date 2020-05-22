@@ -11,7 +11,7 @@ export const StyledFilterPopup = styled.div`
     padding: 1.25em;
     user-select: none;
     transition: all .2s ease-in-out;
-    overflow: scroll;
+    overflow: auto;
 
     &:hover {
         color: black;
