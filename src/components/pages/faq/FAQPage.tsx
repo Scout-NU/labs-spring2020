@@ -1,5 +1,5 @@
 import React from 'react';
-import { H1, P, H4, A } from '../../atoms/typography/Typography';
+import { H1, P, H4 } from '../../atoms/typography/Typography';
 import FAQ from '../../organisms/faq/FAQ';
 import { IFaqContent } from '../../../types/client/page/faq';
 import { PageHeader, HeaderVariant, PageSection } from '../../templates/page/Page';
