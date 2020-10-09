@@ -20,7 +20,7 @@ const Modal: React.FC<IModalProps> = props => {
         return () => {
             root?.removeChild(self);
         };
-    }, [self]);
+    }, [self, root]);
     
     const getModalContent = (): ReactNode => {
         // Need a fragment in here to keep the Scrollock happy...

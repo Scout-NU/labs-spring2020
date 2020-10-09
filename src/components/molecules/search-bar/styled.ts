@@ -69,7 +69,7 @@ export const SearchSuggestionsPopover = styled.div`
     padding: 1.5em;
     background-color: white;
     text-align: left;
-    z-index: 1;
+    z-index: 999;
 `
 
 export const SearchSuggestions = styled.ul`
