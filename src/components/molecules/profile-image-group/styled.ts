@@ -20,10 +20,9 @@ export const DepartmentImage = styled(CircleImage)`
     border-radius: 50%;
     position: relative;
     width: min(25%, 80px);
-    height: 25%;
     background-color: white;
     border: 1px solid black;
-    right: 7%;
+    right: 5%;
     bottom: 0px;
     align-self: flex-end;
 `
